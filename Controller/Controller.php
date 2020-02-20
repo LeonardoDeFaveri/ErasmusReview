@@ -19,7 +19,8 @@
             }
 
             switch ($comando){
-
+                case 'login':
+                    header('Location: View/Login.php');
             }
         }
     }

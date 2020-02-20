@@ -1,0 +1,48 @@
+:root{
+    --default-color: #333;
+    --default-background-color: #faf9f2;
+    --default-elements-background-color: #fccf03;
+    --default-border: 1px solid #333;
+    --default-margin: 5px;
+    --default-padding:5px;
+    --default-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+body{
+    color: var(--default-color);
+    font-family: var(--default-font-family);
+    background: var(--default-background-color);
+    margin: 0px;
+    height: 100%;
+}
+
+header{
+    background: var(--default-elements-background-color);
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    border: var(--default-border);
+    padding: var(--default-padding);
+    margin: 0px;
+}
+
+main{
+    position: absolute;
+    
+}
+
+footer{
+    border: var(--default-border);
+    background: var(--default-elements-background-color);
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 5px;
+}
+
+footer address{
+    display: inline;
+    margin-right: 10px;
+}
