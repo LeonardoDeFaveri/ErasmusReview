@@ -22,6 +22,10 @@ class ConnessioneDB {
                 break;
             case 'Azienda':
                 break;
+            case 'Docente':
+                break;
+            case 'Famiglia':
+                break;
         }
 
 
