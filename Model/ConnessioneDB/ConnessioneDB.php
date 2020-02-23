@@ -11,8 +11,34 @@ class ConnessioneDB {
         }
     }
 
-    public function select() {
+    public function getListaStudenti() {
+        $query = "SELECT * FROM utenti";
+        $studenti = array();
+        $ris = $this->connessione->query($query);
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            
+            foreach ($ris as $studente){
+                $studenti[] = new Studente(
+                    $studente['cognome'],
+                    $studente['data_nascita'],
+                    $studente['id'],
+                    $studente['nome'],
+                    $studente['email_utente']
+                );
+            }
+        }
+        return $studenti;
+    }
+    
+    public function verificaCredenziali($email, $password){
+        $query = "SELECT tipo_utente FROM utenti WHERE email = '{$email}' AND password = '{$password}'";
+        $ris = $this->connessione->query($query);
         
+        if($ris != false && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc()['tipo_utente'];
+        }
+        return $ris;
     }
 
     public function insert($soggetto) {
