@@ -12,8 +12,8 @@
          * Il controllore elabora il comando ricevuto e richiama la vista opportuna
          * fornendole i dati necessari.
          */
-        public function invoca() {
-            $comando = "Home";
+        public function invoca(): void {
+            $comando = 'login';
             if(isset($_GET['comando'])){
                 $comando = $_GET['comando'];
             }
