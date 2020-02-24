@@ -2,17 +2,18 @@
     include_once "include/struttura.php";
 
     $html = creaHeader("Login");
+    $html .= creaBarraMenu(null);
     $html .= <<<testo
-        <fieldset>
-            <legend>Login</legend>
-            <form method="POST">
-                <label for="email">Email</label><br>
-                <input name="email" type="email" required><br>
-                <label for="password">Password</label><br>
-                <input name="password" type="password" required><br>
-                <input type="submit" value="Accedi">
-            </form>
-        </fieldset>
+            <fieldset>
+                <legend>Accedi al tuo account</legend>
+                <form method="POST" >
+                    <label for="email">Indirizzo email</label><br>
+                    <input type="email" name="email" placeholder="Indirizzo email" autocomplete="" required><br>
+                    <label for="password">Password</label><br>
+                    <input type="password" name="password" placeholder="Password" autocomplete="" required><br>
+                    <input type="submit" value="Accedi">
+                </form>
+            </fieldset>\n
     testo;
     $html .= creaFooter();
     echo $html;

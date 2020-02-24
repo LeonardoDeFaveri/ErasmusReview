@@ -1,5 +1,4 @@
 <?php
-
 class Aspetto {
     private $id;
     private $nome;

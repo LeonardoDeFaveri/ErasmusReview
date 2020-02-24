@@ -6,7 +6,7 @@ class Studente extends Soggetto {
     private $scuola;
     private $classe;
 
-    public function __construct($id, $nome, $cognome, $dataNascita, $scuola, $classe) {
+    public function __construct(int $id, string $nome, string $cognome, string $dataNascita, string $scuola, string $classe) {
         parent::__construct($id, $nome);
         $this->cognome = $cognome;
         $this->dataNascita = $dataNascita;
@@ -14,19 +14,19 @@ class Studente extends Soggetto {
         $this->classe = $classe;
     }
 
-    public function getCognome() {
+    public function getCognome(): string {
         return $this->cognome;
     }
 
-    public function getDataNascita() {
+    public function getDataNascita(): string {
         return $this->dataNascita;
     }
 
-    public function getScuola() {
+    public function getScuola(): string {
         return $this->scuola;
     }
 
-    public function getClasse() {
+    public function getClasse(): string {
         return $this->classe;
     }
 }

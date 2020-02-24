@@ -52,7 +52,7 @@ class Modello {
      *
      * @return string tipo di utente identificato, altrimenti false
      */
-    public function verificaCredenziali($email, $password){
+    public function verificaCredenziali($email, $password) {
         $query = "SELECT tipo_utente FROM utenti WHERE email = '{$email}' AND password = '{$password}'";
         $ris = $this->connessione->query($query);
         
