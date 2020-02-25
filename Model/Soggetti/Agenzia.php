@@ -5,17 +5,23 @@ if(session_id() == ''){
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
 class Agenzia extends Soggetto{
+    private $email;
     private $stato;
     private $provincia;
     private $citta;
     private $telefono;
     
-    public function __construct($id, $nome, $stato, $provincia, $citta, $telefono) {
+    public function __construct($id, $nome, $email, $stato, $provincia, $citta, $telefono) {
         parent::__construct($id,$nome);
+        $this->email = $email;
         $this->stato = $stato;
         $this->provincia = $provincia;
         $this->citta = $citta;
         $this->telefono = $telefono;
+    }
+
+    public function getEmail(){
+        return $this->email;
     }
     
     public function getStato() {
@@ -33,6 +39,5 @@ class Agenzia extends Soggetto{
     public function getTelefono() {
         return $this->telefono;
     }
-
 }
 ?>
