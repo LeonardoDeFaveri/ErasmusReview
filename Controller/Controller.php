@@ -1,5 +1,8 @@
 <?php
-    include_once "Model/Modello.php";
+    if(session_id() == ''){
+        session_start();
+    }
+    include_once "{$_SESSION['root']}/Model/Modello.php";
 
     class Controller {
         private $modello;
@@ -20,7 +23,19 @@
 
             switch ($comando){
                 case 'login':
-                    header('Location: View/Login.php');
+                    echo 'Ciao';
+                    if(!isset($_POST['login'])){
+                        header('Location: View/Login.php');
+                        exit();
+                    }
+                    $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], $_POST['password']);
+                    if($tipoUtente){
+                        echo "Accesso eseguito";
+                    }else{
+                        header('Location: View/Login.php?errore=1');
+                        exit();
+                    }
+                    break;
             }
         }
     }

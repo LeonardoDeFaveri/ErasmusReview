@@ -1,5 +1,8 @@
 <?php
-include_once 'Soggetto.php';
+if(session_id() == ''){
+        session_start();
+}
+include_once "{$_SESSION['root']}/Model/Soggetto.php";
 
 class Agenzia extends Soggetto{
     private $stato;
