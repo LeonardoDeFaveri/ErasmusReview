@@ -1,6 +1,6 @@
 <?php
 if(session_id() == ''){
-        session_start();
+    session_start();
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
