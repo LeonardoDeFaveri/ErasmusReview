@@ -1,5 +1,4 @@
 <?php
-
 class Valutazione {
     private $id;
     private $schedaValutazione;
@@ -29,5 +28,4 @@ class Valutazione {
         return $this->aspetto;
     }
 }
-
 ?>

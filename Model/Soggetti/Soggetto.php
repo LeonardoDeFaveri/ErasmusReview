@@ -1,4 +1,5 @@
 <?php
+
 abstract class Soggetto{
     private $id;
     private $nome;
@@ -15,7 +16,5 @@ abstract class Soggetto{
     public function getNome(){
         return $this->nome;
     }
-    
 }
 ?>
-

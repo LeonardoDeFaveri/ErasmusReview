@@ -16,7 +16,5 @@ class Aspetto {
     public function getNome() {
         return $this->nome;
     }
-
 }
-
 ?>

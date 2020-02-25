@@ -1,6 +1,6 @@
 <?php
 if(session_id() == ''){
-        session_start();
+    session_start();
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
@@ -33,6 +33,5 @@ class Famiglia extends Soggetto{
     public function getIndirizzo() {
         return $this->indirizzo;
     }
-
 }
 ?>

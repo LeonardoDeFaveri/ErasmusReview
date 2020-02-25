@@ -1,6 +1,6 @@
 <?php
 if(session_id() == ''){
-        session_start();
+    session_start();
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
@@ -22,5 +22,4 @@ class Docente extends Soggetto{
         return $this->scuola;
     }
 }
-
 ?>

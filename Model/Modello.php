@@ -15,9 +15,12 @@ class Modello {
     private $connessione;
 
     public function __construct() {
-        $this->connessione = new mysqli("localhost", "root", "");
+        $this->connessione = new mysqli("localhost", "root", "", "erasmus_advisor");
         if ($this->connessione->connect_errno != 0) {
-            die("Errore di connessione con db");
+            die("<h2>Errore nella connessione al server</h2>");
+        }
+        if ($this->connessione->errno != 0) {
+            die("<h2>Errore nella connessione al database</h2>");
         }
     }
 
@@ -49,8 +52,8 @@ class Modello {
     /**
      * verificaCredenziali verifica che le coppia email e password siano valide.
      *
-     * @param  string $email
-     * @param  string $password
+     * @param  string $email indirizzo email
+     * @param  string $password password
      *
      * @return string tipo di utente identificato, altrimenti false
      */
@@ -62,6 +65,10 @@ class Modello {
             $ris = $ris->fetch_assoc()['tipo_utente'];
         }
         return $ris;
+    }
+
+    public function insertAgenzia($agenzia){
+        $query = "INSERT INTO agenzie ()"
     }
 
     public function insert($soggetto) {
@@ -111,5 +118,5 @@ class Modello {
         $valore = $this->connessione->query($query);
         return $valore;
     }
-
 }
+?>

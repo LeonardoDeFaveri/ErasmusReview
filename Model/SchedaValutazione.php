@@ -45,5 +45,4 @@ class SchedaValutazione {
         return $this->dataOra;
     }
 }
-
 ?>

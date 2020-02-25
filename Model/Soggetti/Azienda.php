@@ -1,6 +1,6 @@
 <?php
 if(session_id() == ''){
-        session_start();
+    session_start();
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
@@ -35,7 +35,5 @@ class Azienda extends Soggetto{
     public function getTelefono() {
         return $this->telefono;
     }
-
 }
-
 ?>
