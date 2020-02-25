@@ -23,15 +23,12 @@
 
             switch ($comando){
                 case 'login':
-                    echo 'Ciao';
                     if(!isset($_POST['login'])){
                         header('Location: View/Login.php');
                         exit();
                     }
                     $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], $_POST['password']);
-                    if($tipoUtente){
-                        echo "Accesso eseguito";
-                    }else{
+                    if(!$tipoUtente){
                         header('Location: View/Login.php?errore=1');
                         exit();
                     }
