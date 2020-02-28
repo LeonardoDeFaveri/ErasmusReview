@@ -21,7 +21,7 @@ function creaHeader($nomePagina) {
 function creaBarraMenu($emailUtente) {
     $menu = creaSezioneMenu();
     $ricerca = creaSezioneRicerca();
-    $utente = creaSezioneUtente("email");
+    $utente = creaSezioneUtente($emailUtente);
     $html =<<<testo
         <div id="barra-menu">
     {$menu}

@@ -6,6 +6,7 @@
     include_once "include/struttura.php";
 
     $html = creaHeader("Esperienze");
+    $html .= creaBarraMenu("email");
     $html.=<<<testo
         <p>ciao</p>
     testo;
