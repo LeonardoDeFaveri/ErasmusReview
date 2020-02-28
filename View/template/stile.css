@@ -1,7 +1,8 @@
 :root{
     --default-color: #333;
     --default-background-color: #faf9f2;
-    --default-elements-background-color: #fccf03;
+    --default-elements-background-color: #fcba03;
+    --default-elements-background-color-2: #ffdc7a;
     --default-border: 1px solid #333;
     --default-border-radius: 3px;
     --default-margin: 5px;
@@ -14,16 +15,14 @@ body{
     font-family: var(--default-font-family);
     background: var(--default-background-color);
     margin: 0px;
-    height: 100vh;
     display: grid;
     grid-template-areas:
-        'header header header header header header header'
-        'menu menu menu menu ricerca ricerca utente'
-        'main main main main main main main'
-        'footer footer footer footer footer footer footer';
+        'header'
+        'menu'
+        'contenuto';
 }
 
-header{
+#header-principale{
     grid-area: header;
     background: var(--default-elements-background-color);
     border: var(--default-border);
@@ -31,36 +30,94 @@ header{
     margin: 0px;
 }
 
+#barra-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
 nav{
-    grid-area: menu;
     border-left: var(--default-border);
     padding: var(--default-padding);
     background: grey;
+    flex-grow: 100;
 }
 
 #ricerca{
-    grid-area: ricerca;
+    display: flex;
+    align-items: center;
     border-left: var(--default-border);
     padding: var(--default-padding);
-    background: red;
+    width: fit-content;
+}
+
+#ricerca input[type="text"]{
+    font-size: medium;
+    padding: 0px;
+    padding-left: var(--default-padding);
+    padding-right: var(--default-padding);
+}
+
+#ricerca form button[type="submit"]{
+    background-color: var(--default-elements-background-color);
+    cursor: pointer;
+    font-size: large;
+    padding: auto;
+}
+
+#ricerca input[type="text"], #ricerca form button[type="submit"]{
+    vertical-align: middle;
+    margin: 0px;
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+    height: 40px;
+}
+
+#icona-ricerca{
+    vertical-align: middle;
+    font-size: 30px;
 }
 
 #utente{
-    grid-area: utente;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     border-left: var(--default-border);
     border-right: var(--default-border);
     padding: var(--default-padding);
-    background: yellow;
+    width: fit-content;
+}
+
+#utente p{
+    font-style: italic;
+    font-weight: bold;
+}
+
+#icona-utente{
+    font-size: 40px;
+    cursor: pointer;
+}
+
+nav, #ricerca, #utente{
+    background-color: var(--default-elements-background-color-2);
+}
+
+#contenuto{
+    grid-area: contenuto;
+    border: var(--default-border);
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
 }
 
 main{
+    flex-grow: 100;
     display: grid;
-    grid-area: main;
-    min-height: 500px;
     border: var(--default-border);
     border-bottom: none;
     align-items: center;
     justify-items: center;
+    min-height: 0px;
 }
 
 fieldset{
@@ -81,7 +138,6 @@ form{
     width: fit-content;
     height: fit-content;
     margin: auto;
-    vertical-align: central;
 }
 
 form input{
@@ -98,13 +154,20 @@ form input[type="submit"]{
     margin: var(--default-margin);
     margin-right: 0px;
     background: var(--default-elements-background-color);
+    cursor: pointer;
+}
+
+h1 a{
+    text-decoration: none;
+    color: var(--default-color);
 }
 
 footer{
-    grid-area: footer;
+    align-self: flex-end;
     border: var(--default-border);
     background: var(--default-elements-background-color);
     padding: 5px;
+    height: fit-content;
 }
 
 footer address{

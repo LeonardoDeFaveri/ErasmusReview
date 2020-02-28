@@ -60,9 +60,11 @@ class Modello {
     public function verificaCredenziali($email, $password) {
         $query = "SELECT tipo_utente FROM utenti WHERE email = '{$email}' AND password = '{$password}'";
         $ris = $this->connessione->query($query);
-        
+
         if($ris != false && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc()['tipo_utente'];
+        }else{
+            $ris = false;
         }
         return $ris;
     }

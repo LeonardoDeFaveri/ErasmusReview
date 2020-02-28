@@ -15,7 +15,7 @@
          * Il controllore elabora il comando ricevuto e richiama la vista opportuna
          * fornendole i dati necessari.
          */
-        public function invoca(): void {
+        public function invoca() {
             $comando = 'login';
             if(isset($_GET['comando'])){
                 $comando = $_GET['comando'];
@@ -32,7 +32,10 @@
                         header('Location: View/Login.php?errore=1');
                         exit();
                     }
-                    break;
+                break;
+                case 'search':
+                    $search = $_GET['search'];
+                break;
             }
         }
     }

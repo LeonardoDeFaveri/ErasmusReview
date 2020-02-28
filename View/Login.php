@@ -5,7 +5,8 @@
     include_once "{$_SESSION['root']}/View/include/struttura.php";
 
     $html = creaHeader("Login");
-    $html .= creaBarraMenu(null);
+    $html .= creaBarraMenu("email");
+    $html .= "<h2>Login</h2>\n";
     if(isset($_GET['errore']) && $_GET['errore'] == 1) {
         $html .=<<<testo
             <script>
