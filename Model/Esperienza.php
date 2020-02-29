@@ -12,15 +12,17 @@ class Esperienza implements Serializable {
     private $studente;
     private $percorso;
     private $azienda;
+    private $agenzia;
     private $famiglia;
     private $dal;
     private $al;
 
-    public function __construct($id, $studente, $percorso, $azienda, $famiglia, $dal, $al) {
+    public function __construct($id, $studente, $percorso, $azienda, $agenzia, $famiglia, $dal, $al) {
         $this->id = $id;
         $this->studente = $studente;
         $this->percorso = $percorso;
         $this->azienda = $azienda;
+        $this->agenzia = $agenzia;
         $this->famiglia = $famiglia;
         $this->dal = $dal;
         $this->al = $al;
@@ -42,6 +44,10 @@ class Esperienza implements Serializable {
         return $this->azienda;
     }
 
+    public function getAgenzia() {
+        return $this->agenzia;
+    }
+
     public function getFamiglia() {
         return $this->famiglia;
     }
@@ -56,7 +62,7 @@ class Esperienza implements Serializable {
 
     public function serialize() {
         return serialize([$this->id, $this->studente, $this->percorso, $this->azienda, 
-         $this->famiglia, $this->dal, $this->al]);
+         $this->agenzia, $this->famiglia, $this->dal, $this->al]);
     }
 
     public function unserialize($stringa) {
@@ -65,9 +71,10 @@ class Esperienza implements Serializable {
         $this->studente = $valori[1];
         $this->percorso = $valori[2];
         $this->azienda = $valori[3];
-        $this->famiglia = $valori[4];
-        $this->dal = $valori[5];
-        $this->al = $valori[6];
+        $this->agenzia = $valori[4];
+        $this->famiglia = $valori[5];
+        $this->dal = $valori[6];
+        $this->al = $valori[7];
     }
 }
 ?>

@@ -368,6 +368,7 @@ class Modello {
                     $studente,
                     $this->getPercorso($esperienza['id_percorso']),
                     $this->getAziendaDaId($esperienza['id_azienda']),
+                    $this->getAgenziaDaId($esperienza['id_agenzia']),
                     $this->getFamigliaDaId($esperienza['id_famiglia']),
                     $esperienza['dal'],
                     $esperienza['al']
