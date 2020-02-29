@@ -4,7 +4,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
-class Azienda extends Soggetto{
+class Azienda extends Soggetto {
     private $email;
     private $stato;
     private $citta;
@@ -20,7 +20,7 @@ class Azienda extends Soggetto{
         $this->telefono = $telefono;
     }
 
-    public function getEmail(){
+    public function getEmail() {
         return $this->email;
     }
 
@@ -38,6 +38,22 @@ class Azienda extends Soggetto{
 
     public function getTelefono() {
         return $this->telefono;
+    }
+
+    public function serialize() {
+        return serialize([$this->id, $this->nome, $this->email, $this->stato,
+         $this->citta, $this->indirizzo, $this->telefono]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->nome = $valori[1];
+        $this->email = $valori[2];
+        $this->stato = $valori[3];
+        $this->citta = $valori[4];
+        $this->indirizzo = $valori[5];
+        $this->telefono = $valori[6];
     }
 }
 ?>

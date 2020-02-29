@@ -1,6 +1,10 @@
 <?php
+if(session_id() == ''){
+    session_start();
+}
+include_once "{$_SESSION['root']}/Model/percorso.php";
 
-class SchedaValutazione {
+class SchedaValutazione implements Serializable {
     private $id;
     private $tabellaRecensore;
     private $idRecensore;
@@ -21,7 +25,7 @@ class SchedaValutazione {
         return $this->id;
     }
 
-    public function getTabellaRecensore(){
+    public function getTabellaRecensore() {
         return $this->tabellaRecensore;
     }
 
@@ -29,7 +33,7 @@ class SchedaValutazione {
         return $this->idRecensore;
     }
 
-    public function getTabellaRecensito(){
+    public function getTabellaRecensito() {
         return $this->tabellaRecensito;
     }
 
@@ -43,6 +47,22 @@ class SchedaValutazione {
 
     public function getDataOra() {
         return $this->dataOra;
+    }
+
+    public function serialize() {
+        return serialize([$this->id, $this->tabellaRecensore, $this->idRecensore,
+         $this->tabellaRecensito, $this->idRecensito, $this->idPercorso, $this->dataOra]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->tabellaRecensore = $valori[1];
+        $this->idRecensore = $valori[2];
+        $this->tabellaRecensito = $valori[3];
+        $this->idRecensito = $valori[4];
+        $this->idPercorso = $valori[5];
+        $this->dataOra = $valori[6];
     }
 }
 ?>

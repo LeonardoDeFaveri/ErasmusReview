@@ -39,5 +39,21 @@ class Agenzia extends Soggetto{
     public function getTelefono() {
         return $this->telefono;
     }
+
+    public function serialize() {
+        return serialize([$this->id, $this->nome, $this->email, $this->stato,
+         $this->provicia, $this->citta, $this->telefono]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->nome = $valori[1];
+        $this->email = $valori[2];
+        $this->stato = $valori[3];
+        $this->provincia = $valori[4];
+        $this->citta = $valori[5];
+        $this->telefono = $valori[6];
+    }
 }
 ?>

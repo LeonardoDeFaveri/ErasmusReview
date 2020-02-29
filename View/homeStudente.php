@@ -1,6 +1,6 @@
 <?php
 /*
-    paginaStudente contiene una lista di tutte le esperienze svolte e attive per uno studente
+    homeStudente contiene una lista di tutte le esperienze svolte e attive per uno studente
 */
     include_once "include/struttura.php";
 

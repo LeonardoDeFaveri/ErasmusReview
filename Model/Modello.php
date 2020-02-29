@@ -38,15 +38,39 @@ class Modello {
             
             foreach ($ris as $studente){
                 $studenti[] = new Studente(
-                    $studente['cognome'],
-                    $studente['data_nascita'],
                     $studente['id'],
                     $studente['nome'],
-                    $studente['email_utente']
+                    $studente['cognome'],
+                    $studente['email_utente'],
+                    $studente['data_nascita']
                 );
             }
         }
         return $studenti;
+    }
+
+    /**
+     * getStudente estrae dal database lo studente associato alla mail specificata.
+     *
+     * @param  string $email email dello studente da estrarre
+     *
+     * @return Studente se è stato trovato, altirmenti null
+     */
+    public function getStudente($email){
+        $query = "SELECT * FROM studenti WHERE email_utente = '{$email}'";
+        $ris = $this->query($query);
+        $studente = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $studente = new Studente(
+                $ris['id'],
+                $ris['nome'],
+                $ris['cognome'],
+                $ris['email_utente'],
+                $ris['data_nascita']
+            );
+        }
+        return $studente;
     }
     
     /**
@@ -67,6 +91,10 @@ class Modello {
             $ris = false;
         }
         return $ris;
+    }
+
+    public function getEsperienze($studente){
+
     }
 
     /**
