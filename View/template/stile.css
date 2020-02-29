@@ -36,6 +36,7 @@ body{
 
 /*Regole per la barra dei menu (menu, ricerca, utente)*/
 #barra-menu{
+    grid-area: menu;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
