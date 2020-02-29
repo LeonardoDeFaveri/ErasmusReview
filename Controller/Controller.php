@@ -38,13 +38,13 @@
                     exit();
 
                 break;
-                case 'search':
-                    $search = $_GET['search'];
+                case 'cerca':
+                    $cercato = $_POST['cerca'];
                 break;
                 case 'home-studente':
                     $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                     if($studente == null){
-                        header('Location: View/homeStudente?errore=1');
+                        header('Location: View/homeStudente.php?errore=1');
                         exit();
                     }
                     $esperienze = $this->modello->getEsperienze($studente);

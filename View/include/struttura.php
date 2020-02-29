@@ -45,8 +45,8 @@ function creaSezioneMenu() {
 function creaSezioneRicerca() {
     $html =<<<testo
             <div id="ricerca">
-                <form method="GET" action="../index.php">
-                    <input type="text" placeholder="Search.." name="search">
+                <form method="POST" action="../index.php?comando=cerca">
+                    <input type="text" placeholder="Cerca.." name="cerca">
                     <button type="submit"><i id="icona-ricerca" class="material-icons">search</i></button>
                 </form>
             </div>\n

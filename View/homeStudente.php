@@ -8,7 +8,7 @@ if(session_id() == ''){
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Esperienze");
-if(!isset($_SESSION['studente'])){
+if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come utente per poter vedere questa pagina</h2>
