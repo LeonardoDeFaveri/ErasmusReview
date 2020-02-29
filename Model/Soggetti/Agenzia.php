@@ -4,7 +4,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
-class Agenzia extends Soggetto{
+class Agenzia extends Soggetto {
     private $email;
     private $stato;
     private $provincia;

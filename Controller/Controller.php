@@ -21,7 +21,7 @@
                 $comando = $_GET['comando'];
             }
 
-            switch ($comando){
+            switch ($comando) {
                 case 'login':
                     if(!isset($_POST['login'])){
                         header('Location: View/login.php');
@@ -42,14 +42,16 @@
                     $search = $_GET['search'];
                 break;
                 case 'home-studente':
-                    $studente = $this->modello->getStudente($_SESSION['email_utente']);
+                    $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                     if($studente == null){
                         header('Location: View/homeStudente?errore=1');
                         exit();
                     }
                     $esperienze = $this->modello->getEsperienze($studente);
                     $_SESSION['studente'] = serialize($studente);
+                    $_SESSION['esperieze'] = serialize($esperienze);
                     header('Location: View/homeStudente.php');
+                    exit();
             }
         }
     }

@@ -10,9 +10,8 @@ class Percorso implements Serializable {
     private $id;
     private $docente;
     private $classe;
-    private $esperienze;
 
-    public function __construct($id, $docente, $classe, $esperienze = array()) {
+    public function __construct($id, $docente, $classe) {
         $this->id = $id;
         $this->docente = $docente;
         $this->classe = $classe;
@@ -31,12 +30,8 @@ class Percorso implements Serializable {
         return $this->classe;
     }
 
-    public function getEsperienze() {
-        return $this->esperienze;
-    }
-
     public function serialize() {
-        return serialize([$this->id, $this->docente, $this->classe, $this->esperienze]);
+        return serialize([$this->id, $this->docente, $this->classe]);
     }
 
     public function unserialize($stringa) {
@@ -44,7 +39,6 @@ class Percorso implements Serializable {
         $this->id = $valori[0];
         $this->docente = $valori[1];
         $this->classe = $valori[2];
-        $this->esperienze = $valori[3];
     }
 }
 ?>

@@ -42,7 +42,7 @@ function creaSezioneMenu() {
     return $html;
 }
 
-function creaSezioneRicerca(){
+function creaSezioneRicerca() {
     $html =<<<testo
             <div id="ricerca">
                 <form method="GET" action="../index.php">
