@@ -24,6 +24,7 @@ body{
         'menu'
         'main'
         'footer';
+    grid-template-rows: fit-content(10%) fit-content(10%) auto fit-content(10%);
 }
 
 /*Regole dell'intestazione principale*/
@@ -103,12 +104,14 @@ nav{
 /*Regole per il contenuto della pagina*/
 main{
     grid-area: main;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    justify-content: flex-start;
 }
 
 fieldset{
+    align-self: center;
     margin: var(--default-margin);
     font-size: larger;
     height: 300px;

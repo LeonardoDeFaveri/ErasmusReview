@@ -2,7 +2,7 @@
 if(session_id() == ''){
     session_start();
 }
-include_once "{$_SESSION['root']}/Model/percorso.php";
+include_once "{$_SESSION['root']}/Model/Percorso.php";
 
 class SchedaValutazione implements Serializable {
     private $id;

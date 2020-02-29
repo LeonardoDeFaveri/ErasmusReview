@@ -1,6 +1,6 @@
 <?php
 
-class Aspetto implements serialize {
+class Aspetto implements Serializable {
     private $id;
     private $nome;
     

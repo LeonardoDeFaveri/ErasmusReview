@@ -2,19 +2,22 @@
 /**
  * homeStudente contiene una lista di tutte le esperienze svolte e attive per uno studente.
  */
-    if(session_id() == ''){
-        session_start();
-    }
-    include_once "{$_SESSION['root']}/View/include/struttura.php";
+if(session_id() == ''){
+    session_start();
+}
+include_once "{$_SESSION['root']}/View/include/struttura.php";
 
-    $html = creaHeader("Esperienze");
-    if(isset($_SESSION['studente'])){
-        $studente = unserialize($_SESSION['studente']);
-        $html .= creaBarraMenu($studente->getEmail());
-    }else{
-        $html .= creaBarraMenu("");
-    }
-    
+$html = creaHeader("Esperienze");
+if(!isset($_SESSION['studente'])){
+    $html .= creaBarraMenu("");
+    $html .=<<<testo
+        <h2>Devi aver eseguito l'accesso come utente per poter vedere questa pagina</h2>
+        <a href="login.php">Accedi</a>
+    testo;
+}else{
+    $studente = unserialize($_SESSION['studente']);
+    $html .= creaBarraMenu($studente->getEmail());
+
     if(isset($_SESSION['esperienze'])){
         $esperienze = unserialize($esperienze);
         $html.=<<<testo
@@ -50,7 +53,7 @@
             </table>
         testo;
     }
-
-    $html .= creaFooter();
-    echo $html;
+}
+$html .= creaFooter();
+echo $html;
 ?>
