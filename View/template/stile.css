@@ -1,3 +1,4 @@
+/*Variabili per valori standard da richiamare con: var(<nome-variabile>)*/
 :root{
     --default-color: #333;
     --default-background-color: #faf9f2;
@@ -10,43 +11,45 @@
     --default-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
+/*Regole di base e definizione delle aree per il grid layout*/
 body{
     color: var(--default-color);
     font-family: var(--default-font-family);
     background: var(--default-background-color);
     margin: 0px;
+    min-height: 100vh;
     display: grid;
     grid-template-areas:
         'header'
         'menu'
-        'contenuto';
+        'main'
+        'footer';
 }
 
+/*Regole dell'intestazione principale*/
 #header-principale{
     grid-area: header;
     background: var(--default-elements-background-color);
-    border: var(--default-border);
     padding: var(--default-padding);
     margin: 0px;
 }
 
+/*Regole per la barra dei menu (menu, ricerca, utente)*/
 #barra-menu{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    background-color: var(--default-elements-background-color-2);
 }
 
 nav{
-    border-left: var(--default-border);
     padding: var(--default-padding);
-    background: grey;
     flex-grow: 100;
 }
 
 #ricerca{
     display: flex;
     align-items: center;
-    border-left: var(--default-border);
     padding: var(--default-padding);
     width: fit-content;
 }
@@ -82,8 +85,6 @@ nav{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    border-left: var(--default-border);
-    border-right: var(--default-border);
     padding: var(--default-padding);
     width: fit-content;
 }
@@ -98,26 +99,12 @@ nav{
     cursor: pointer;
 }
 
-nav, #ricerca, #utente{
-    background-color: var(--default-elements-background-color-2);
-}
-
-#contenuto{
-    grid-area: contenuto;
-    border: var(--default-border);
-    display: flex;
-    flex-direction: column;
-    align-content: flex-end;
-}
-
+/*Regole per il contenuto della pagina*/
 main{
-    flex-grow: 100;
+    grid-area: main;
     display: grid;
-    border: var(--default-border);
-    border-bottom: none;
     align-items: center;
     justify-items: center;
-    min-height: 0px;
 }
 
 fieldset{
@@ -162,9 +149,10 @@ h1 a{
     color: var(--default-color);
 }
 
+/*Regole per il footer*/
 footer{
+    grid-area: footer;
     align-self: flex-end;
-    border: var(--default-border);
     background: var(--default-elements-background-color);
     padding: 5px;
     height: fit-content;
