@@ -21,7 +21,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
     $html .= creaBarraMenu($studente->getEmail());
 
     if(isset($_SESSION['esperienze'])){
-        $esperienze = unserialize($esperienze);
+        $esperienze = unserialize($_SESSION['esperienze']);
         $html.=<<<testo
             <table id="esperienze">
                 <thead>
@@ -38,12 +38,14 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
         testo;
 
         foreach ($esperienze as $esperienza) {
+            $agenzia = $esperienza->getAgenzia() != NULL ? $esperienza->getAgenzia()->getNome() : "";
+            $famiglia = $esperienza->getFamiglia() != NULL ? $esperienza->getFamiglia()->getCognome() : "";
             $html .=<<<testo
                     <tr>
                         <td>{$esperienza->getId()}</td>
                         <td><a href="#">{$esperienza->getAzienda()->getNome()}</a></td>
-                        <td><a href="#">{$esperienza->getAgenzia()->getNome()}</a></td>
-                        <td><a href="#">{$esperienza->getFamiglia()->getCognome()}</a></td>
+                        <td><a href="#">{$agenzia}</a></td>
+                        <td><a href="#">{$famiglia}</a></td>
                         <td>{$esperienza->getDal()}</td>
                         <td>{$esperienza->getAl()}</td>
                     </tr>

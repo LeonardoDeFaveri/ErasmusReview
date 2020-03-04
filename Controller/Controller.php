@@ -49,7 +49,7 @@ class Controller {
                 }
                 $esperienze = $this->modello->getEsperienze($studente);
                 $_SESSION['studente'] = serialize($studente);
-                $_SESSION['esperieze'] = serialize($esperienze);
+                $_SESSION['esperienze'] = serialize($esperienze);
                 header('Location: View/homeStudente.php');
                 exit();
         }

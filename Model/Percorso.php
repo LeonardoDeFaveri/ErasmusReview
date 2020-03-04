@@ -4,7 +4,6 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
 include_once "{$_SESSION['root']}/Model/Classe.php";
-include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 class Percorso implements Serializable {
     private $id;
@@ -15,7 +14,6 @@ class Percorso implements Serializable {
         $this->id = $id;
         $this->docente = $docente;
         $this->classe = $classe;
-        $this->esperienze = $esperienze;
     }
 
     public function getId() {

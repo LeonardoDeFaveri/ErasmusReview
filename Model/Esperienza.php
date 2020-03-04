@@ -4,6 +4,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 

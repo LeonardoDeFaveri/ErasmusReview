@@ -7,15 +7,13 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 class Agenzia extends Soggetto {
     private $email;
     private $stato;
-    private $provincia;
     private $citta;
     private $telefono;
     
-    public function __construct($id, $nome, $email, $stato, $provincia, $citta, $telefono) {
+    public function __construct($id, $nome, $email, $stato, $citta, $telefono) {
         parent::__construct($id,$nome);
         $this->email = $email;
         $this->stato = $stato;
-        $this->provincia = $provincia;
         $this->citta = $citta;
         $this->telefono = $telefono;
     }
@@ -28,10 +26,6 @@ class Agenzia extends Soggetto {
         return $this->stato;
     }
 
-    public function getProvincia() {
-        return $this->provincia;
-    }
-
     public function getCitta() {
         return $this->citta;
     }
@@ -42,7 +36,7 @@ class Agenzia extends Soggetto {
 
     public function serialize() {
         return serialize([$this->id, $this->nome, $this->email, $this->stato,
-         $this->provicia, $this->citta, $this->telefono]);
+         $this->citta, $this->telefono]);
     }
 
     public function unserialize($stringa) {
@@ -51,9 +45,8 @@ class Agenzia extends Soggetto {
         $this->nome = $valori[1];
         $this->email = $valori[2];
         $this->stato = $valori[3];
-        $this->provincia = $valori[4];
-        $this->citta = $valori[5];
-        $this->telefono = $valori[6];
+        $this->citta = $valori[4];
+        $this->telefono = $valori[5];
     }
 }
 ?>

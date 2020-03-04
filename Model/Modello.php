@@ -36,7 +36,7 @@ class Modello {
      */
     public function getAgenziaDaId($id) {
         $query = "SELECT * FROM agenzie WHERE id = {$id}";
-        $ris = $this->connessione->query($quey);
+        $ris = $this->connessione->query($query);
         $agenzia = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
@@ -45,7 +45,6 @@ class Modello {
                 $ris['nome'],
                 $ris['email_utente'],
                 $ris['stato'],
-                $ris['provincia'],
                 $ris['citta'],
                 $ris['telefono']
             );
@@ -88,7 +87,7 @@ class Modello {
      */
     public function getAziendaDaId($id) {
         $query = "SELECT * FROM aziende WHERE id = {$id}";
-        $ris = $this->connessione->query($quey);
+        $ris = $this->connessione->query($query);
         $azienda = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
@@ -184,7 +183,7 @@ class Modello {
      */
     public function getFamigliaDaId($id) {
         $query = "SELECT * FROM famiglie WHERE id = {$id}";
-        $ris = $this->connessione->query($quey);
+        $ris = $this->connessione->query($query);
         $famiglia = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
