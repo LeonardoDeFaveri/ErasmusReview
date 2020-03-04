@@ -27,7 +27,7 @@ class Controller {
                     header('Location: View/login.php');
                     exit();
                 }
-                $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], $_POST['password']);
+                $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], hash('sha256', $_POST['password']));
                 if(!$tipoUtente){
                     header('Location: View/login.php?errore=1');
                     exit();
