@@ -6,6 +6,8 @@ if(session_id() == ''){
     session_start();
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
+include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Esperienze");
 if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
