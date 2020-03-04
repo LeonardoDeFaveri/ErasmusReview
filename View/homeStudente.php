@@ -49,7 +49,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                 $html.=<<<testo
                 <div class='riquadroEsperienza'>
                     <a href='?comando=azienda-{$esperienza->getAzienda()->getId()}'>{$esperienza->getAzienda()->getNome()}</a>
-                    <p>dal:{$esperienza->getDal()} al {$esperienza->getAl()}</p>
+                    <p>dal: {$esperienza->getDal()} al: {$esperienza->getAl()}</p>
                     <a href='?comando=famiglia-{$esperienza->getFamiglia()->getId()}'>{$famiglia} {$esperienza->getFamiglia()->getNome()}</a><br>
                     <a href='?comando=agenzia-{$esperienza->getAgenzia()->getId()}'>{$agenzia}</a><br>
                     <a href='?comando=esperienza-{$esperienza->getId()}'>visualizza esperienza</a><br>
