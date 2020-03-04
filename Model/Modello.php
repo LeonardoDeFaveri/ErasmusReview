@@ -1,6 +1,7 @@
 <?php
 if(session_id() == ''){
     session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
@@ -17,13 +18,13 @@ include_once "{$_SESSION['root']}/Model/SchedaValutazione.php";
 class Modello {
     private $connessione;
 
-    public function __construct() {
+    public function __construct(){
         $this->connessione = new mysqli("localhost", "root", "", "erasmus_advisor");
         if ($this->connessione->connect_errno != 0) {
-            die("<h2>Errore nella connessione al server</h2>");
+            throw new Exception("Server non raggungibile");
         }
         if ($this->connessione->errno != 0) {
-            die("<h2>Errore nella connessione al database</h2>");
+            throw new Exception("Database non raggiungibile");
         }
     }
 

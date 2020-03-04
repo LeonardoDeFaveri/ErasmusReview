@@ -1,11 +1,13 @@
 <?php
 if(session_id() == ''){
     session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Login");
-$html .= creaBarraMenu("email");
+$email = $_SESSION['email_utente'] ?? "";
+$html .= creaBarraMenu($email);
 $html .= "<h2>Login</h2>\n";
 if(isset($_GET['errore']) && $_GET['errore'] == 1) {
     $html .=<<<testo

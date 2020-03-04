@@ -1,13 +1,20 @@
 <?php
 if(session_id() == ''){
     session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
 class Controller {
     private $modello;
     public function __construct() {
-        $this->modello = new Modello();
+        try{
+            $this->modello = new Modello();
+        } catch (Exception $e) {
+            $_SESSION['msg_errore'] = $e->getMessage();
+            header("location: View/errore.php?errore=503");
+            exit();
+        }
     }
 
     /**
@@ -52,6 +59,12 @@ class Controller {
                 $_SESSION['esperienze'] = serialize($esperienze);
                 header('Location: View/homeStudente.php');
                 exit();
+            break;
+            case 'home-docente':
+            break;
+            default:
+                header('Location: View/errore.php');
+            break;
         }
     }
 }
