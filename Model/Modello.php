@@ -399,6 +399,39 @@ class Modello {
         }
         return $percorso;
     }
+    
+    /**
+     * getPercorsiStudente estrae dal database tutti i percorsi di 
+     * PCTO ed Erasmus ai quali ha pertecipato uno studente.
+     *
+     * @param Studente $studente studente per il quale estrarre i percorsi
+     * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getPercorsiStudente($studente){
+        $query =<<<testo
+        SELECT P.* FROM studenti S
+            INNER JOIN classi_studenti CS
+                ON S.id = CS.id_studente
+            INNER JOIN classi C
+                ON CS.id_classe = C.id
+            INNER JOIN percorsi P
+                ON CS.id_classe = P.id_classe
+        WHERE S.id = 1
+        testo;
+        $ris = $this->connessione->query($query);
+        $percorsi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $percorso) {
+                $percorsi[] = new Percorso(
+                    $percorso['id'],
+                    $this->getDocenteDaId($percorso['id_docente']),
+                    $this->getClasseDaId($percorso['id_classe'])
+                );
+            }
+        }
+        return $percorsi;
+    }
 
     /**
      * insertAgenzia inserisce un'agenzia nel database.

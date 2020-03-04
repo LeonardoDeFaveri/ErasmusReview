@@ -45,23 +45,47 @@ class Controller {
                 exit();
 
             break;
+
             case 'cerca':
                 $cercato = $_POST['cerca'];
             break;
+
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                 if($studente == null){
                     header('Location: View/homeStudente.php?errore=1');
                     exit();
                 }
-                $esperienze = $this->modello->getEsperienze($studente);
+                $_SESSION['esperienze'] = serialize($this->modello->getEsperienze($studente));
+                $_SESSION['percorsi'] = serialize($this->modello->getPercorsiStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
-                $_SESSION['esperienze'] = serialize($esperienze);
                 header('Location: View/homeStudente.php');
                 exit();
             break;
             case 'home-docente':
             break;
+
+            case 'mostra-azienda':
+                $id = $_GET['id'] ?? -1;
+                $azienda = $this->modello->getAziendaDaId($id);
+                if($azienda == null){
+                    header('Location: View/mostraAzienda.php?errore=1');
+                    exit();
+                }
+                $_SESSION['azienda'] = serialize($azienda);
+                header('Location: View/mostraAzienda.php');
+                exit();
+            break;
+            case 'mostra-famiglia':
+            
+            break;
+            case 'mostra-agenzia':
+            
+            break;
+            case 'mostra-esperienza':
+
+            break;
+
             default:
                 header('Location: View/errore.php');
             break;

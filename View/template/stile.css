@@ -169,11 +169,16 @@ footer address{
 
 /*stile del riquadro che visualizza l'esperienza*/
 .riquadroEsperienza{
-    background-color: gainsboro;
+    background-color: var(--default-elements-background-color-2);
+    border: var(--default-border);
+    border-width: 3px;
     padding: 10px;
-    border: 3px solid gray;
-    margin-left: 10px;
-    margin-right: 40px;
-    margin-bottom: 10px;
-    margin-top: 20px;
-}   
+}
+
+.riquadroEsperienza h3{
+    display: inline;
+}
+
+.riquadroEsperienza i{
+    float: right;
+}

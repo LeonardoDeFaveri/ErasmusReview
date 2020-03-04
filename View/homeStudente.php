@@ -8,6 +8,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
+include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Esperienze");
@@ -23,37 +24,53 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
 
     if(isset($_SESSION['esperienze'])){
         $esperienze = unserialize($_SESSION['esperienze']);
+        $percorsi = unserialize($_SESSION['percorsi']);
         
-        $html.="<p>in corso:</p>\n<br>\n";
-        $primoRiquadro = true;
+        $html .=<<<testo
+                <div id="inCorso" class="riquadroEsperienza">
+                    <h3>In corso..</h3>
+                    <i class='fas fa-angle-down'></i>
+        testo;
+        for ($i = 0; $i < count($percorsi); $i++){
+            if($percorsi->getAl() >= date('Y-m-d')){
+                
+            }
+        } 
 
         foreach ($esperienze as $esperienza) {
-            $agenzia = $esperienza->getAgenzia() != NULL ? $esperienza->getAgenzia()->getNome() : "";
-            $famiglia = $esperienza->getFamiglia() != NULL ? $esperienza->getFamiglia()->getCognome() : "";
+            $azienda = $esperienza->getAzienda();
+            $agenzia = $esperienza->getAgenzia() != NULL ? $esperienza->getAgenzia() : "";
+            $famiglia = $esperienza->getFamiglia() != NULL ? $esperienza->getFamiglia() : "";
             if($esperienza->getAl() >= date('Y-m-d')){
-                
                 $html.=<<<testo
                 <div class='riquadroEsperienza'>
-                    <a href='?comando=azienda-{$esperienza->getAzienda()->getId()}'>{$esperienza->getAzienda()->getNome()}</a>
-                    <p>dal:{$esperienza->getDal()} al {$esperienza->getAl()}</p>
-                    <a href='?comando=famiglia-{$esperienza->getFamiglia()->getId()}'>{$famiglia} {$esperienza->getFamiglia()->getNome()}</a><br>
-                    <a href='?comando=agenzia-{$esperienza->getAgenzia()->getId()}'>{$agenzia}</a><br>
-                    <a href='?comando=esperienza-{$esperienza->getId()}'>visualizza esperienza</a><br>
+                    <a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
+                    <p>Dal:{$esperienza->getDal()} Al {$esperienza->getAl()}</p>
+                    <a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>visualizza esperienza</a><br>
                 </div>\n
                 testo;
             }else{
-                if($primoRiquadro){ //se è la prima esperienza che viene stampata scrivo il paragrafo sennò non serve perchè è gia stato scritto 
-                    $html.="<p>completate:</p>\n";
+                if($primoRiquadro){ 
+                    //se è la prima esperienza che viene stampata scrivo il paragrafo
+                    //sennò non serve perchè è già stato scritto 
+                    $html.="<p>Completate:</p>\n";
                     $primoRiquadro = false;
                 }
-                $html.=<<<testo
+                /*$html.=<<<testo
                 <div class='riquadroEsperienza'>
-                    <a href='?comando=azienda-{$esperienza->getAzienda()->getId()}'>{$esperienza->getAzienda()->getNome()}</a>
-                    <p>dal: {$esperienza->getDal()} al: {$esperienza->getAl()}</p>
-                    <a href='?comando=famiglia-{$esperienza->getFamiglia()->getId()}'>{$famiglia} {$esperienza->getFamiglia()->getNome()}</a><br>
-                    <a href='?comando=agenzia-{$esperienza->getAgenzia()->getId()}'>{$agenzia}</a><br>
-                    <a href='?comando=esperienza-{$esperienza->getId()}'>visualizza esperienza</a><br>
+                    <a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
+                    <p>Dal:{$esperienza->getDal()} Al {$esperienza->getAl()}</p>
+                    <a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>visualizza esperienza</a><br>
                 </div>\n
+                testo;*/
+                $html .=<<<testo
+                <div class="riquadroEsperienza">
+                    <p></p>
+                </div>
                 testo;
             }
         }
