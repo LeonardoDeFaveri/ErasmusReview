@@ -68,7 +68,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                     $primoRiquadro = false;
                 }
                 $html.=<<<testo
-                <div class='riquadroEsperienza'>
+                <div id="completate" class='riquadroEsperienza'>
                     <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
                     <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
                     <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
