@@ -1,14 +1,17 @@
 <?php
-if(session_id() == ''){
+
+if (session_id() == '') {
     session_start();
     $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
 class Controller {
+
     private $modello;
+
     public function __construct() {
-        try{
+        try {
             $this->modello = new Modello();
         } catch (Exception $e) {
             $_SESSION['msg_errore'] = $e->getMessage();
@@ -24,18 +27,18 @@ class Controller {
      */
     public function invoca() {
         $comando = 'login';
-        if(isset($_GET['comando'])){
+        if (isset($_GET['comando'])) {
             $comando = $_GET['comando'];
         }
 
         switch ($comando) {
             case 'login':
-                if(!isset($_POST['login'])){
+                if (!isset($_POST['login'])) {
                     header('Location: View/login.php');
                     exit();
                 }
                 $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], hash('sha256', $_POST['password']));
-                if(!$tipoUtente){
+                if (!$tipoUtente) {
                     header('Location: View/login.php?errore=1');
                     exit();
                 }
@@ -44,15 +47,15 @@ class Controller {
                 header("Location: index.php?comando=home-{$tipoUtente}");
                 exit();
 
-            break;
+                break;
 
             case 'cerca':
                 $cercato = $_POST['cerca'];
-            break;
+                break;
 
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
-                if($studente == null){
+                if ($studente == null) {
                     header('Location: View/homeStudente.php?errore=1');
                     exit();
                 }
@@ -61,35 +64,76 @@ class Controller {
                 $_SESSION['studente'] = serialize($studente);
                 header('Location: View/homeStudente.php');
                 exit();
-            break;
+                break;
             case 'home-docente':
-            break;
+                break;
 
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
+                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
+                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
+                 * di conseguenza quella query mi darà null
+                 */
                 $azienda = $this->modello->getAziendaDaId($id);
-                if($azienda == null){
+                if ($azienda == null) {
                     header('Location: View/mostraAzienda.php?errore=1');
                     exit();
                 }
                 $_SESSION['azienda'] = serialize($azienda);
                 header('Location: View/mostraAzienda.php');
                 exit();
-            break;
+                break;
             case 'mostra-famiglia':
-            
-            break;
+                $id = $_GET['id'] ?? -1;
+                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
+                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
+                 * di conseguenza quella query mi darà null
+                 */
+                $famiglia = $this->modello->getFamigliaDaId($id);
+                if ($famiglia == null) {
+                    header('Location: View/mostraFamiglia.php?errore=1');
+                    exit();
+                }
+                $_SESSION['famiglia'] = serialize($famiglia);
+                header('Location: View/mostraFamiglia.php');
+                exit();
+                break;
             case 'mostra-agenzia':
-            
-            break;
+                $id = $_GET['id'] ?? -1;
+                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
+                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
+                 * di conseguenza quella query mi darà null
+                 */
+                $famiglia = $this->modello->getAgenziaDaId($id);
+                if ($agenzia == null) {
+                    header('Location: View/mostraAgenzia.php?errore=1');
+                    exit();
+                }
+                $_SESSION['agenzia'] = serialize($agenzia);
+                header('Location: View/mostraAgenzia.php');
+                exit();
+                break;
             case 'mostra-esperienza':
-
-            break;
-
+                $id = $_GET['id'] ?? -1;
+                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
+                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
+                 * di conseguenza quella query mi darà null
+                 */
+                $esperienza = $this->modello->getEsperienzaDaId($id);
+                if ($esperienza == null) {
+                    header('Location: View/mostraEsperienza.php?errore=1');
+                    exit();
+                }
+                $_SESSION['esperienza'] = serialize($agenzia);
+                header('Location: View/mostraEsperienza.php');
+                exit();
+                break;
             default:
                 header('Location: View/errore.php');
-            break;
+                break;
         }
     }
+
 }
+
 ?>
