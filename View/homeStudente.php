@@ -29,7 +29,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
         $html .=<<<testo
                 <div id="inCorso" class="riquadroEsperienza">
                     <h3>In corso..</h3>
-                    <i class='fas fa-angle-down'></i>
+                    <i class="material-icons">expand_more</i>
         testo;
         for ($i = 0; $i < count($percorsi); $i++){
             if($percorsi->getAl() >= date('Y-m-d')){
