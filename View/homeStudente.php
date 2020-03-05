@@ -49,11 +49,21 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                 <div class='riquadroEsperienza'>
                     <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
                     <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
-                    <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
-                    <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
-                </div><br>\n
                 testo;
+                    if($famiglia != ""){
+                        $html.= <<<testo
+                        <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                        testo;
+                    }
+                    if($agenzia !=""){
+                        $html.=<<<testo
+                        <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                        testo;
+                    }
+                    $html.=<<<testo
+                        <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
+                        </div><br>\n
+                    testo;
             }else{
                 if($primoRiquadro){ 
                     //se è la prima esperienza che viene stampata scrivo il paragrafo
@@ -68,14 +78,24 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                     $primoRiquadro = false;
                 }
                 $html.=<<<testo
-                <div id="completate" class='riquadroEsperienza'>
+                <div class='riquadroEsperienza'>
                     <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
                     <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
-                    <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
-                    <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
-                </div><br>\n
                 testo;
+                    if($famiglia != ""){
+                        $html.= <<<testo
+                        <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                        testo;
+                    }
+                    if($agenzia !=""){
+                        $html.=<<<testo
+                        <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                        testo;
+                    }
+                    $html.=<<<testo
+                        <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
+                        </div><br>\n
+                    testo;
                 $html.="</details>";
             }
         }
