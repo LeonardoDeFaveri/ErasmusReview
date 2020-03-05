@@ -28,15 +28,18 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
         
         $html .=<<<testo
                 <div id="inCorso" class="riquadroEsperienza">
-                    <h3>In corso..</h3>
-                    <i class="material-icons">expand_more</i>
+                    <details open>
+                        <summary>
+                            <h3>In corso..</h3>
+                        </summary>
         testo;
-        for ($i = 0; $i < count($percorsi); $i++){
+        /*for ($i = 0; $i < count($percorsi); $i++){
             if($percorsi->getAl() >= date('Y-m-d')){
                 
             }
-        } 
+        } */
 
+        $primoRiquadro = true;
         foreach ($esperienze as $esperienza) {
             $azienda = $esperienza->getAzienda();
             $agenzia = $esperienza->getAgenzia() != NULL ? $esperienza->getAgenzia() : "";
@@ -44,34 +47,36 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
             if($esperienza->getAl() >= date('Y-m-d')){
                 $html.=<<<testo
                 <div class='riquadroEsperienza'>
-                    <a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
-                    <p>Dal:{$esperienza->getDal()} Al {$esperienza->getAl()}</p>
-                    <a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>visualizza esperienza</a><br>
-                </div>\n
+                    <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
+                    <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
+                    <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                    <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
+                </div><br>\n
                 testo;
             }else{
                 if($primoRiquadro){ 
                     //se è la prima esperienza che viene stampata scrivo il paragrafo
                     //sennò non serve perchè è già stato scritto 
-                    $html.="<p>Completate:</p>\n";
+                    $html.=<<<testo
+                        </details>
+                        <details>
+                            <summary>
+                                <h3>Completate:</h3>
+                            </summary>
+                    testo;
                     $primoRiquadro = false;
                 }
-                /*$html.=<<<testo
-                <div class='riquadroEsperienza'>
-                    <a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
-                    <p>Dal:{$esperienza->getDal()} Al {$esperienza->getAl()}</p>
-                    <a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
-                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>visualizza esperienza</a><br>
-                </div>\n
-                testo;*/
-                $html .=<<<testo
-                <div class="riquadroEsperienza">
-                    <p></p>
-                </div>
+                $html.=<<<testo
+                <div id="completate" class='riquadroEsperienza'>
+                    <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
+                    <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
+                    <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
+                    <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
+                    <a href='../index.php?comando=mostra-esperienza&id={$esperienza->getId()}'>Visualizza esperienza</a><br>
+                </div><br>\n
                 testo;
+                $html.="</details>";
             }
         }
     }
