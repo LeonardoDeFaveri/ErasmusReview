@@ -59,7 +59,7 @@ class Controller {
                     header('Location: View/homeStudente.php?errore=1');
                     exit();
                 }
-                $_SESSION['esperienze'] = serialize($this->modello->getEsperienze($studente));
+                $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaStudente($studente));
                 $_SESSION['percorsi'] = serialize($this->modello->getPercorsiStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
                 header('Location: View/homeStudente.php');
@@ -85,10 +85,6 @@ class Controller {
                 break;
             case 'mostra-famiglia':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
-                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
-                 * di conseguenza quella query mi darà null
-                 */
                 $famiglia = $this->modello->getFamigliaDaId($id);
                 if ($famiglia == null) {
                     header('Location: View/mostraFamiglia.php?errore=1');
@@ -100,11 +96,7 @@ class Controller {
                 break;
             case 'mostra-agenzia':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
-                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
-                 * di conseguenza quella query mi darà null
-                 */
-                $famiglia = $this->modello->getAgenziaDaId($id);
+                $agenzia = $this->modello->getAgenziaDaId($id);
                 if ($agenzia == null) {
                     header('Location: View/mostraAgenzia.php?errore=1');
                     exit();
@@ -115,16 +107,12 @@ class Controller {
                 break;
             case 'mostra-esperienza':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
-                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
-                 * di conseguenza quella query mi darà null
-                 */
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
                     header('Location: View/mostraEsperienza.php?errore=1');
                     exit();
                 }
-                $_SESSION['esperienza'] = serialize($agenzia);
+                $_SESSION['esperienza'] = serialize($esperienza);
                 header('Location: View/mostraEsperienza.php');
                 exit();
                 break;

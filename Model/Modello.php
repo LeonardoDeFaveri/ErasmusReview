@@ -348,15 +348,41 @@ class Modello {
             );
         }
     }
+    
+    /**
+     * getEsperienzaDaId estrae dal database l'esperienza associata all'id dato.
+     * 
+     * @param int $id id dell'esperienza da estrarre
+     * 
+     * @return Esperienza se è stata trovata, altrimenti null
+     */
+    public function getEsperienzaDaId($id) {
+        $query = "SELECT * FROM esperienze WHERE id = {$id}";
+        $ris = $this->connessione->query($query);
+        $esperienza = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $esperienza = new Esperienza(
+                $id, 
+                $this->getStudenteDaId($ris['id_studente']), 
+                $this->getPercorsiStudente($ris['id_percorso']), 
+                $this->getAziendaDaId($ris['id_azienda']), 
+                $this->getAgenziaDaId($ris['id_agenzia']),
+                $this->getFamigliaDaId($ris['id_famiglia']),
+                $ris['dal'],
+                $ris['al']
+            );
+        }
+    }
 
     /**
-     * getEsperienze estrae dal database tutte le esperienze associate a uno studente.
+     * getEsperienzeDaStudente estrae dal database tutte le esperienze associate a uno studente.
      *
      * @param Studente $studente studente del quale estrarre le esperienze
      *
      * @return Esperienza[] se ne sono state trovate, altrimenti un array vuoto
      */
-    public function getEsperienze($studente) {
+    public function getEsperienzeDaStudente($studente) {
         $query = "SELECT * FROM esperienze WHERE id_studente = {$studente->getId()} ORDER BY dal DESC";
         $ris_esperienze = $this->connessione->query($query);
         $esperienze = array();
