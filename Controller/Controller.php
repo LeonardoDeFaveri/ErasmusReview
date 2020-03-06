@@ -47,11 +47,11 @@ class Controller {
                 header("Location: index.php?comando=home-{$tipoUtente}");
                 exit();
 
-                break;
+            break;
 
             case 'cerca':
                 $cercato = $_POST['cerca'];
-                break;
+            break;
 
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
@@ -64,9 +64,9 @@ class Controller {
                 $_SESSION['studente'] = serialize($studente);
                 header('Location: View/homeStudente.php');
                 exit();
-                break;
+            break;
             case 'home-docente':
-                break;
+            break;
 
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
@@ -82,7 +82,7 @@ class Controller {
                 $_SESSION['azienda'] = serialize($azienda);
                 header('Location: View/mostraAzienda.php');
                 exit();
-                break;
+            break;
             case 'mostra-famiglia':
                 $id = $_GET['id'] ?? -1;
                 $famiglia = $this->modello->getFamigliaDaId($id);
@@ -93,7 +93,7 @@ class Controller {
                 $_SESSION['famiglia'] = serialize($famiglia);
                 header('Location: View/mostraFamiglia.php');
                 exit();
-                break;
+            break;
             case 'mostra-agenzia':
                 $id = $_GET['id'] ?? -1;
                 $agenzia = $this->modello->getAgenziaDaId($id);
@@ -104,7 +104,7 @@ class Controller {
                 $_SESSION['agenzia'] = serialize($agenzia);
                 header('Location: View/mostraAgenzia.php');
                 exit();
-                break;
+            break;
             case 'mostra-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
@@ -115,10 +115,11 @@ class Controller {
                 $_SESSION['esperienza'] = serialize($esperienza);
                 header('Location: View/mostraEsperienza.php');
                 exit();
-                break;
+            break;
+            
             default:
                 header('Location: View/errore.php');
-                break;
+            break;
         }
     }
 

@@ -22,10 +22,10 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
     $studente = unserialize($_SESSION['studente']);
     $html .= creaBarraMenu($studente->getEmail());
 
-    if(isset($_SESSION['esperienze'])){
+    if(isset($_SESSION['esperienze']) && isset($_SESSION['percorsi'])){
         $esperienze = unserialize($_SESSION['esperienze']);
         $percorsi = unserialize($_SESSION['percorsi']);
-        
+
         $html .=<<<testo
                 <div id="inCorso" class="riquadroEsperienza">
                     <details open>
@@ -33,11 +33,6 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                             <h3>In corso..</h3>
                         </summary>
         testo;
-        /*for ($i = 0; $i < count($percorsi); $i++){
-            if($percorsi->getAl() >= date('Y-m-d')){
-                
-            }
-        } */
 
         $primoRiquadro = true;
         foreach ($esperienze as $esperienza) {

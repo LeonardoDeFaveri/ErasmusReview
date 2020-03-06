@@ -175,6 +175,10 @@ footer address{
     padding: 10px;
 }
 
+.riquadroEsperienza div{
+    display: inline;
+}
+
 .riquadroEsperienza h3{
     display: inline;
 }
