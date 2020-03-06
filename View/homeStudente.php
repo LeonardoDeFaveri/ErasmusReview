@@ -73,21 +73,21 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
                         <details>
                             <summary>
                                 <h3>Completate:</h3>
-                            </summary>
+                            </summary>\n
                     testo;
                     $primoRiquadro = false;
                 }
                 $html.=<<<testo
-                <div class='riquadroEsperienza'>
-                    <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
-                    <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
+                    <div class='riquadroEsperienza'>
+                        <label>Azienda: </label><a href='../index.php?comando=mostra-azienda&id={$azienda->getId()}'>{$azienda->getNome()}</a>
+                        <p>Dal: {$esperienza->getDal()} Al: {$esperienza->getAl()}</p>
                 testo;
                     if($famiglia != ""){
                         $html.= <<<testo
                         <label>Responsabile Famiglia: </label><a href='../index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()} {$famiglia->getNome()}</a><br>
                         testo;
                     }
-                    if($agenzia !=""){
+                    if($agenzia != ""){
                         $html.=<<<testo
                         <label>Agenzia: </label><a href='../index.php?comando=mostra-agenzia&id={$agenzia->getId()}'>{$agenzia->getNome()}</a><br>
                         testo;

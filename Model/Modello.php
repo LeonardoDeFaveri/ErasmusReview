@@ -425,6 +425,32 @@ class Modello {
         }
         return $percorso;
     }
+
+    /**
+     * getPercorsiDocente estrae dal database tutti i percorsi di 
+     * PCTO ed Erasmus di un Docente.
+     *
+     * @param Docente $docente docente per il quale estrarre i percorsi
+     * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getPercorsiDocente($docente){
+        $query =<<<testo
+        SELECT * FROM percorsi P WHERE P.id_docente = {$docente->getID()}
+        testo;
+        $ris = $this->connessione->query($query);
+        $percorsi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $percorso) {
+                $percorsi[] = new Percorso(
+                    $percorso['id'],
+                    $this->getDocenteDaId($percorso['id_docente']),
+                    $this->getClasseDaId($percorso['id_classe'])
+                );
+            }
+        }
+        return $percorsi;
+    }
     
     /**
      * getPercorsiStudente estrae dal database tutti i percorsi di 
@@ -442,7 +468,7 @@ class Modello {
                 ON CS.id_classe = C.id
             INNER JOIN percorsi P
                 ON CS.id_classe = P.id_classe
-        WHERE S.id = 1
+        WHERE S.id = {$studente->getID()}
         testo;
         $ris = $this->connessione->query($query);
         $percorsi = array();
