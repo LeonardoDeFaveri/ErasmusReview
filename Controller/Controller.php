@@ -60,7 +60,6 @@ class Controller {
                     exit();
                 }
                 $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaStudente($studente));
-                $_SESSION['percorsi'] = serialize($this->modello->getPercorsiStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
                 header('Location: View/homeStudente.php');
                 exit();
@@ -115,6 +114,16 @@ class Controller {
                 $_SESSION['esperienza'] = serialize($esperienza);
                 header('Location: View/mostraEsperienza.php');
                 exit();
+            break;
+
+            case 'valutazione-esperienza':
+                $id = $_GET['id'] ?? -1;
+                $esperienza = $this->modello->getEsperienzaDaId($id);
+                if ($esperienza == null) {
+                    header('Location: View/mostraEsperienza.php?errore=1');
+                    exit();
+                }
+                
             break;
             
             default:

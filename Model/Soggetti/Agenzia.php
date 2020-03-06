@@ -12,7 +12,7 @@ class Agenzia extends Soggetto {
     private $telefono;
     
     public function __construct($id, $nome, $email, $stato, $citta, $telefono) {
-        parent::__construct($id,$nome);
+        parent::__construct($id, $nome);
         $this->email = $email;
         $this->stato = $stato;
         $this->citta = $citta;

@@ -104,20 +104,17 @@ nav{
 /*Regole per il contenuto della pagina*/
 main{
     grid-area: main;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    text-align: center;
 }
 
 fieldset{
-    align-self: center;
     margin: var(--default-margin);
     font-size: larger;
     height: 300px;
     width: 300px;
     border: var(--default-border);
     border-radius: var(--default-border-radius);
+    display: inline-block;
 }
 
 fieldset legend {
@@ -167,22 +164,47 @@ footer address{
     margin-right: 10px;
 }
 
-/*stile del riquadro che visualizza l'esperienza*/
-.riquadroEsperienza{
-    background-color: var(--default-elements-background-color-2);
+details{
     border: var(--default-border);
     border-width: 3px;
     padding: 10px;
 }
 
-.riquadroEsperienza div{
-    display: inline;
+details summary{
+    font-weight: bold;
+    text-align: left;
 }
 
-.riquadroEsperienza h3{
-    display: inline;
+.contenitore-riquadri{
+    display: flex;
+    flex-flow: row wrap;
 }
 
-.riquadroEsperienza i{
-    float: right;
+/*stile del riquadro che visualizza l'esperienza*/
+.riquadroEsperienza{
+    position: relative;
+    background-color: var(--default-elements-background-color-2);
+    border: var(--default-border);
+    padding: var(--default-padding);
+    margin: var(--default-margin);
+    text-align: left;
+    width: 300px;
+    height: 200px;
+}
+
+.riquadroEsperienza a{
+    color: var(--default-color);
+    text-decoration: none;
+    font-style: italic;
+}
+
+.riquadroEsperienza button{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+    background-color: var(--default-elements-background-color);
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
 }

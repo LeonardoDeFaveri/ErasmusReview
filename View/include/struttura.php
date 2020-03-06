@@ -28,7 +28,7 @@ function creaBarraMenu($emailUtente) {
     {$ricerca}
     {$utente}    
         </div>
-        <main>
+        <main>\n
     testo;
     return $html;
 }

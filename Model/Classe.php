@@ -1,21 +1,22 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/../../";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 
 class Classe implements Serializable {
     private $id;
-    private $codiceScuola;
+    private $scuola;
     private $numero;
     private $sezione;
     private $annoScolastico;
     private $studenti;
 
-    public function __construct($id, $codiceScuola, $numero, $sezione, $annoScolastico, $studenti = array()) {
+    public function __construct($id, $scuola, $numero, $sezione, $annoScolastico, $studenti = array()) {
         $this->id = $id;
-        $this->codiceScuola = $codiceScuola;
+        $this->scuola = $scuola;
         $this->numero = $numero;
         $this->sezione = $sezione;
         $this->annoScolastico = $annoScolastico;
@@ -26,8 +27,8 @@ class Classe implements Serializable {
         return $this->id;
     }
 
-    public function getCodiceScuola() {
-        return $this->codiceScuola;
+    public function getScuola() {
+        return $this->scuola;
     }
 
     public function getNumero() {
@@ -47,14 +48,14 @@ class Classe implements Serializable {
     }
 
     public function serialize() {
-        return serialize([$this->id, $this->codiceScuola, $this->numero, $this->sezione,
+        return serialize([$this->id, $this->scuola, $this->numero, $this->sezione,
          $this->annoScolastico, $this->studenti]);
     }
 
     public function unserialize($stringa) {
         $valori = unserialize($stringa);
         $this->id = $valori[0];
-        $this->codiceScuola = $valori[1];
+        $this->scuola = $valori[1];
         $this->numero = $valori[2];
         $this->sezione = $valori[3];
         $this->annoScolastico = $valori[4];

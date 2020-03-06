@@ -7,6 +7,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Aspetto.php";
 include_once "{$_SESSION['root']}/Model/Classe.php";
@@ -151,6 +152,7 @@ class Modello {
                 $ris['email_utente']
             );
         }
+        return $docente;
     }
 
     /**
@@ -340,13 +342,37 @@ class Modello {
             $ris = $ris->fetch_assoc();
             $classe = new Classe(
                 $id,
-                $ris['codice_scuola'],
+                $this->getScuolaDaCodice($ris['codice_scuola']),
                 $ris['numero'],
                 $ris['sezione'],
                 $ris['anno_scolastico'],
                 $this->getStudentiClasse($ris['id'])
             );
         }
+        return $classe;
+    }
+    
+    /**
+     * getScuolaDaCodice estrae dal database una scuola.
+     *
+     * @param string $codiceMeccanografico codice meccanografico della scuola da estrarre
+     * @return Scuola se è stata trovata, altrimenti null
+     */
+    public function getScuolaDaCodice($codiceMeccanografico) {
+        $query = "SELECT * FROM scuole WHERE codice_meccanografico = '{$codiceMeccanografico}'";
+        $ris = $this->connessione->query($query);
+        $scuola = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $scuola = new Scuola(
+                $codiceMeccanografico,
+                $ris['nome'],
+                $ris['email_utente'],
+                $ris['citta'],
+                $ris['indirizzo']
+            );
+        }
+        return $scuola;
     }
     
     /**
@@ -365,7 +391,7 @@ class Modello {
             $esperienza = new Esperienza(
                 $id, 
                 $this->getStudenteDaId($ris['id_studente']), 
-                $this->getPercorsiStudente($ris['id_percorso']), 
+                $this->getPercorsoDaId($ris['id_percorso']), 
                 $this->getAziendaDaId($ris['id_azienda']), 
                 $this->getAgenziaDaId($ris['id_agenzia']),
                 $this->getFamigliaDaId($ris['id_famiglia']),
@@ -373,6 +399,7 @@ class Modello {
                 $ris['al']
             );
         }
+        return $esperienza;
     }
 
     /**
@@ -392,7 +419,7 @@ class Modello {
                 $esperienze[] = new Esperienza(
                     $esperienza['id'],
                     $studente,
-                    $this->getPercorso($esperienza['id_percorso']),
+                    $this->getPercorsoDaId($esperienza['id_percorso']),
                     $this->getAziendaDaId($esperienza['id_azienda']),
                     $this->getAgenziaDaId($esperienza['id_agenzia']),
                     $this->getFamigliaDaId($esperienza['id_famiglia']),
@@ -405,13 +432,13 @@ class Modello {
     }
 
     /**
-     * getPercorso estrae dal database il percorso associato all'id specificato.
+     * getPercorsoDaId estrae dal database il percorso associato all'id specificato.
      *
      * @param int $id id del percorso da estrarre
      *
      * @return Percorso se è stato trovato, altrimenti null
      */
-    public function getPercorso($id) {
+    public function getPercorsoDaId($id) {
         $query = "SELECT * FROM percorsi WHERE id = {$id}";
         $ris = $this->connessione->query($query);
         $percorso = null;
@@ -433,7 +460,7 @@ class Modello {
      * @param Docente $docente docente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getPercorsiDocente($docente){
+    public function getPercorsiDocente($docente) {
         $query =<<<testo
         SELECT * FROM percorsi P WHERE P.id_docente = {$docente->getID()}
         testo;
@@ -459,7 +486,7 @@ class Modello {
      * @param Studente $studente studente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getPercorsiStudente($studente){
+    public function getPercorsiStudente($studente) {
         $query =<<<testo
         SELECT P.* FROM studenti S
             INNER JOIN classi_studenti CS
@@ -468,7 +495,7 @@ class Modello {
                 ON CS.id_classe = C.id
             INNER JOIN percorsi P
                 ON CS.id_classe = P.id_classe
-        WHERE S.id = {$studente->getID()}
+        WHERE S.id = {$studente->getId()}
         testo;
         $ris = $this->connessione->query($query);
         $percorsi = array();
@@ -492,7 +519,7 @@ class Modello {
      *
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertAgenzia($agenzia){
+    public function insertAgenzia($agenzia) {
         $query = "INSERT INTO agenzie (nome, email_utente, stato, provincia, citta, telefono) VALUES (";
         $query .= "{$agenzia->getNome()}, ";
         $query .= "{$agenzia->getEmail()}, ";
@@ -512,7 +539,7 @@ class Modello {
      *
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertAzienda($azienda){
+    public function insertAzienda($azienda) {
         $query = "INSERT INTO agenzie (nome, email_utente, stato, citta, indirizzo, telefono) VALUES (";
         $query .= "{$azienda->getNome()}, ";
         $query .= "{$azienda->getEmail()}, ";
@@ -532,7 +559,7 @@ class Modello {
      *
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertDocente($docente){
+    public function insertDocente($docente) {
         $query = "INSERT INTO agenzie (nome, cognome, email_utente) VALUES (";
         $query .= "{$docente->getNome()}, ";
         $query .= "{$docente->getCognome()}";
@@ -549,7 +576,7 @@ class Modello {
      *
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertFamiglia($famiglia){
+    public function insertFamiglia($famiglia) {
         $query = "INSERT INTO agenzie (nome, cognome, stato, citta, indirizzo) VALUES (";
         $query .= "{$famiglia->getNome()}, ";
         $query .= "{$famiglia->getCognome()}";
@@ -568,7 +595,7 @@ class Modello {
      *
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertStudente($studente){
+    public function insertStudente($studente) {
         $query = "INSERT INTO agenzie (nome, cognome, email_utente, data_nascita) VALUES (";
         $query .= "{$studente->getNome()}, ";
         $query .= "{$studente->getCognome()}";
