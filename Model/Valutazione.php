@@ -1,6 +1,12 @@
 <?php
+if(session_id() == ''){
+    session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
+}
+include_once "{$_SESSION['root']}/Model/SchedaValutazione.php";
+include_once "{$_SESSION['root']}/Model/Aspetto.php";
 
-class Valutazione {
+class Valutazione implements Serializable {
     private $id;
     private $schedaValutazione;
     private $voto;
@@ -28,6 +34,17 @@ class Valutazione {
     public function getAspetto() {
         return $this->aspetto;
     }
-}
 
+    public function serialize() {
+        return serialize([$this->id, $this->schedaValutazione, $this->voto, $this->aspetto]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->schedaValutazione = $valori[1];
+        $this->voto = $valori[2];
+        $this->aspetto = $valori[3];
+    }
+}
 ?>

@@ -1,0 +1,21 @@
+<?php
+if(session_id() == ''){
+    session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
+}
+include_once "{$_SESSION['root']}/View/include/struttura.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
+
+$html = creaHeader("Azienda");
+$html = creaBarraMenu($_SESSION['email_utente'] ?? "");
+if(isset($_GET['errore'])){
+    $html .= "<h2>Devi selezionare un'azienda per poter accedere a questa pagina</h2>";
+}else{
+    $html .=<<<testo
+        
+    testo;
+}
+
+$html .= creaFooter();
+echo $html;
+?>

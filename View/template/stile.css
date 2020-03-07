@@ -1,48 +1,213 @@
+/*Variabili per valori standard da richiamare con: var(<nome-variabile>)*/
 :root{
     --default-color: #333;
     --default-background-color: #faf9f2;
-    --default-elements-background-color: #fccf03;
+    --default-elements-background-color: #fcba03;
+    --default-elements-background-color-2: #ffdc7a;
     --default-border: 1px solid #333;
+    --default-border-radius: 3px;
     --default-margin: 5px;
-    --default-padding:5px;
+    --default-padding: 5px;
     --default-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
+/*Regole di base e definizione delle aree per il grid layout*/
 body{
     color: var(--default-color);
     font-family: var(--default-font-family);
     background: var(--default-background-color);
     margin: 0px;
-    height: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas:
+        'header'
+        'menu'
+        'main'
+        'footer';
+    grid-template-rows: fit-content(10%) fit-content(10%) auto fit-content(10%);
 }
 
-header{
+/*Regole dell'intestazione principale*/
+#header-principale{
+    grid-area: header;
     background: var(--default-elements-background-color);
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    border: var(--default-border);
     padding: var(--default-padding);
     margin: 0px;
 }
 
-main{
-    position: absolute;
-    
+/*Regole per la barra dei menu (menu, ricerca, utente)*/
+#barra-menu{
+    grid-area: menu;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: var(--default-elements-background-color-2);
 }
 
-footer{
+nav{
+    padding: var(--default-padding);
+    flex-grow: 100;
+}
+
+#ricerca{
+    display: flex;
+    align-items: center;
+    padding: var(--default-padding);
+    width: fit-content;
+}
+
+#ricerca input[type="text"]{
+    font-size: medium;
+    padding: 0px;
+    padding-left: var(--default-padding);
+    padding-right: var(--default-padding);
+}
+
+#ricerca form button[type="submit"]{
+    background-color: var(--default-elements-background-color);
+    cursor: pointer;
+    font-size: large;
+    padding: auto;
+}
+
+#ricerca input[type="text"], #ricerca form button[type="submit"]{
+    vertical-align: middle;
+    margin: 0px;
     border: var(--default-border);
+    border-radius: var(--default-border-radius);
+    height: 40px;
+}
+
+#icona-ricerca{
+    vertical-align: middle;
+    font-size: 30px;
+}
+
+#utente{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--default-padding);
+    width: fit-content;
+}
+
+#utente p{
+    font-style: italic;
+    font-weight: bold;
+}
+
+#icona-utente{
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/*Regole per il contenuto della pagina*/
+main{
+    grid-area: main;
+    text-align: center;
+}
+
+fieldset{
+    margin: var(--default-margin);
+    font-size: larger;
+    height: 300px;
+    width: 300px;
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+    display: inline-block;
+}
+
+fieldset legend {
+    text-align: center;
+    text-decoration: underline;
+}
+
+form{
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+
+form input{
+    border: var(--default-border);
+    font-size: large;
+    background: #FFF;
+    padding: var(--default-padding);
+    margin-bottom: 5px;
+    border-radius: var(--default-border-radius);
+}
+
+form input[type="submit"]{
+    float: right;
+    margin: var(--default-margin);
+    margin-right: 0px;
     background: var(--default-elements-background-color);
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    cursor: pointer;
+}
+
+h1 a{
+    text-decoration: none;
+    color: var(--default-color);
+}
+
+/*Regole per il footer*/
+footer{
+    grid-area: footer;
+    align-self: flex-end;
+    background: var(--default-elements-background-color);
     padding: 5px;
+    height: fit-content;
 }
 
 footer address{
     display: inline;
     margin-right: 10px;
+}
+
+details{
+    border: none;
+    border-width: 3px;
+}
+
+details summary{
+    font-weight: bold;
+    text-align: left;
+    padding: var(--default-padding);
+    border: var(--default-border);
+    background-color: var(--default-elements-background-color);
+}
+
+.contenitore-riquadri{
+    display: flex;
+    flex-flow: row wrap;
+    padding: var(--default-padding);
+}
+
+/*stile del riquadro che visualizza l'esperienza*/
+.riquadroEsperienza{
+    position: relative;
+    background-color: var(--default-elements-background-color-2);
+    border: var(--default-border);
+    padding: var(--default-padding);
+    margin: var(--default-margin);
+    text-align: left;
+    width: 300px;
+    height: 200px;
+}
+
+.riquadroEsperienza a{
+    color: var(--default-color);
+    text-decoration: none;
+    font-style: italic;
+}
+
+.riquadroEsperienza button{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+    background-color: var(--default-elements-background-color);
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
 }

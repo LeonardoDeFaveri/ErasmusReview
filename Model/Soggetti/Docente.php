@@ -1,22 +1,37 @@
 <?php
+if(session_id() == ''){
+    session_start();
+    $_SESSION['root'] = __DIR__ . "/../../";
+}
+include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
-class Docente extends Soggetto{
+class Docente extends Soggetto {
     private $cognome;
-    private $scuola;
-    
-    public function __construct($id, $nome, $cognome, $scuola) {
+    private $email;
+
+    public function __construct($id, $nome, $cognome, $email) {
         parent::__construct($id, $nome);
         $this->cognome = $cognome;
-        $this->scuola = $scuola;
     }
 
     public function getCognome() {
         return $this->cognome;
     }
 
-    public function getScuola(){
-        return $this->scuola;
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function serialize() {
+        return serialize([$this->id, $this->nome, $this->cognome, $this->email]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->nome = $valori[1];
+        $this->cognome = $valori[2];
+        $this->email = $valori[3];
     }
 }
-
 ?>

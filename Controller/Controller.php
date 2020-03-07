@@ -1,27 +1,137 @@
 <?php
-    include_once "Model/Modello.php";
 
-    class Controller {
-        private $modello;
-        public function __construct() {
+if (session_id() == '') {
+    session_start();
+    $_SESSION['root'] = __DIR__ . "/../";
+}
+include_once "{$_SESSION['root']}/Model/Modello.php";
+
+class Controller {
+
+    private $modello;
+
+    public function __construct() {
+        try {
             $this->modello = new Modello();
-        }
-
-        /**
-         * invoca: elabora il comando ricevuto.
-         * Il controllore elabora il comando ricevuto e richiama la vista opportuna
-         * fornendole i dati necessari.
-         */
-        public function invoca(): void {
-            $comando = 'login';
-            if(isset($_GET['comando'])){
-                $comando = $_GET['comando'];
-            }
-
-            switch ($comando){
-                case 'login':
-                    header('Location: View/Login.php');
-            }
+        } catch (Exception $e) {
+            $_SESSION['msg_errore'] = $e->getMessage();
+            header("location: View/errore.php?errore=503");
+            exit();
         }
     }
+
+    /**
+     * invoca: elabora il comando ricevuto.
+     * Il controllore elabora il comando ricevuto e richiama la vista opportuna
+     * fornendole i dati necessari.
+     */
+    public function invoca() {
+        $comando = 'login';
+        if (isset($_GET['comando'])) {
+            $comando = $_GET['comando'];
+        }
+
+        switch ($comando) {
+            case 'login':
+                if (!isset($_POST['login'])) {
+                    header('Location: View/login.php');
+                    exit();
+                }
+                $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], hash('sha256', $_POST['password']));
+                if (!$tipoUtente) {
+                    header('Location: View/login.php?errore=1');
+                    exit();
+                }
+                $_SESSION['email_utente'] = $_POST['email'];
+                $_SESSION['tipo_utente'] = $tipoUtente;
+                header("Location: index.php?comando=home-{$tipoUtente}");
+                exit();
+
+            break;
+
+            case 'cerca':
+                $cercato = $_POST['cerca'];
+            break;
+
+            case 'home-studente':
+                $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
+                if ($studente == null) {
+                    header('Location: View/homeStudente.php?errore=1');
+                    exit();
+                }
+                $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaStudente($studente));
+                $_SESSION['studente'] = serialize($studente);
+                header('Location: View/homeStudente.php');
+                exit();
+            break;
+            case 'home-docente':
+            break;
+
+            case 'mostra-azienda':
+                $id = $_GET['id'] ?? -1;
+                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
+                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
+                 * di conseguenza quella query mi darà null
+                 */
+                $azienda = $this->modello->getAziendaDaId($id);
+                if ($azienda == null) {
+                    header('Location: View/mostraAzienda.php?errore=1');
+                    exit();
+                }
+                $_SESSION['azienda'] = serialize($azienda);
+                header('Location: View/mostraAzienda.php');
+                exit();
+            break;
+            case 'mostra-famiglia':
+                $id = $_GET['id'] ?? -1;
+                $famiglia = $this->modello->getFamigliaDaId($id);
+                if ($famiglia == null) {
+                    header('Location: View/mostraFamiglia.php?errore=1');
+                    exit();
+                }
+                $_SESSION['famiglia'] = serialize($famiglia);
+                header('Location: View/mostraFamiglia.php');
+                exit();
+            break;
+            case 'mostra-agenzia':
+                $id = $_GET['id'] ?? -1;
+                $agenzia = $this->modello->getAgenziaDaId($id);
+                if ($agenzia == null) {
+                    header('Location: View/mostraAgenzia.php?errore=1');
+                    exit();
+                }
+                $_SESSION['agenzia'] = serialize($agenzia);
+                header('Location: View/mostraAgenzia.php');
+                exit();
+            break;
+            case 'mostra-esperienza':
+                $id = $_GET['id'] ?? -1;
+                $esperienza = $this->modello->getEsperienzaDaId($id);
+                if ($esperienza == null) {
+                    header('Location: View/mostraEsperienza.php?errore=1');
+                    exit();
+                }
+                $_SESSION['esperienza'] = serialize($esperienza);
+                header('Location: View/mostraEsperienza.php');
+                exit();
+            break;
+
+            case 'valutazione-esperienza':
+                $id = $_GET['id'] ?? -1;
+                $esperienza = $this->modello->getEsperienzaDaId($id);
+                if ($esperienza == null) {
+                    header('Location: View/mostraEsperienza.php?errore=1');
+                    exit();
+                }
+                
+            break;
+            
+            default:
+                header('Location: View/errore.php');
+            break;
+        }
+    }
+
+}
+
 ?>

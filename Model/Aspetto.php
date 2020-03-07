@@ -1,6 +1,6 @@
 <?php
 
-class Aspetto {
+class Aspetto implements Serializable {
     private $id;
     private $nome;
     
@@ -17,6 +17,14 @@ class Aspetto {
         return $this->nome;
     }
 
-}
+    public function serialize() {
+        return serialize([$this->id, $this->nome]);
+    }
 
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->nome = $valori[1];
+    }
+}
 ?>
