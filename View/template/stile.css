@@ -165,19 +165,22 @@ footer address{
 }
 
 details{
-    border: var(--default-border);
+    border: none;
     border-width: 3px;
-    padding: 10px;
 }
 
 details summary{
     font-weight: bold;
     text-align: left;
+    padding: var(--default-padding);
+    border: var(--default-border);
+    background-color: var(--default-elements-background-color);
 }
 
 .contenitore-riquadri{
     display: flex;
     flex-flow: row wrap;
+    padding: var(--default-padding);
 }
 
 /*stile del riquadro che visualizza l'esperienza*/
