@@ -65,6 +65,15 @@ class Controller {
                 exit();
             break;
             case 'home-docente':
+                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                if ($docente == null) {
+                    header('Location: View/homeDocente.php?errore=1');
+                    exit();
+                }
+                $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
+                $_SESSION['docente'] = serialize($docente);
+                header('Location: View/homeDocente.php');
+                exit();
             break;
 
             case 'mostra-azienda':
