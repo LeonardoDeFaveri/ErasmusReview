@@ -455,13 +455,13 @@ class Modello {
     }
 
     /**
-     * getPercorsiDocente estrae dal database tutti i percorsi di 
+     * getPercorsiDaDocente estrae dal database tutti i percorsi di 
      * PCTO ed Erasmus di un Docente.
      *
      * @param Docente $docente docente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getPercorsiDocente($docente) {
+    public function getPercorsiDaDocente($docente) {
         $query =<<<testo
         SELECT * FROM percorsi P WHERE P.id_docente = {$docente->getID()}
         testo;
