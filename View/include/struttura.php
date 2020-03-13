@@ -11,33 +11,24 @@ function creaHeader($nomePagina) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        <header id="header-principale">
-            <h1><a href="../index.php">ErasmusAdvisor</a></h1>
-        </header>\n
+        <div id="barra-superiore">
+            <header id="header-principale">
+                <h1><a href="../index.php">ErasmusAdvisor</a></h1>
+            </header>\n
     testo;
     return $html;
 }
 
 function creaBarraMenu($emailUtente) {
-    $menu = creaSezioneMenu();
     $ricerca = creaSezioneRicerca();
     $utente = creaSezioneUtente($emailUtente);
     $html =<<<testo
-        <div id="barra-menu">
-    {$menu}
-    {$ricerca}
-    {$utente}    
+            <div id="barra-menu">
+        {$ricerca}
+        {$utente}    
+            </div>
         </div>
         <main>\n
-    testo;
-    return $html;
-}
-
-function creaSezioneMenu() {
-    $html =<<<testo
-            <nav id="menu-principale">
-                <p>Menu</p>
-            </nav>\n
     testo;
     return $html;
 }
