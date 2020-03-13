@@ -457,7 +457,7 @@ class Modello {
     }
 
     /**
-     * getPercorsiDocente estrae dal database tutti i percorsi di 
+     * getPercorsiDaDocente estrae dal database tutti i percorsi di 
      * PCTO ed Erasmus di un Docente.
      *
      * @param Docente $docente docente per il quale estrarre i percorsi
