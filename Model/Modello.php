@@ -175,6 +175,7 @@ class Modello {
                 $email
             );
         }
+        return $docente;
     }
 
     /**
