@@ -76,7 +76,8 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $riquadro =<<<testo
         \t\t\t<div class="riquadroEsperienza">
         {$studente->getCognome()}{$studente->getNome()}{$studente->getEmail()}
-        {$periodo->getDal}{$periodo->getAl}
+        {$periodo->getDal()}{$periodo->getAl()}
+        {$tutor->getCognome()}
             \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
             \t\t\t<a href="#">{$scuola->getNome()}</a>
             \t\t\t<hr>
