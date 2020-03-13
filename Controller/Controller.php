@@ -53,6 +53,9 @@ class Controller {
                 $cercato = $_POST['cerca'];
             break;
 
+            case 'home-admin':
+                header('Location: View/homeAdmin.php');
+            break;
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                 if ($studente == null) {
