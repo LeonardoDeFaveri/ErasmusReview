@@ -448,20 +448,22 @@ class Modello {
             $percorso = new Percorso(
                 $id,
                 $this->getDocenteDaId($ris['id_docente']),
-                $this->getClasseDaId($ris['id_classe'])
+                $this->getClasseDaId($ris['id_classe']),
+                $ris['dal'],
+                $ris['al']
             );
         }
         return $percorso;
     }
 
     /**
-     * getPercorsiDocente estrae dal database tutti i percorsi di 
+     * getPercorsiDaDocente estrae dal database tutti i percorsi di 
      * PCTO ed Erasmus di un Docente.
      *
      * @param Docente $docente docente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getPercorsiDocente($docente) {
+    public function getPercorsiDaDocente($docente) {
         $query =<<<testo
         SELECT * FROM percorsi P WHERE P.id_docente = {$docente->getID()}
         testo;
@@ -473,7 +475,9 @@ class Modello {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
                     $this->getDocenteDaId($percorso['id_docente']),
-                    $this->getClasseDaId($percorso['id_classe'])
+                    $this->getClasseDaId($percorso['id_classe']),
+                    $ris['dal'],
+                    $ris['al']
                 );
             }
         }
@@ -487,7 +491,7 @@ class Modello {
      * @param Studente $studente studente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getPercorsiStudente($studente) {
+    public function getPercorsiDaStudente($studente) {
         $query =<<<testo
         SELECT P.* FROM studenti S
             INNER JOIN classi_studenti CS
@@ -506,7 +510,9 @@ class Modello {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
                     $this->getDocenteDaId($percorso['id_docente']),
-                    $this->getClasseDaId($percorso['id_classe'])
+                    $this->getClasseDaId($percorso['id_classe']),
+                    $ris['dal'],
+                    $ris['al']
                 );
             }
         }
