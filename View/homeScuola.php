@@ -18,7 +18,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
         <a href="login.php">Accedi</a>
     testo;
 }else{
-    $scuola = unserialize($_SESSION['scuola']);   
+    $scuola = unserialize($_SESSION['scuola']);
 }
 $html .= creaFooter();
 echo $html;
