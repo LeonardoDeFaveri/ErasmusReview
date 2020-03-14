@@ -177,6 +177,34 @@ class Modello {
         }
         return $docente;
     }
+    
+    /**
+     * getDocentiScuola estrae dal database tutti i docenti di una scuola.
+     *
+     * @param Scuola $scuola scuola della quale estrarre gli studenti
+     * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getDocentiScuola($scuola) {
+        $query =<<<testo
+        SELECT D.* FROM docenti D
+            INNER JOIN docenti_scuole DS
+            ON DS.id_docente = D.id
+        testo;
+        $ris = $this->connessione->query($query);
+        $docenti = array();
+        if ($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach($ris as $docente){
+                $docenti[] = new Docente(
+                    $docente['id'],
+                    $docente['nome'],
+                    $docente['cognome'],
+                    $docente['email_utente']
+                );
+            }
+        }
+        return $docenti;
+    }
 
     /**
      * getFamigliaDaId estrae dal database la famiglia associato all'id specificato.
@@ -354,6 +382,32 @@ class Modello {
     }
     
     /**
+     * getClassiDaScuola restitusice tutte le classi di una scuola.
+     *
+     * @param Scuola $scuola scuola per la quale estrarre le classi
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaScuola($scuola) {
+        $query = "SELECT * FROM classi WHERE codice_scuola = '{$scuola->getId()}' ORDER BY anno _scolastico DESC";
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $scuola,
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
+    
+    /**
      * getScuolaDaCodice estrae dal database una scuola.
      *
      * @param string $codiceMeccanografico codice meccanografico della scuola da estrarre
@@ -369,6 +423,29 @@ class Modello {
                 $codiceMeccanografico,
                 $ris['nome'],
                 $ris['email_utente'],
+                $ris['citta'],
+                $ris['indirizzo']
+            );
+        }
+        return $scuola;
+    }
+
+    /**
+     * getScuolaDaEmail estrae dal database una scuola.
+     *
+     * @param string $email email del responsabile della scuola da estrarre
+     * @return Scuola se è stata trovata, altrimenti null
+     */
+    public function getScuolaDaEmail($email) {
+        $query = "SELECT * FROM scuole WHERE email_utente = '{$email}'";
+        $ris = $this->connessione->query($query);
+        $scuola = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $scuola = new Scuola(
+                $ris['codice_meccaanografico'],
+                $ris['nome'],
+                $email,
                 $ris['citta'],
                 $ris['indirizzo']
             );
@@ -493,9 +570,7 @@ class Modello {
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaDocente($docente) {
-        $query =<<<testo
-        SELECT * FROM percorsi P WHERE P.id_docente = {$docente->getID()}
-        testo;
+        $query = "SELECT * FROM percorsi WHERE id_docente = {$docente->getID()}";
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
@@ -503,7 +578,7 @@ class Modello {
             foreach ($ris as $percorso) {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
-                    $this->getDocenteDaId($percorso['id_docente']),
+                    $docente,
                     $this->getClasseDaId($percorso['id_classe']),
                     $ris['dal'],
                     $ris['al']
