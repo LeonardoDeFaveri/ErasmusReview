@@ -63,7 +63,7 @@ class Modello {
      */
     public function getAgenziaDaEmail($email) {
         $query = "SELECT * FROM agenzie WHERE email_utente = '{$email}'";
-        $ris = $this->connessione->query($quey);
+        $ris = $this->connessione->query($query);
         $agenzia = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
@@ -115,7 +115,7 @@ class Modello {
      */
     public function getAziendaDaEmail($email) {
         $query = "SELECT * FROM aziende WHERE email_utente = '{$email}'";
-        $ris = $this->connessione->query($quey);
+        $ris = $this->connessione->query($query);
         $azienda = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
@@ -412,16 +412,45 @@ class Modello {
      */
     public function getEsperienzeDaStudente($studente) {
         $query = "SELECT * FROM esperienze WHERE id_studente = {$studente->getId()} ORDER BY dal DESC";
-        $ris_esperienze = $this->connessione->query($query);
+        $ris = $this->connessione->query($query);
         $esperienze = array();
-        if($ris_esperienze && $ris_esperienze->num_rows > 0){
-            $ris_esperienze = $ris_esperienze->fetch_all(MYSQLI_BOTH);
-            foreach ($ris_esperienze as $esperienza) {
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $esperienza) {
                 $esperienze[] = new Esperienza(
                     $esperienza['id'],
                     $studente,
                     $this->getPercorsoDaId($esperienza['id_percorso']),
                     $this->getAziendaDaId($esperienza['id_azienda']),
+                    $this->getAgenziaDaId($esperienza['id_agenzia']),
+                    $this->getFamigliaDaId($esperienza['id_famiglia']),
+                    $esperienza['dal'],
+                    $esperienza['al']
+                );
+            }
+        }
+        return $esperienze;
+    }
+
+    /**
+     * getEsperienzeDaAzienda estrae dal database tutte le esperienze associate ad un'azienda.
+     *
+     * @param Azienda $azienda azienda della quale estrarre le esperienze
+     *
+     * @return Esperienza[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getEsperienzeDaAzienda($azienda) {
+        $query = "SELECT * FROM esperienze WHERE id_azienda = {$azienda->getId()} ORDER BY dal DESC";
+        $ris = $this->connessione->query($query);
+        $esperienze = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $esperienza) {
+                $esperienze[] = new Esperienza(
+                    $esperienza['id'],
+                    $this->getStudenteDaId($esperienza['id_studente']),
+                    $this->getPercorsoDaId($esperienza['id_percorso']),
+                    $azienda,
                     $this->getAgenziaDaId($esperienza['id_agenzia']),
                     $this->getFamigliaDaId($esperienza['id_famiglia']),
                     $esperienza['dal'],

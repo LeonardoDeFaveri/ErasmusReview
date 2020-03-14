@@ -46,7 +46,6 @@ class Controller {
                 $_SESSION['tipo_utente'] = $tipoUtente;
                 header("Location: index.php?comando=home-{$tipoUtente}");
                 exit();
-
             break;
 
             case 'cerca':
@@ -76,6 +75,17 @@ class Controller {
                 $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
                 $_SESSION['docente'] = serialize($docente);
                 header('Location: View/homeDocente.php');
+                exit();
+            break;
+            case 'home-azienda':
+                $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
+                if ($azienda == null){
+                    header('Location: View/homeDocente.php?errore=1');
+                    exit();
+                }
+                $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaAzienda($azienda));
+                $_SESSION['azienda'] = serialize($azienda);
+                header('Location: View/homeAzienda.php');
                 exit();
             break;
 

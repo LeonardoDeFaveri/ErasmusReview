@@ -179,7 +179,7 @@ details summary{
     text-align: left;
     padding: var(--default-padding);
     border: var(--default-border);
-    background-color: var(--default-elements-background-color);
+    background-color: var(--default-elements-background-color-2);
 }
 
 .contenitore-riquadri{

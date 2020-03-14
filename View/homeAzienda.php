@@ -68,28 +68,18 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $studente=$esperienza->getStudente();
     $periodo=$esperienza->getPercorso();
     $tutor=$esperienza->getPercorso()->getDocente();
-    /*$classe = $esperienza->getPercorso()->getClasse();
-    $scuola = $classe->getScuola();
+    $scuola = $esperienza->getPercorso()->getClasse()->getScuola();
     $azienda = $esperienza->getAzienda();
-    $agenzia = $esperienza->getAgenzia();
-    $famiglia = $esperienza->getFamiglia();*/
     $riquadro =<<<testo
         \t\t\t<div class="riquadroEsperienza">
-        {$studente->getCognome()}{$studente->getNome()}{$studente->getEmail()}
-        {$periodo->getDal()}{$periodo->getAl()}
-        {$tutor->getCognome()}
-            \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
-            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t<a href="#">{$azienda->getNome()}</a><br>
             \t\t\t<hr>
             \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>
-            \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
+            {$studente->getCognome()} {$studente->getNome()}<br>
+            {$studente->getEmail()}<br>
+            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t{$tutor->getCognome()}<br>\n
     testo;
-    if($agenzia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Agenzia {$agenzia->getNome()}</a><br>\n";
-    }
-    if($famiglia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
-    }
 
     if($daValutare){
         $riquadro .=<<<testo
