@@ -10,37 +10,37 @@ class Scuola extends Soggetto{
     private $citta;
     private $indirizzo;
 
-    public function __construct($id, $nome, $email, $citta, $indirizzo){
+    public function __construct($id, $nome, $email, $citta, $indirizzo) {
         parent::__construct($id, $nome);
         $this->email = $email;
         $this->citta = $citta;
         $this->indirizzo = $indirizzo;
     }
 
-    public function getEmail(){
+    public function getEmail() {
         return $this->email;
     }
 
-    public function getCitta(){
+    public function getCitta() {
         return $this->citta;
     }
 
-    public function getIndirizzo(){
+    public function getIndirizzo() {
         return $this->indirizzo;
     }
 
-    public function serialize(){
+    public function serialize() {
         return serialize([$this->id, $this->nome, $this->email, $this->citta,
          $this->indirizzo]);
     }
-
+    
     public function unserialize($stringa){
         $valori = unserialize($stringa);
         $this->id = $valori[0];
         $this->nome = $valori[1];
         $this->email = $valori[2];
         $this->citta = $valori[3];
-        $this->getIndirizzo = $valori[4];
+        $this->indirizzo = $valori[4];
     }
 }
 ?>
