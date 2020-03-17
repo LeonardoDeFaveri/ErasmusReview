@@ -34,7 +34,7 @@ class Scuola extends Soggetto{
          $this->indirizzo]);
     }
     
-    public function unserialize($stringa){
+    public function unserialize($stringa) {
         $valori = unserialize($stringa);
         $this->id = $valori[0];
         $this->nome = $valori[1];
