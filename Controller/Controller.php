@@ -86,7 +86,7 @@ class Controller {
                     header('Location: View/homeAgenzia.php?errore=1');
                     exit();
                 }
-                $agenzia->getId();
+                $esperienze=$this->modello->getEsperienzeDaAgenzia($agenzia->getId());
             break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);

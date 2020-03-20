@@ -59,7 +59,7 @@ class Modello {
      *
      * @param string $email email dell'agenzia da estrarre
      *
-     * @return Agenzia se è stata trovata, altirmenti null
+     * @return Agenzia se è stata trovata, altrimenti null
      */
     public function getAgenziaDaEmail($email) {
         $query = "SELECT * FROM agenzie WHERE email_utente = '{$email}'";
@@ -78,9 +78,6 @@ class Modello {
             );
         }
         return $agenzia;
-    }
-    public function getEsperienzeDaIdAgenzia($idAgenzia){
-        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
     }
     /**
      * getAziendaDaid estrae dal database l'azienda associata all'id specificato.
@@ -454,6 +451,28 @@ class Modello {
             );
         }
         return $scuola;
+    }
+    
+     /**
+     * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
+     * 
+     * @param type $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
+     */
+    public function getEsperienzeDaAgenzia($idAgenzia){
+        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
+        $ris = $this->connessione->query($query);
+        $esperienze=null;
+        $esperienza = null;
+        $i=0;
+        if($ris && $ris->num_rows>0){
+            $ris = $ris->fetch_assoc();
+            foreach($ris AS $esperienza){
+                $esperienza = $this->getEsperienzaDaId($ris[$id]);
+                $esperienze[$i]=$esperienza; 
+                $i++;
+            }
+        } 
+        return $esperienze;
     }
     
     /**
