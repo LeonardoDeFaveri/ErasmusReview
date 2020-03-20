@@ -72,7 +72,6 @@ class Modello {
                 $ris['nome'],
                 $email,
                 $ris['stato'],
-                $ris['provincia'],
                 $ris['citta'],
                 $ris['telefono']
             );
