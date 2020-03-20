@@ -74,6 +74,9 @@ class Controller {
                 header('Location: View/homeDocente.php');
                 exit();
             break;
+            case 'home-agenzia':
+                $agenzia = $this->modello->getAgenziaDaEmail($_SESSION['email_utente']);
+            break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
                 if ($azienda == null){
