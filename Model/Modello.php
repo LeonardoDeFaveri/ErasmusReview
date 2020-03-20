@@ -79,7 +79,9 @@ class Modello {
         }
         return $agenzia;
     }
-
+    public function getEsperienzeDaIdAgenzia($idAgenzia){
+        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
+    }
     /**
      * getAziendaDaid estrae dal database l'azienda associata all'id specificato.
      *
