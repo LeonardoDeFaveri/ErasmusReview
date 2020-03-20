@@ -75,5 +75,4 @@ function creaFooter() {
     testo;
     return $html;
 }
-
 ?>
