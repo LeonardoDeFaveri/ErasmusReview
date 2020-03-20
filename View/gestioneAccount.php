@@ -9,7 +9,7 @@ $html = creaHeader("Gestione Account");
 $html = $html . creaBarraMenu($_SESSION["email_utente"]);
 
 $html.=<<<testo
-    <form action="?azione=cambio-password" method="POST" onsubmit="return controlloCorrispondezaPassword(this)">
+    <form method="POST" action="?azione=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">
         <fieldset>
             <legend>Modifica password</legend>
             <label>Cambia password:</label><br>
