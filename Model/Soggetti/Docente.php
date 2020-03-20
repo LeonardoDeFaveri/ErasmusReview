@@ -12,6 +12,7 @@ class Docente extends Soggetto {
     public function __construct($id, $nome, $cognome, $email) {
         parent::__construct($id, $nome);
         $this->cognome = $cognome;
+        $this->email = $email;
     }
 
     public function getCognome() {

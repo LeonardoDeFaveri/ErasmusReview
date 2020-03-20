@@ -571,7 +571,7 @@ class Modello {
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaDocente($docente) {
-        $query = "SELECT * FROM percorsi WHERE id_docente = {$docente->getID()}";
+        $query = "SELECT * FROM percorsi WHERE id_docente = {$docente->getId()}";
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
@@ -581,7 +581,7 @@ class Modello {
                     $percorso['id'],
                     $docente,
                     $this->getClasseDaId($percorso['id_classe']),
-                    $percorsi['dal'],
+                    $percorso['dal'],
                     $percorso['al']
                 );
             }
