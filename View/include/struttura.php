@@ -49,13 +49,10 @@ function creaSezioneRicerca() {
 
 function creaSezioneUtente($email) {
     $html = "<div id=\"utente\">";
-    /*se l email è settata allora l accesso è stato effettuato*/
     if(isset($email)){
-        /*allora posso cliccare e vedere i link a esci o gestione account*/
         $html.="<p>{$email}</p>";
         $html.="<i id=\"icona-utente\" class=\"material-icons\" onClick=\"mostraMenuUtente()\">account_circle</i>";
     }else{
-        /*altrimenti no*/
         $html.="<i id=\"icona-utente\" class=\"material-icons\">account_circle</i>";
     }
     $html .="</div>\n";
@@ -75,5 +72,4 @@ function creaFooter() {
     testo;
     return $html;
 }
-
 ?>

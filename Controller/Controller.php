@@ -168,6 +168,10 @@ class Controller {
                     exit();
                 }
                 
+            break;     
+            
+            case 'gestione-account':
+                header('Location: View/gestioneAccount.php');
             break;
             
             default:
