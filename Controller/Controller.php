@@ -76,6 +76,11 @@ class Controller {
             break;
             case 'home-agenzia':
                 $agenzia = $this->modello->getAgenziaDaEmail($_SESSION['email_utente']);
+                if ($agenzia == null){
+                    header('Location: View/homeAgenzia.php?errore=1');
+                    exit();
+                }
+                $agenzia->getId();
             break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
