@@ -48,6 +48,13 @@ class Controller {
                 exit();
             break;
 
+            case 'logout':
+                session_destroy();
+                session_unset();
+                header('Location: View/login.php');
+                exit();
+            break;
+
             case 'cerca':
                 $cercato = $_POST['cerca'];
             break;
