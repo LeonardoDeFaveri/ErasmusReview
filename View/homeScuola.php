@@ -4,8 +4,9 @@ if(session_id() == ''){
     $_SESSION['root'] = __DIR__ . '/../';
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
-include_once "{$_SESSION['root']}/Model/Classe.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+include_once "{$_SESSION['root']}/Model/Classe.php";
+include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Amministrazione Scuola");
@@ -20,6 +21,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html .= creaBarraMenu($scuola->getEmail());
     $classi = unserialize($_SESSION['classi']);
     $docenti = unserialize($_SESSION['docenti']);
+    $percorsi = unserialize($_SESSION['percorsi']);
+    $html .= "\t\t<h2>Tutti i percorsi</h2>\n";
 }
 $html .= creaFooter();
 echo $html;

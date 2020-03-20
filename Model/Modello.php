@@ -178,12 +178,12 @@ class Modello {
     }
     
     /**
-     * getDocentiScuola estrae dal database tutti i docenti di una scuola.
+     * getDocentiDaScuola estrae dal database tutti i docenti di una scuola.
      *
      * @param Scuola $scuola scuola della quale estrarre gli studenti
      * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getDocentiScuola($scuola) {
+    public function getDocentiDaScuola($scuola) {
         $query =<<<testo
         SELECT D.* FROM docenti D
             INNER JOIN docenti_scuole DS
@@ -229,31 +229,6 @@ class Modello {
             );
         }
         return $famiglia;
-    }
-
-    /**
-     * getListaStudenti restituisce la lista di tutti gli studenti.
-     *
-     * @return Studente[] lista di studenti
-     */
-    public function getListaStudenti() {
-        $query = "SELECT * FROM utenti";
-        $studenti = array();
-        $ris = $this->connessione->query($query);
-        if($ris){
-            $ris = $ris->fetch_all(MYSQLI_ASSOC);
-            
-            foreach ($ris as $studente){
-                $studenti[] = new Studente(
-                    $studente['id'],
-                    $studente['nome'],
-                    $studente['cognome'],
-                    $studente['email_utente'],
-                    $studente['data_nascita']
-                );
-            }
-        }
-        return $studenti;
     }
 
     /**
@@ -305,13 +280,13 @@ class Modello {
     }
 
     /**
-     * getStudentiClasse estrae dal database tutti gli studenti di una classe.
+     * getStudentiDaClasse estrae dal database tutti gli studenti di una classe.
      *
      * @param int $idClasse id della classe dalla quale estrarre gli studenti
      *
      * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
      */
-    public function getStudentiClasse($idClasse) {
+    public function getStudentiDaClasse($idClasse) {
         $query =<<<testo
             SELECT S.* FROM classi_studenti CS
                 INNER JOIN studenti S
@@ -337,26 +312,6 @@ class Modello {
     }
     
     /**
-     * verificaCredenziali verifica che le coppia email e password siano valide.
-     *
-     * @param  string $email indirizzo email
-     * @param  string $password password
-     *
-     * @return string tipo di utente identificato, altrimenti false
-     */
-    public function verificaCredenziali($email, $password) {
-        $query = "SELECT tipo_utente FROM utenti WHERE email = '{$email}' AND password = '{$password}'";
-        $ris = $this->connessione->query($query);
-
-        if($ris != false && $ris->num_rows == 1){
-            $ris = $ris->fetch_assoc()['tipo_utente'];
-        }else{
-            $ris = false;
-        }
-        return $ris;
-    }
-
-    /**
      * getClasseDaId estrae dal database una classe e i relativi studenti.
      *
      * @param int $id id della classe da estrarre
@@ -375,12 +330,12 @@ class Modello {
                 $ris['numero'],
                 $ris['sezione'],
                 $ris['anno_scolastico'],
-                $this->getStudentiClasse($ris['id'])
+                $this->getStudentiDaClasse($ris['id'])
             );
         }
         return $classe;
     }
-    
+
     /**
      * getClassiDaScuola restitusice tutte le classi di una scuola.
      *
@@ -400,7 +355,7 @@ class Modello {
                     $classe['numero'],
                     $classe['sezione'],
                     $classe['anno_scolastico'],
-                    $this->getStudentiClasse($classe['id'])
+                    $this->getStudentiDaClasse($classe['id'])
                 );
             }
         }
@@ -452,29 +407,7 @@ class Modello {
         }
         return $scuola;
     }
-    
-     /**
-     * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
-     * 
-     * @param type $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
-     */
-    public function getEsperienzeDaAgenzia($idAgenzia){
-        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
-        $ris = $this->connessione->query($query);
-        $esperienze=null;
-        $esperienza = null;
-        $i=0;
-        if($ris && $ris->num_rows>0){
-            $ris = $ris->fetch_assoc();
-            foreach($ris AS $esperienza){
-                $esperienza = $this->getEsperienzaDaId($ris[$id]);
-                $esperienze[$i]=$esperienza; 
-                $i++;
-            }
-        } 
-        return $esperienze;
-    }
-    
+
     /**
      * getEsperienzaDaId estrae dal database l'esperienza associata all'id dato.
      * 
@@ -500,6 +433,28 @@ class Modello {
             );
         }
         return $esperienza;
+    }
+    
+    /**
+     * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
+     * 
+     * @param type $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
+     */
+    public function getEsperienzeDaAgenzia($idAgenzia){
+        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
+        $ris = $this->connessione->query($query);
+        $esperienze=null;
+        $esperienza = null;
+        $i=0;
+        if($ris && $ris->num_rows>0){
+            $ris = $ris->fetch_assoc();
+            foreach($ris AS $esperienza){
+                $esperienza = $this->getEsperienzaDaId($ris[$id]);
+                $esperienze[$i]=$esperienza; 
+                $i++;
+            }
+        } 
+        return $esperienze;
     }
 
     /**
@@ -643,6 +598,56 @@ class Modello {
             }
         }
         return $percorsi;
+    }
+    
+    /**
+     * getPercorsiDaScuola estrae tutti i percorsi effettuati dalle classe di una scuola.
+     *
+     * @param Scuola $scuola scuola perla quale estrarre i percorsi
+     * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getPercorsiDaScuola($scuola) {
+        $query =<<<testo
+        SELECT P.* FROM percorsi P
+            INNER JOIN classi C
+            ON C.id = P.id_classe
+        WHERE C.codice_scuola = 'TVTF007017'
+        testo;
+        $ris = $this->connessione->query($query);
+        $percorsi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $percorso) {
+                $percorsi[] = new Percorso(
+                    $percorso['id'],
+                    $this->getDocenteDaId($percorso['id_docente']),
+                    $this->getClasseDaId($percorso['id_classe']),
+                    $percorso['dal'],
+                    $percorso['al']
+                );
+            }
+        }
+        return $percorsi;
+    }
+
+    /**
+     * verificaCredenziali verifica che le coppia email e password siano valide.
+     *
+     * @param  string $email indirizzo email
+     * @param  string $password password
+     *
+     * @return string tipo di utente identificato, altrimenti false
+     */
+    public function verificaCredenziali($email, $password) {
+        $query = "SELECT tipo_utente FROM utenti WHERE email = '{$email}' AND password = '{$password}'";
+        $ris = $this->connessione->query($query);
+
+        if($ris != false && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc()['tipo_utente'];
+        }else{
+            $ris = false;
+        }
+        return $ris;
     }
 
     /**

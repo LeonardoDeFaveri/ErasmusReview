@@ -106,7 +106,8 @@ class Controller {
                     exit();
                 }
                 $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
-                $_SESSION['docenti'] = serialize($this->modello->getDocentiScuola($scuola));
+                $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaScuola($scuola));
                 $_SESSION['scuola'] = serialize($scuola);
                 header('Location: View/homeScuola.php');
             break;

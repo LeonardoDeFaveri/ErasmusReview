@@ -42,21 +42,23 @@ function creaSezioneRicerca() {
                     <input type="text" placeholder="Cerca.." name="cerca">
                     <button type="submit"><i id="icona-ricerca" class="material-icons">search</i></button>
                 </form>
-            </div>\n
+            </div>
     testo;
     return $html;
 }
 
 function creaSezioneUtente($email) {
-    $html = "<div id=\"utente\">";
+    $html = "\t<div id=\"utente\">\n";
     if(isset($email)){
-        $html.="<p>{$email}</p>";
         //Aggiunge l'evento onClick per visulizzare le opzioni per l'utente (esci e gestione)
-        $html.="<i id=\"icona-utente\" class=\"material-icons\" onClick=\"mostraMenuUtente()\">account_circle</i>";
+        $html .=<<<testo
+            \t\t<p>{$email}</p>
+            \t\t<i id="icona-utente" class="material-icons" onClick="mostraMenuUtente()">account_circle</i>\n
+        testo;
     }else{
-        $html.="<i id=\"icona-utente\" class=\"material-icons\">account_circle</i>";
+        $html.="\t\t\t<i id='icona-utente' class='material-icons'>account_circle</i>\n";
     }
-    $html .="</div>\n";
+    $html .="\t\t</div>";
             
     return $html;
 }
