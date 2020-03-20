@@ -51,6 +51,7 @@ function creaSezioneUtente($email) {
     $html = "<div id=\"utente\">";
     if(isset($email)){
         $html.="<p>{$email}</p>";
+        //Aggiunge l'evento onClick per visulizzare le opzioni per l'utente (esci e gestione)
         $html.="<i id=\"icona-utente\" class=\"material-icons\" onClick=\"mostraMenuUtente()\">account_circle</i>";
     }else{
         $html.="<i id=\"icona-utente\" class=\"material-icons\">account_circle</i>";
