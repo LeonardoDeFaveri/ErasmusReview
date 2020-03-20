@@ -189,6 +189,7 @@ class Modello {
         SELECT D.* FROM docenti D
             INNER JOIN docenti_scuole DS
             ON DS.id_docente = D.id
+        WHERE DS.codice_scuola = '{$scuola->getId()}'
         testo;
         $ris = $this->connessione->query($query);
         $docenti = array();
@@ -388,7 +389,7 @@ class Modello {
      * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getClassiDaScuola($scuola) {
-        $query = "SELECT * FROM classi WHERE codice_scuola = '{$scuola->getId()}' ORDER BY anno _scolastico DESC";
+        $query = "SELECT * FROM classi WHERE codice_scuola = '{$scuola->getId()}' ORDER BY anno_scolastico DESC";
         $ris = $this->connessione->query($query);
         $classi = array();
         if($ris && $ris->num_rows > 0){
@@ -443,7 +444,7 @@ class Modello {
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
             $scuola = new Scuola(
-                $ris['codice_meccaanografico'],
+                $ris['codice_meccanografico'],
                 $ris['nome'],
                 $email,
                 $ris['citta'],

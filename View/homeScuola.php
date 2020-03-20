@@ -16,6 +16,9 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
 }else{
     $scuola = unserialize($_SESSION['scuola']);
     $html .= creaBarraMenu($scuola->getEmail());
+    if(isset($_SESSION['classi'])){
+        $classi = unserialize($_SESSION['classi']);
+    }
 }
 $html .= creaFooter();
 echo $html;
