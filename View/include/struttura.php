@@ -24,37 +24,17 @@ function creaHeader($nomePagina) {
 function creaBarraMenu($emailUtente) {
     $ricerca = creaSezioneRicerca();
     $utente = creaSezioneUtente($emailUtente);
-<<<<<<< HEAD
-    $html = <<<testo
-        <div id="barra-menu">
-    {$menu}
-    {$ricerca}
-    {$utente}    
-=======
     $html =<<<testo
             <div id="barra-menu">
         {$ricerca}
         {$utente}    
             </div>
->>>>>>> eb02466e2148dd6b76b252170b4c0913b6fb79fb
         </div>
         <main>\n
     testo;
     return $html;
 }
 
-<<<<<<< HEAD
-function creaSezioneMenu() {
-    $html = <<<testo
-            <nav id="menu-principale">
-                <p>Menu</p>
-            </nav>\n
-    testo;
-    return $html;
-}
-
-=======
->>>>>>> eb02466e2148dd6b76b252170b4c0913b6fb79fb
 function creaSezioneRicerca() {
     $html = <<<testo
             <div id="ricerca">

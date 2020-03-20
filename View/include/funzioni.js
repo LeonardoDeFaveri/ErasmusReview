@@ -5,6 +5,3 @@ function mostraMenuUtente(){
     </div>";
     document.getElementById("utente").innerHTML = html;
 }
-    
-
-
