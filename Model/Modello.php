@@ -581,8 +581,8 @@ class Modello {
                     $percorso['id'],
                     $docente,
                     $this->getClasseDaId($percorso['id_classe']),
-                    $ris['dal'],
-                    $ris['al']
+                    $percorsi['dal'],
+                    $percorso['al']
                 );
             }
         }
