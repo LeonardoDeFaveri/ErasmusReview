@@ -71,7 +71,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $scuola = $esperienza->getPercorso()->getClasse()->getScuola();
     $azienda = $esperienza->getAzienda();
     $riquadro =<<<testo
-        \t\t\t<div class="riquadroEsperienza">
+        \t\t\t<div class="riquadro-esperienza">
             \t\t\t<a href="#">{$azienda->getNome()}</a><br>
             \t\t\t<hr>
             \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>

@@ -189,7 +189,7 @@ details summary{
 }
 
 /*stile del riquadro che visualizza l'esperienza*/
-.riquadroEsperienza{
+.riquadro-esperienza{
     position: relative;
     background-color: var(--default-elements-background-color-2);
     border: var(--default-border);
@@ -200,19 +200,76 @@ details summary{
     height: 200px;
 }
 
-.riquadroEsperienza a{
+.riquadro-esperienza a{
     color: var(--default-color);
     text-decoration: none;
     font-style: italic;
 }
 
-.riquadroEsperienza button{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+button{
     margin: var(--default-margin);
     padding: var(--default-padding);
     background-color: var(--default-elements-background-color);
     border: var(--default-border);
     border-radius: var(--default-border-radius);
+}
+
+.riquadro-esperienza button{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.pagina-con-barra-laterale{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.contenuto{
+    position: relative;
+    flex-grow: 100;
+    text-align: left;
+    padding: var(--default-padding);
+}
+
+#crea-percorso{
+    position: absolute;
+    right: 0px;
+}
+
+.riquadro-percorso{
+    position: relative;
+    background-color: var(--default-elements-background-color-2);
+    border: var(--default-border);
+    padding: var(--default-padding);
+    margin: var(--default-margin);
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.riquadro-percorso p{
+    display: block;
+    margin: var(--default-margin);
+}
+
+.riquadro-percorso button{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+}
+
+.barra-laterale{
+    float: right;
+    min-width: 250px;
+    max-width: auto;
+    text-align: left;
+}
+
+.barra-laterale div{
+    padding: var(--default-padding);
 }

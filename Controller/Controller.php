@@ -114,9 +114,9 @@ class Controller {
 
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id e settato e se è diverso da null
-                 * nel caso in cui $_GET[id] non sia settato, assegno un lavore -1, che rappresenta un id che nel db non esiste
-                 * di conseguenza quella query mi darà null
+                /* $id = $_GET['id'] ?? -1; controlla se l id è settato e diverso da null.
+                 * Nel caso in cui $_GET[id] non sia settato o sia null, assegno un lavore -1,
+                 * che rappresenta un id che nel db non esiste di conseguenza la query mi darà null.
                  */
                 $azienda = $this->modello->getAziendaDaId($id);
                 if ($azienda == null) {
@@ -169,10 +169,30 @@ class Controller {
                     exit();
                 }
                 
-            break;     
+            break;   
+            
+            case 'crea-percorso':
+            break;
+            case 'modifica-percorso':
+                $id = $_GET['id'] ?? -1;
+                $percorso = $this->modello->getPercorsoDaId($id);
+                if ($percorso == null){
+                    header('Location: View/modificaPercorso.php?errore=1');
+                    exit();
+                }
+            break;
+            case 'mostra-info-percorso':
+                $id = $_GET['id'] ?? -1;
+                $percorso = $this->modello->getPercorsoDaId($id);
+                if ($percorso == null){
+                    header('Location: View/mostraPercorso.php?errore=1');
+                    exit();
+                }
+            break;
             
             case 'gestione-account':
                 header('Location: View/gestioneAccount.php');
+                exit();
             break;
             
             default:
