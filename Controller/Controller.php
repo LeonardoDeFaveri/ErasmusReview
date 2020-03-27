@@ -85,10 +85,9 @@ class Controller {
                     header('Location: View/homeAgenzia.php?errore=1');
                     exit();
                 }
-                //$esperienze=$this->modello->getEsperienzeDaAgenzia($agenzia->getId());
-                //$_SESSION ['esperienze']= serialize($esperienze);
                 $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia->getId()));
-            break;
+                 header('Location: View/homeAgenzia.php');
+                break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
                 if ($azienda == null){
