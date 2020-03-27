@@ -498,7 +498,7 @@ class Modello {
     /**
      * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
      * 
-     * @param type $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
+     * @param int $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
      */
     public function getEsperienzeDaAgenzia($idAgenzia){
         $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
@@ -506,11 +506,20 @@ class Modello {
         $esperienze=null;
         $esperienza = null;
         if($ris && $ris->num_rows>0){
-            //$ris = $ris->fetch_assoc();
             $ris = $ris->fetch_all(MYSQLI_BOTH);
             foreach($ris as $esperienza){
-                $esperienza = $this->getEsperienzaDaId($ris['id']);
+                $esperienza=new Esperienza(
+                $esperienza['id'],
+                $this->getStudenteDaId('id_studente'),
+                $this->getPercorsoDaId('id_percorso'),
+                $this->getAgenziaDaId('id_azienda'),
+                $idAgenzia,
+                $this->getFamigliaDaId('id_famiglia'),
+                $esperienza['dal'],
+                $esperienza['al']
+                );          
                 $esperienze[]=$esperienza; 
+
             }
         } 
         return $esperienze;
@@ -819,6 +828,15 @@ class Modello {
 
         $valore = $this->connessione->query($query);
         return $valore;
+    }
+    
+    public function modificaPassword($digest) {
+        $query = "UPDATE utenti SET password='{$digest}' WHERE email='{$_SESSION["email_utente"]}'";
+        $ris=$this->connessione->query($query);
+        if($ris!=true){
+            $ris=false;    
+        }
+        return $ris;
     }
 }
 ?>

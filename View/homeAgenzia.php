@@ -78,9 +78,6 @@ function creaRiquadro($esperienza, $daValutare = false) {
             \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>
             \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
     testo;
-    if($agenzia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Agenzia {$agenzia->getNome()}</a><br>\n";
-    }
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
     }

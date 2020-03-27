@@ -160,6 +160,21 @@ CREATE TABLE classi_studenti(
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+CREATE TABLE classi_docenti(
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	id_docente INTEGER NOT NULL,
+	id_classe INTEGER NOT NULL,
+	dal DATE,
+	al DATE,
+	PRIMARY KEY(id),
+	UNIQUE (id_docente,dal),
+	FOREIGN KEY (id_docente) REFERENCES docenti(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY (id_classe) REFERENCES classi (id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
 
 CREATE TABLE percorsi (
 	id INTEGER NOT NULL AUTO_INCREMENT,
