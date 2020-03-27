@@ -64,6 +64,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         testo;
     }
 }
+$html.="<button class=\"aggiungiPercorso\" type=\"submit\">Crea Percorso</button>";
 $html .= creaFooter();
 echo $html;
 
