@@ -110,6 +110,7 @@ nav{
 main{
     grid-area: main;
     text-align: center;
+    position: relative;
 }
 
 fieldset{
