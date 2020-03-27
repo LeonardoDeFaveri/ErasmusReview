@@ -9,7 +9,7 @@ $html = creaHeader("Gestione Account");
 $html = $html . creaBarraMenu($_SESSION["email_utente"]);
 
 $html.=<<<testo
-    <form method="POST" action="?azione=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">
+    <form method="POST" action="?cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">
         <fieldset>
             <legend>Modifica password</legend>
             <label>Cambia password:</label><br>
@@ -20,6 +20,12 @@ $html.=<<<testo
         </fieldset>
     </form>\n
 testo; 
+
+if(isset($_GET["errore"])){
+    if($_GET["errore"]==2){
+        $html.="<p>Errore generico, non sono riuscito a cambiare la password</p>";
+    }
+}
 
 $html.=creaFooter();
 echo $html;
