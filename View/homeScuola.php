@@ -103,7 +103,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                 <details open>
                     <summary>Classi e studenti</summary>
                     <div>
-                        <a href="#">Tutti gli studenti</a><br>
+                        <a href="../index.php?comando=mostra-studenti&codice_scuola={$scuola->getId()}">Tutti gli studenti</a><br>
                         <a href="#">Aggiungi Classe</a>
                         <ul>\n
     testo;
