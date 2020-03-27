@@ -312,6 +312,41 @@ class Modello {
     }
     
     /**
+     * getStudentiDaScuola estrae dal database tutti gli studenti di una scuola.
+     *
+     * @param string $codiceMeccanografico codice meccanografico della scuola
+     * per la quale estrarre gli studenti
+     * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getStudentiDaScuola($codiceMeccanografico) {
+        $query =<<<testo
+        SELECT S.* FROM studenti S
+            INNER JOIN classi_studenti CS
+            ON CS.id_studente = S.id
+            INNER JOIN classi C
+            ON C.id = CS.id_classe
+            INNER JOIN scuole SC
+            ON SC.codice_meccanografico = C.codice_scuola
+        WHERE SC.codice_meccanografico = '{$codiceMeccanografico}'
+        testo;
+        $ris = $this->connessione->query($query);
+        $studenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $studente) {
+                $studenti[] = new Studente(
+                    $studente['id'],
+                    $studente['nome'],
+                    $studente['cognome'],
+                    $studente['email_utente'],
+                    $studente['data_nascita']
+                );
+            }
+        }
+        return $studenti;
+    }
+    
+    /**
      * getClasseDaId estrae dal database una classe e i relativi studenti.
      *
      * @param int $id id della classe da estrarre

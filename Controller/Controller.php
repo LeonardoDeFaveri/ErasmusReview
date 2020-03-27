@@ -112,6 +112,9 @@ class Controller {
                 header('Location: View/homeScuola.php');
             break;
 
+            case 'mostra-studenti':
+                $studenti = $this->modello->getStudentiDaScuola("Da inserire");
+            break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
                 /* $id = $_GET['id'] ?? -1; controlla se l id è settato e diverso da null.

@@ -47,22 +47,34 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
         }
 
         if(count($futuri) > 0){
-            $html .= "<h3>Percorsi programmati</h3>\n";
+            $html .=<<<testo
+                <details open>
+                    <summary>Percorsi Futuri</summary>\n
+            testo;
             foreach ($futuri as $percorso) {
-                $html .= creaRiquadroPercorso($percorso);
+                $html .= creaRiquadroPercorso($percorso, true);
             }
+            $html .= "</details>\n";
         }
         if(count($inCorso) > 0){
-            $html .= "<h3>Percorsi attivi</h3>\n";
+            $html .=<<<testo
+                <details open>
+                    <summary>Percorsi Attivi</summary>\n
+            testo;
             foreach ($inCorso as $percorso) {
                 $html .= creaRiquadroPercorso($percorso, true);
             }
+            $html .= "</details>\n";
         }
-        if(count($inCorso) > 0){
-            $html .= "<h3>Percorsi conclusi</h3>\n";
+        if(count($conclusi) > 0){
+            $html .=<<<testo
+                <details>
+                    <summary>Percorsi Conclusi</summary>\n
+            testo;
             foreach ($conclusi as $percorso) {
                 $html .= creaRiquadroPercorso($percorso);
             }
+            $html .= "</details>\n";
         }
     }
 
