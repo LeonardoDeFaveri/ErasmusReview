@@ -64,7 +64,12 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         testo;
     }
 }
-$html.="<button class=\"aggiungiPercorso\" type=\"submit\">Crea Percorso</button>";
+$html.=<<<testo
+    <hr>
+    <form method="POST" action="../index.php?comando=crea-percorso">
+        <button type="submit" id="crea-percorso">Crea percorso</button>
+    </form>
+testo;
 $html .= creaFooter();
 echo $html;
 

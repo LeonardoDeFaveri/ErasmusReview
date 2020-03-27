@@ -7,7 +7,6 @@ if (session_id() == '') {
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
 class Controller {
-
     private $modello;
 
     public function __construct() {
@@ -113,7 +112,10 @@ class Controller {
             break;
 
             case 'mostra-studenti':
-                $studenti = $this->modello->getStudentiDaScuola("Da inserire");
+                $studenti = $this->modello->getStudentiDaScuola($_GET['codice_scuola']);
+                $_SESSION['studenti'] = serialize($studenti);
+                header('Location: View/mostraStudenti.php');
+                exit();
             break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
