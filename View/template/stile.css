@@ -214,17 +214,6 @@ button{
     border-radius: var(--default-border-radius);
 }
 
-<<<<<<< HEAD
-.aggiungiPercorso button{
-    position: absolute;
-    bottom: 40px;
-    right: 20px;
-    margin: var(--default-margin);
-    padding: var(--default-padding);
-    background-color: var(--default-elements-background-color);
-    border: var(--default-border);
-    border-radius: var(--default-border-radius);
-=======
 .riquadro-esperienza button{
     position: absolute;
     bottom: 0px;
@@ -283,5 +272,4 @@ button{
 
 .barra-laterale div{
     padding: var(--default-padding);
->>>>>>> 4a94df6fd3f13d6ab1cac444e86a980d068f55ea
 }
