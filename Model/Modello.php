@@ -794,5 +794,14 @@ class Modello {
         $valore = $this->connessione->query($query);
         return $valore;
     }
+    
+    public function modificaPassword($digest) {
+        $query = "UPDATE utenti SET password=\"$digest\" WHERE email=\"{$_SESSION["email"]}\";";
+        $ris=$this->connessione->query($query);
+        if($ris!=true){
+            $ris=false;    
+        }
+        return $ris;
+    }
 }
 ?>
