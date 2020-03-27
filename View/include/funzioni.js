@@ -5,3 +5,14 @@ function mostraMenuUtente(){
     </div>";
     document.getElementById("utente").innerHTML = html;
 }
+
+function controlloCorrispondezaPassword(form) { 
+	password1 = form.password.value;
+	password2 = form.passwordConferma.value; 
+	   
+	if (password1 === password2) { 
+		return true;
+	}
+	alert ("Le password non corrispondono");
+	return false;
+} 
