@@ -92,7 +92,7 @@ class Controller {
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
                 if ($azienda == null){
-                    header('Location: View/homeDocente.php?errore=1');
+                    header('Location: View/homeAzienda.php?errore=1');
                     exit();
                 }
                 $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaAzienda($azienda));
