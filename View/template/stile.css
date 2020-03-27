@@ -246,9 +246,12 @@ button{
     padding: var(--default-padding);
 }
 
+.contenuto form{
+    width: auto;
+}
+
 #crea-percorso{
-    position: absolute;
-    right: 0px;
+    float: right;
 }
 
 .riquadro-percorso p{
@@ -272,4 +275,16 @@ button{
 
 .barra-laterale div{
     padding: var(--default-padding);
+}
+
+table, tr, th, td{
+    border: var(--default-border);
+    border-collapse: collapse;
+    padding: var(--default-padding);
+    text-align: left;
+}
+
+th{
+    background-color: var(--default-elements-background-color);
+    text-align: center;
 }

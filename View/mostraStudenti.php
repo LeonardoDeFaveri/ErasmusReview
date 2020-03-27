@@ -19,7 +19,6 @@ $html .=<<<testo
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Data di nascita</th>
-                <th>Azione</th>
             </tr>
         </thead>
         <tbody>\n

@@ -498,7 +498,7 @@ class Modello {
     /**
      * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
      * 
-     * @param int $agenzia è l'agenzia per la quale voglio estrarre le esperienze
+     * @param Agenzia $agenzia è l'agenzia per la quale voglio estrarre le esperienze
      */
     public function getEsperienzeDaAgenzia($agenzia){
         $query="SELECT * FROM esperienze WHERE id_agenzia = {$agenzia->getId()}";

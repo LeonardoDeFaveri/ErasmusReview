@@ -45,7 +45,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         //Creazione dei riquadri dei percorsi
         $html .=<<<testo
                 <details id="inCorso" open>
-                    <summary>In corso..</summary>
+                    <summary>Attivi</summary>
                     <div class="contenitore-riquadri">\n
         testo;
         foreach ($inCorso as $percorso){
@@ -58,8 +58,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
 
         //Creazione dei riquadri dei percorsi completati
         $html .=<<<testo
-                <details id="completate" open>
-                    <summary>Completati</summary>
+                <details id="completate">
+                    <summary>Conclusi</summary>
                     <div class="contenitore-riquadri">\n
         testo;
         foreach ($completati as $percorso){
