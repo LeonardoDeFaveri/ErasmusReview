@@ -480,11 +480,20 @@ class Modello {
         $esperienze=null;
         $esperienza = null;
         if($ris && $ris->num_rows>0){
-            //$ris = $ris->fetch_assoc();
             $ris = $ris->fetch_all(MYSQLI_BOTH);
             foreach($ris as $esperienza){
-                $esperienza = $this->getEsperienzaDaId($ris['id']);
+                $esperienza=new Esperienza(
+                $esperienza['id'],
+                $this->getStudenteDaId('id_studente'),
+                $this->getPercorsoDaId('id_percorso'),
+                $this->getAgenziaDaId('id_azienda'),
+                $idAgenzia,
+                $this->getFamigliaDaId('id_famiglia'),
+                $esperienza['dal'],
+                $esperienza['al']
+                );          
                 $esperienze[]=$esperienza; 
+
             }
         } 
         return $esperienze;

@@ -110,6 +110,7 @@ nav{
 main{
     grid-area: main;
     text-align: center;
+    position: relative;
 }
 
 fieldset{
@@ -212,6 +213,18 @@ button{
     background-color: var(--default-elements-background-color);
     border: var(--default-border);
     border-radius: var(--default-border-radius);
+}
+
+.aggiungiPercorso button{
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+    background-color: var(--default-elements-background-color);
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+
 }
 
 .riquadro-esperienza button{

@@ -7,7 +7,6 @@ if (session_id() == '') {
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
 class Controller {
-
     private $modello;
 
     public function __construct() {
@@ -86,7 +85,9 @@ class Controller {
                     header('Location: View/homeAgenzia.php?errore=1');
                     exit();
                 }
-                $esperienze=$this->modello->getEsperienzeDaAgenzia($agenzia->getId());
+                //$esperienze=$this->modello->getEsperienzeDaAgenzia($agenzia->getId());
+                //$_SESSION ['esperienze']= serialize($esperienze);
+                $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia->getId()));
             break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
@@ -113,7 +114,10 @@ class Controller {
             break;
 
             case 'mostra-studenti':
-                $studenti = $this->modello->getStudentiDaScuola("Da inserire");
+                $studenti = $this->modello->getStudentiDaScuola($_GET['codice_scuola']);
+                $_SESSION['studenti'] = serialize($studenti);
+                header('Location: View/mostraStudenti.php');
+                exit();
             break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
