@@ -74,7 +74,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $agenzia = $esperienza->getAgenzia();
     $famiglia = $esperienza->getFamiglia();
     $riquadro =<<<testo
-        \t\t\t<div class="riquadroEsperienza">
+        \t\t\t<div class="riquadro-esperienza">
             \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
             \t\t\t<a href="#">{$scuola->getNome()}</a>
             \t\t\t<hr>
@@ -99,5 +99,4 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $riquadro .= "\t\t\t\t</div>\n";
     return $riquadro;
 }
-
 ?>
