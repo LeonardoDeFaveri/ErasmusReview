@@ -24,6 +24,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
 
     if(isset($_SESSION['percorsi'])){
         $percorsi = unserialize($_SESSION['percorsi']);
+        $classi = unserialize($_SESSION['classi']);
         $inCorso = array();
         $completati = array();
 
@@ -63,13 +64,35 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                 </details>\n
         testo;
     }
-}
-$html.=<<<testo
+    $html.=<<<testo
     <hr>
     <form method="POST" action="../index.php?comando=crea-percorso">
         <button type="submit" id="crea-percorso">Crea percorso</button>
     </form>
-testo;
+    testo;
+    $html .=<<<testo
+            <div class="barra-laterale">
+                <details open>
+                    <summary>Le mie Classi</summary>
+                    <div>
+                        <ul>\n
+    testo;
+    if(count($classi) > 0){
+        foreach ($classi as $classe){
+            $html .= "<li>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</li>\n";
+        }
+    }
+    $html .=<<<testo
+                        </ul>
+                    </div>
+                </details>
+    testo;
+    $html .=<<<testo
+            </div>
+        </main>\n
+    testo;
+}
+
 $html .= creaFooter();
 echo $html;
 

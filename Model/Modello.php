@@ -395,6 +395,32 @@ class Modello {
         }
         return $classi;
     }
+
+    /**
+     * getClassiDaDocente restitusice tutte le classi di un docente.
+     *
+     * @param Docente $docente docente per la quale estrarre le classi
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaDocente($docente) {
+        $query = "SELECT * FROM classi WHERE codice_scuola = '{$scuola->getId()}' ORDER BY anno_scolastico DESC";
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $scuola,
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiDaClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
     
     /**
      * getScuolaDaCodice estrae dal database una scuola.

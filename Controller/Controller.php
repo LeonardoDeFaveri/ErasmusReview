@@ -74,6 +74,7 @@ class Controller {
                     header('Location: View/homeDocente.php?errore=1');
                     exit();
                 }
+                $_SESSION['classi'] = serialize($this->modello->getClassiDaDocente($docente));
                 $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
                 $_SESSION['docente'] = serialize($docente);
                 header('Location: View/homeDocente.php');
