@@ -205,9 +205,11 @@ class Controller {
             case 'cambio-password':
                 $digest=hash('sha256', $_POST["password"]);
                 //modificaPassword restituisce true o false
-                if($modello->modificaPassword($digest)!=true){
+                if(!$this->modello->modificaPassword($digest)){
                     header('Location: View/gestioneAccount.php?errore=2');
+                    exit();
                 }
+                header('Location: View/gestioneAccount.php?successo=true');
                 exit();
             break;
             
@@ -216,15 +218,10 @@ class Controller {
             break;
         }
     }
-
 }
-
-
-
 /*
 In alcuni casi di errore si viene reindirizzati alla pagina di "origine" con un parmetro del tipo ?errore=1
 il numero rappresenta un tipo di errore, la lista che associa il numero con l'errore è sulla wiki di github
 (https://github.com/LeonardoDeFaveri/ErasmusAdvisor/wiki/Struttura-del-sito)
-*/ 
-
+*/
 ?>

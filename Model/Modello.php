@@ -472,7 +472,7 @@ class Modello {
     /**
      * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
      * 
-     * @param type $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
+     * @param int $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
      */
     public function getEsperienzeDaAgenzia($idAgenzia){
         $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
@@ -805,7 +805,7 @@ class Modello {
     }
     
     public function modificaPassword($digest) {
-        $query = "UPDATE utenti SET password=\"$digest\" WHERE email=\"{$_SESSION["email"]}\";";
+        $query = "UPDATE utenti SET password='{$digest}' WHERE email='{$_SESSION["email_utente"]}'";
         $ris=$this->connessione->query($query);
         if($ris!=true){
             $ris=false;    
