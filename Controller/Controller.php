@@ -86,7 +86,8 @@ class Controller {
                     exit();
                 }
                 $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia->getId()));
-                 header('Location: View/homeAgenzia.php');
+                $_SESSION['agenzia'] = serialize($agenzia);
+                header('Location: View/homeAgenzia.php');
                 break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);

@@ -78,6 +78,12 @@ INSERT INTO classi_studenti (id_studente, id_classe, dal, al) VALUES
     (4, 1, '2019-9-1', '2020-10-31'),
     (5, 1, '2019-9-1', '2020-10-31');
 
+DELETE FROM classi_docenti;
+INSERT INTO classi_docenti (id_docente, id_classe, dal, al) VALUES 
+	(1,1,'2019-9-1', '2020-10-31'),
+	(2,1,'2019-9-1', '2020-10-31'),
+	(3,1,'2019-9-1', '2020-10-31');
+
 DELETE FROM percorsi;
 INSERT INTO percorsi (id, id_docente, id_classe,dal,al) VALUES 
     (1, 1, 1,"2019-10-01","2019-10-31"),
