@@ -9,15 +9,15 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Esperienze");
-if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
+if(isset($_GET['errore']) || !isset($_SESSION['agenzia'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
-        <h2>Devi aver eseguito l'accesso come studente per poter vedere questa pagina</h2>
+        <h2>Devi aver eseguito l'accesso come agenzia per poter vedere questa pagina</h2>
         <a href="login.php">Accedi</a>
     testo;
 }else{
-    $studente = unserialize($_SESSION['studente']);
-    $html .= creaBarraMenu($studente->getEmail());
+    $agenzia = unserialize($_SESSION['agenzia']);
+    $html .= creaBarraMenu($agenzia->getEmail());
 
     if(isset($_SESSION['esperienze'])){
         $esperienze = unserialize($_SESSION['esperienze']);

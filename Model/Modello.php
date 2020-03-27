@@ -479,13 +479,12 @@ class Modello {
         $ris = $this->connessione->query($query);
         $esperienze=null;
         $esperienza = null;
-        $i=0;
         if($ris && $ris->num_rows>0){
-            $ris = $ris->fetch_assoc();
-            foreach($ris AS $esperienza){
-                $esperienza = $this->getEsperienzaDaId($ris[$id]);
-                $esperienze[$i]=$esperienza; 
-                $i++;
+            //$ris = $ris->fetch_assoc();
+            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            foreach($ris as $esperienza){
+                $esperienza = $this->getEsperienzaDaId($ris['id']);
+                $esperienze[]=$esperienza; 
             }
         } 
         return $esperienze;
