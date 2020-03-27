@@ -7,14 +7,12 @@ function mostraMenuUtente(){
 }
 
 function controlloCorrispondezaPassword(form) { 
-	passwordCorrispondenti=false;
 	password1 = form.password.value;
 	password2 = form.passwordConferma.value; 
 	   
 	if (password1 === password2) { 
-		alert ("Le password non corrispondono") 
-		passwordCorrispondenti=true;
+		return true;
 	}
-	
-	return passwordCorrispondenti;
+	alert ("Le password non corrispondono");
+	return false;
 } 
