@@ -28,6 +28,12 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         $inCorso = array();
         $completati = array();
 
+        $html .=<<<testo
+            <main class="pagina-con-barra-laterale">
+                <div class="contenuto">
+                    <h2>Tutti i percorsi</h2>
+        testo;
+
         foreach ($percorsi as $percorso) {
             if($percorso->getAl() >= date('Y-m-d')){
                 $inCorso[] = $percorso;
@@ -65,10 +71,11 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         testo;
     }
     $html.=<<<testo
-    <hr>
-    <form method="POST" action="../index.php?comando=crea-percorso">
-        <button type="submit" id="crea-percorso">Crea percorso</button>
-    </form>
+                <hr>
+                <form method="POST" action="../index.php?comando=crea-percorso">
+                    <button type="submit" id="crea-percorso">Crea percorso</button>
+                </form>
+            </div>
     testo;
     $html .=<<<testo
             <div class="barra-laterale">
@@ -86,8 +93,6 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                         </ul>
                     </div>
                 </details>
-    testo;
-    $html .=<<<testo
             </div>
         </main>\n
     testo;
@@ -100,7 +105,7 @@ function creaRiquadro($percorso, $daValutare = false) {
     $classe = $percorso->getClasse();
     $scuola = $classe->getScuola();
     $riquadro =<<<testo
-        \t\t\t<div class="riquadro-esperienza">
+        \t\t\t<div class="riquadro">
             \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
             \t\t\t<a href="#">{$scuola->getNome()}</a>
             \t\t\t<hr>
@@ -108,6 +113,5 @@ function creaRiquadro($percorso, $daValutare = false) {
     testo;
     $riquadro .= "\t\t\t\t</div>\n";
     return $riquadro;
-
 }
 ?>

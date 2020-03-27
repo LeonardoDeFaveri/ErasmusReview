@@ -125,12 +125,13 @@ echo $html;
 
 function creaRiquadroPercorso($percorso, $modificabile = false){
     $classe = $percorso->getClasse();
-    $docente = $percorso->getDocente();
+    $scuola = $classe->getScuola();
     $html =<<<testo
-        <div class="riquadro-percorso">
-            <p>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</p>
-            <p>{$docente->getCognome()} {$docente->getNome()}</p>
-            <p>{$percorso->getDal()} - {$percorso->getAl()}</p>\n
+        \t\t\t<div class="riquadro">
+            \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
+            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t<hr>
+            \t\t\t<a href="#">{$percorso->getDal()} {$percorso->getAl()}</a><br>\n
     testo;
     if($modificabile){
         $html .=<<<testo
@@ -145,7 +146,7 @@ function creaRiquadroPercorso($percorso, $modificabile = false){
             </form>\n
         testo;
     }
-    $html .= "</div>\n";
+    $html .= "\t\t\t\t</div>\n";
     return $html;
 }
 ?>

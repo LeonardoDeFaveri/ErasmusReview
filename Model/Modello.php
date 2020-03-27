@@ -403,7 +403,7 @@ class Modello {
      * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getClassiDaDocente($docente) {
-        $query = "SELECT * FROM classi WHERE codice_scuola = '{$scuola->getId()}' ORDER BY anno_scolastico DESC";
+        $query = "SELECT * FROM classi WHERE codice_scuola = '{$docente->getId()}' ORDER BY anno_scolastico DESC";
         $ris = $this->connessione->query($query);
         $classi = array();
         if($ris && $ris->num_rows > 0){
@@ -498,28 +498,25 @@ class Modello {
     /**
      * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
      * 
-     * @param int $idAgenzia è l'id dell'agenzia di cui voglio estrarre le esperienze
+     * @param int $agenzia è l'agenzia per la quale voglio estrarre le esperienze
      */
-    public function getEsperienzeDaAgenzia($idAgenzia){
-        $query="SELECT * FROM esperienze WHERE id_agenzia IS NOT NULL AND id_agenzia = '{$idAgenzia}'";
+    public function getEsperienzeDaAgenzia($agenzia){
+        $query="SELECT * FROM esperienze WHERE id_agenzia = {$agenzia->getId()}";
         $ris = $this->connessione->query($query);
-        $esperienze=null;
-        $esperienza = null;
-        if($ris && $ris->num_rows>0){
+        $esperienze = array();
+        if($ris && $ris->num_rows > 0){
             $ris = $ris->fetch_all(MYSQLI_BOTH);
             foreach($ris as $esperienza){
-                $esperienza=new Esperienza(
-                $esperienza['id'],
-                $this->getStudenteDaId('id_studente'),
-                $this->getPercorsoDaId('id_percorso'),
-                $this->getAgenziaDaId('id_azienda'),
-                $idAgenzia,
-                $this->getFamigliaDaId('id_famiglia'),
-                $esperienza['dal'],
-                $esperienza['al']
-                );          
-                $esperienze[]=$esperienza; 
-
+                $esperienze[] = new Esperienza(
+                    $esperienza['id'],
+                    $this->getStudenteDaId($esperienza['id_studente']),
+                    $this->getPercorsoDaId($esperienza['id_percorso']),
+                    $this->getAziendaDaId($esperienza['id_azienda']),
+                    $agenzia,
+                    $this->getFamigliaDaId($esperienza['id_famiglia']),
+                    $esperienza['dal'],
+                    $esperienza['al']
+                );
             }
         } 
         return $esperienze;

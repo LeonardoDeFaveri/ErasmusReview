@@ -86,7 +86,7 @@ class Controller {
                     header('Location: View/homeAgenzia.php?errore=1');
                     exit();
                 }
-                $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia->getId()));
+                $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia));
                 $_SESSION['agenzia'] = serialize($agenzia);
                 header('Location: View/homeAgenzia.php');
                 break;

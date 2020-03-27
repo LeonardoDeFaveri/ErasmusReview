@@ -189,8 +189,8 @@ details summary{
     padding: var(--default-padding);
 }
 
-/*stile del riquadro che visualizza l'esperienza*/
-.riquadro-esperienza{
+/*stile del riquadro che visualizza le esperienze e i percorsi*/
+.riquadro{
     position: relative;
     background-color: var(--default-elements-background-color-2);
     border: var(--default-border);
@@ -201,7 +201,7 @@ details summary{
     height: 200px;
 }
 
-.riquadro-esperienza a{
+.riquadro a{
     color: var(--default-color);
     text-decoration: none;
     font-style: italic;
@@ -227,7 +227,7 @@ button{
 
 }
 
-.riquadro-esperienza button{
+.riquadro button{
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -249,19 +249,6 @@ button{
 #crea-percorso{
     position: absolute;
     right: 0px;
-}
-
-.riquadro-percorso{
-    position: relative;
-    background-color: var(--default-elements-background-color-2);
-    border: var(--default-border);
-    padding: var(--default-padding);
-    margin: var(--default-margin);
-    text-align: left;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
 }
 
 .riquadro-percorso p{
