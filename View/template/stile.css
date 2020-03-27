@@ -216,3 +216,14 @@ details summary{
     border: var(--default-border);
     border-radius: var(--default-border-radius);
 }
+
+.aggiungiPercorso button{
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+    background-color: var(--default-elements-background-color);
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+}
