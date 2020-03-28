@@ -1,4 +1,15 @@
 START TRANSACTION;
+
+DELETE FROM tipi_utenti;
+INSERT INTO tipi_utenti (tipo_utente) VALUES
+('studente'),
+('docente'),
+('azienda'),
+('agenzia'),
+('scuola'),
+('admin');
+
+
 DELETE FROM utenti;
 INSERT INTO utenti (email, password, tipo_utente) VALUES
     ('leonardo.defaveri@iisvittorioveneto.it', SHA2('leonardo', 256), 'studente'),

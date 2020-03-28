@@ -19,10 +19,18 @@ CREATE TABLE aspetti(
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE tipi_utenti(
+	tipo_utente VARCHAR(50) NOT NULL,
+	PRIMARY KEY(tipo_utente)
+);
+
 CREATE TABLE utenti (
 	email VARCHAR(320) NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	tipo_utente VARCHAR (30) NOT NULL,
+	FOREIGN KEY (tipo_utente) REFERENCES tipi_utenti(tipo_utente)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
 	PRIMARY KEY (email)
 );
 
