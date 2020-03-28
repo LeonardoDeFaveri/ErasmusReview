@@ -28,10 +28,10 @@ CREATE TABLE utenti (
 	email VARCHAR(320) NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	tipo_utente VARCHAR (30) NOT NULL,
+	PRIMARY KEY (email),
 	FOREIGN KEY (tipo_utente) REFERENCES tipi_utenti(tipo_utente)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	PRIMARY KEY (email)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE famiglie(
