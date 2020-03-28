@@ -45,9 +45,10 @@ CREATE TABLE famiglie(
 );
 
 CREATE TABLE modelli_aspetti(
+	id INTEGER NOT NULL AUTO_INCREMENT,
 	id_modello INTEGER NOT NULL,
 	id_aspetto INTEGER NOT NULL,
-	PRIMARY KEY (id_modello,id_aspetto),
+	PRIMARY KEY (id),
 	FOREIGN KEY (id_modello) REFERENCES modelli (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
@@ -227,11 +228,15 @@ CREATE TABLE esperienze(
 
 CREATE TABLE schede_di_valutazione(
 	id INTEGER NOT NULL AUTO_INCREMENT,
+	id_modello INTEGER NOT NULL,
 	id_recensore INTEGER NOT NULL,
 	id_recensito INTEGER NOT NULL,
 	id_esperienza INTEGER NOT NULL,
 	data_ora DATETIME NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (id),
+	FOREIGN KEY (id_modello) REFERENCES modelli(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY (id_esperienza) REFERENCES esperienze(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE

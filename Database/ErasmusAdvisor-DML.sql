@@ -144,16 +144,16 @@ VALUES
 	(9,"Rispetto verso il personale");
 
 DELETE FROM modelli_aspetti;
-INSERT INTO modelli_aspetti (id_modello,id_aspetto) 
+INSERT INTO modelli_aspetti (id, id_modello, id_aspetto) 
 VALUES 
-	(1,1),
-	(1,2),
-	(1,3),
-	(1,4),
-	(2,5),
-	(2,6),
-	(2,7),
-	(2,8),
-	(2,9);
+	(1, 1,1),
+	(2, 1,2),
+	(3, 1,3),
+	(4, 1,4),
+	(5, 2,5),
+	(6, 2,6),
+	(7, 2,7),
+	(8, 2,8),
+	(9, 2,9);
 	
 COMMIT;
