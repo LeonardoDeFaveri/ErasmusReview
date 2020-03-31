@@ -48,7 +48,8 @@ class Modello {
                 $ris['email_utente'],
                 $ris['stato'],
                 $ris['citta'],
-                $ris['telefono']
+                $ris['telefono'],
+                $ris['indirizzo']
             );
         }
         return $agenzia;
@@ -73,7 +74,8 @@ class Modello {
                 $email,
                 $ris['stato'],
                 $ris['citta'],
-                $ris['telefono']
+                $ris['telefono'],
+                $ris['indirizzo']
             );
         }
         return $agenzia;
