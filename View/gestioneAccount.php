@@ -18,47 +18,47 @@ $soggetto=unserialize($_SESSION[$_SESSION["tipo_utente"]]);
 
 switch($_SESSION["tipo_utente"]){
     case "azienda":
-        $html.=<<<TESTO
+        $html.=<<<testo
         <div id="dati-personali">
-            <p><strong>Email:</strong>{$soggetto->getEmail()}</p>
-            <p><strong>Nome:</strong>{$soggetto->getNome()}</p>
-            <p><strong>Stato:</strong>{$soggetto->getStato()}</p>
-            <p><strong>Citt&agrave;:</strong>{$soggetto->getCitta()}</p>
-            <p><strong>Indirizzo:</strong>{$soggetto->getIndirizzo()}</p>
-            <p><strong>Telefono:</strong>{$soggetto->getTelefono()}</p>
+            <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+            <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+            <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
+            <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
+            <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
+            <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>
         </div>
-    TESTO;
+    testo;
         break;
     case "agenzia":
-        $html.=<<<TESTO
+        $html.=<<<testo
         <div>
-            <p><strong>Email:</strong>{$soggetto->getEmail()}</p>
-            <p><strong>Nome:</strong>{$soggetto->getNome()}</p>
-            <p><strong>Stato:</strong>{$soggetto->getStato()}</p>
-            <p><strong>Citt&agrave;:</strong>{$soggetto->getCitta()}</p>
-            <p><strong>Indirizzo:</strong>{$soggetto->getIndirizzo()}</p>
-            <p><strong>Telefono:</strong>{$soggetto->getTelefono()}</p>
+            <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+            <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+            <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
+            <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
+            <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
+            <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>
         </div>
-    TESTO;
+    testo;
         break;
     case "studente":
-        $html.=<<<TESTO
+        $html.=<<<testo
             <div>
-                <p><strong>Email:</strong>{$soggetto->getEmail()}</p>
-                <p><strong>Nome:</strong>{$soggetto->getNome()}</p>
-                <p><strong>Cognome:</strong>{$soggetto->getCognome()}</p>
-                <p><strong>Data di nascita:</strong>{$soggetto->getDataNascita()}</p>
+                <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>
+                <p><strong>Data di nascita: </strong>{$soggetto->getDataNascita()}</p>
             </div>
-        TESTO;
+        testo;
         break;
     case "docente":
-        $html.=<<<TESTO
+        $html.=<<<testo
         <div>
-            <p><strong>Email:</strong>{$soggetto->getEmail()}</p>
-            <p><strong>Nome:</strong>{$soggetto->getNome()}</p>
-            <p><strong>Cognome:</strong>{$soggetto->getCognome()}</p>
+            <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+            <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+            <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>
         </div>
-    TESTO;
+    testo;
         break; 
     case "admin":
         //da creare la classe per l admin

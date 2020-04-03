@@ -11,7 +11,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Esperienze");
+$html = creaHeader("Home Studente");
 if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
