@@ -8,7 +8,7 @@
     --default-border-radius: 3px;
     --default-margin: 5px;
     --default-padding: 5px;
-    --default-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    --default-font-family: "Arial", "Lucida Sans Unicode", sans-serif;
 }
 
 /*Regole di base e definizione delle aree per il grid layout*/
