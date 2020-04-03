@@ -12,32 +12,36 @@ $studenti = unserialize($_SESSION['studenti']);
 
 $html .=<<<testo
     <h2>Tutti gli studenti</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Data di nascita</th>
-            </tr>
-        </thead>
-        <tbody>\n
+    <div class="contenitore-centrato">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Data di nascita</th>
+                    <th>Modifica</th>
+                </tr>
+            </thead>
+            <tbody>\n
 testo;
 
 foreach ($studenti as $studente) {
     $html .=<<<testo
-            <tr>
-                <td>{$studente->getCognome()}</td>
-                <td>{$studente->getNome()}</td>
-                <td>{$studente->getEmail()}</td>
-                <td>{$studente->getDataNascita()}</td>
-            </tr>\n
+                <tr>
+                    <td>{$studente->getCognome()}</td>
+                    <td>{$studente->getNome()}</td>
+                    <td>{$studente->getEmail()}</td>
+                    <td>{$studente->getDataNascita()}</td>
+                    <td><i class="material-icons">mode_edit</i></td>
+                </tr>\n
     testo;
 }
 
 $html .=<<<testo
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 testo;
 
 $html .= creaFooter();
