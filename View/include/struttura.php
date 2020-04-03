@@ -5,7 +5,7 @@ function creaHeader($nomePagina) {
     <!DOCTYPE html>  
     <html>
     <head>
-        <title>{$nomePagina} - ErasmusAdvisor</title>
+        <title>{$nomePagina} - ErasmusReview</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="template/stile.css">
@@ -15,7 +15,7 @@ function creaHeader($nomePagina) {
     <body>
         <div id="barra-superiore">
             <header id="header-principale">
-                <h1><a href="../index.php">ErasmusAdvisor</a></h1>
+                <h1><a href="../index.php">ErasmusReview</a></h1>
             </header>\n
     testo;
     return $html;

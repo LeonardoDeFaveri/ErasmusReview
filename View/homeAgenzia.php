@@ -8,7 +8,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Esperienze");
+$html = creaHeader("Home Agenzia");
 if(isset($_GET['errore']) || !isset($_SESSION['agenzia'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
@@ -48,7 +48,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['agenzia'])){
 
         //Creazione dei riquadri delle esperiene completate
         $html .=<<<testo
-                <details id="completate" open>
+                <details id="completate">
                     <summary>Completate</summary>
                     <div class="contenitore-riquadri">\n
         testo;
