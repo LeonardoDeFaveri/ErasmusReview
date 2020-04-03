@@ -405,7 +405,13 @@ class Modello {
      * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getClassiDaDocente($docente) {
-        $query = "SELECT * FROM classi WHERE id =(SELECT id_classe FROM classi_docenti where id_docente = '{$docente->getId()}') ORDER BY anno_scolastico DESC";
+        $query =<<<testo
+        SELECT C.* FROM classi C
+            INNER JOIN classi_docenti CD
+            ON CD.id_classe = C.id
+        WHERE CD.id_docente = {$docente->getId()}
+        ORDER By C.anno_scolastico DESC
+        testo;
         $ris = $this->connessione->query($query);
         $classi = array();
         if($ris && $ris->num_rows > 0){
@@ -413,7 +419,7 @@ class Modello {
             foreach ($ris as $classe){
                 $classi[] = new Classe(
                     $classe['id'],
-                    $scuola,
+                    $this->getScuolaDaCodice($classe['codice_scuola']),
                     $classe['numero'],
                     $classe['sezione'],
                     $classe['anno_scolastico'],

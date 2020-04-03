@@ -277,6 +277,12 @@ button{
     padding: var(--default-padding);
 }
 
+.contenitore-centrato{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 table, tr, th, td{
     border: var(--default-border);
     border-collapse: collapse;
