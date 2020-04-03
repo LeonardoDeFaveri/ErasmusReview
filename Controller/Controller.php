@@ -197,9 +197,12 @@ class Controller {
                     exit();
                 }
             break;
-            case 'creazione-classi':
+            case 'crea-classe':
                 $scuola = $_GET['codice_scuola'];
-                header('Location: View/creazioneClasse.php');
+                header('Location: View/creaClasse.php');
+                if(isset($_POST['submit'])){
+                    
+                }
                 exit();
             break;
             case 'gestione-account':
