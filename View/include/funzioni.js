@@ -1,9 +1,11 @@
 function mostraMenuUtente(){
-    html="<div id=\"menuUtente\">\n\
-    <a href=\"../index.php?comando=logout\">Esci</a><br>\n\
-    <a href=\"../index.php?comando=gestione-account\">Gestione Account</a>\n\
-    </div>";
-    document.getElementById("utente").innerHTML = html;
+	// $("#menu-utente").show();
+	var menuUtente = document.getElementById("menu-utente");
+	if(menuUtente.style.visibility == "visible") {
+		menuUtente.style.visibility = "hidden";
+	} else {
+		menuUtente.style.visibility = "visible";
+	}
 }
 
 function controlloCorrispondezaPassword(form) { 
