@@ -29,6 +29,18 @@ class Modello {
         }
     }
 
+
+
+    public function getScuole(){
+        $query = "SELECT * FROM scuole;";
+        $risQuery = $connessione->query($query);
+        $array = array();
+        foreach($risQuery as $elemento){
+            $array=new Scuola($elemento["codice_meccanografico"],$elemento["nome"],$elemento["email_utente"],$elemento["citta"],$elemento["indirizzo"]);
+        }
+        return $array;
+    }
+
     /**
      * getAziendaDaId estrae dal database l'azienda associata all'id specificato.
      *

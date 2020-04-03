@@ -57,6 +57,13 @@ class Controller {
                 $cercato = $_POST['cerca'];
             break;
 
+            case 'home-admin':
+                $scuole = getScuole(); 
+                $_SESSION["scuole"]=serialize($scuole);
+                header('Location: View/homeAdmin.php');
+                exit();
+            break;
+
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                 if ($studente == null) {
@@ -68,6 +75,7 @@ class Controller {
                 header('Location: View/homeStudente.php');
                 exit();
             break;
+            
             case 'home-docente':
                 $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                 if ($docente == null) {
