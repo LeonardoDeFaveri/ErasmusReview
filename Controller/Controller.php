@@ -187,6 +187,24 @@ class Controller {
                 
             break;   
             
+            case 'crea-percorso':
+                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                if ($docente != null) {
+                    $_SESSION['docente'] = serialize($docente);
+                    header('Location: View/creaPercorso.php');
+                    exit();
+                }else{
+                    if($scuola != null){
+                        $_SESSION['scuola'] = serialize($scuola);
+                        header('Location: View/creaPercorso.php');
+                        exit();
+                    }
+                    header('Location: View/creaPercorso.php?errore=1');
+                    exit();
+                }
+            break;
+
             case 'modifica-percorso':
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
