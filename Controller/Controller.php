@@ -57,6 +57,13 @@ class Controller {
                 $cercato = $_POST['cerca'];
             break;
 
+            case 'home-admin':
+                $scuole = getScuole(); 
+                $_SESSION["scuole"]=serialize($scuole);
+                header('Location: View/homeAdmin.php');
+                exit();
+            break;
+
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                 if ($studente == null) {
@@ -68,6 +75,7 @@ class Controller {
                 header('Location: View/homeStudente.php');
                 exit();
             break;
+            
             case 'home-docente':
                 $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                 if ($docente == null) {
@@ -122,7 +130,7 @@ class Controller {
             break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id è settato e diverso da null.
+                /* $id = $_GET['id'] ?? -1; controlla se l'id è settato e diverso da null.
                  * Nel caso in cui $_GET[id] non sia settato o sia null, assegno un lavore -1,
                  * che rappresenta un id che nel db non esiste di conseguenza la query mi darà null.
                  */
@@ -213,15 +221,23 @@ class Controller {
                     exit();
                 }
             break;
+
+            case 'crea-percorso':
+            break;
+            case 'crea-classe':
+                header('Location: View/creaClasse.php');
+                if(isset($_POST['submit'])){
+                    
+                }
+                exit();
+            break;
             
             case 'gestione-account':
                 header('Location: View/gestioneAccount.php');
                 exit();
-            break; 
-            
+            break;
             case 'cambio-password':
                 $digest=hash('sha256', $_POST["password"]);
-                //modificaPassword restituisce true o false
                 if(!$this->modello->modificaPassword($digest)){
                     header('Location: View/gestioneAccount.php?errore=2');
                     exit();

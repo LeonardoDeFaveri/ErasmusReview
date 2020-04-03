@@ -104,7 +104,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                     <summary>Classi e studenti</summary>
                     <div>
                         <a href="../index.php?comando=mostra-studenti&codice_scuola={$scuola->getId()}">Tutti gli studenti</a><br>
-                        <a href="#">Aggiungi Classe</a>
+                        <a href="../index.php?comando=crea-classe&codice_scuola={$scuola->getId()}">Aggiungi Classe</a>
                         <ul>\n
     testo;
     if(count($classi) > 0){

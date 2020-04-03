@@ -116,8 +116,8 @@ main{
 fieldset{
     margin: var(--default-margin);
     font-size: larger;
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
     border: var(--default-border);
     border-radius: var(--default-border-radius);
     display: inline-block;
@@ -277,6 +277,12 @@ button{
     padding: var(--default-padding);
 }
 
+.contenitore-centrato{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 table, tr, th, td{
     border: var(--default-border);
     border-collapse: collapse;
@@ -287,4 +293,17 @@ table, tr, th, td{
 th{
     background-color: var(--default-elements-background-color);
     text-align: center;
+}
+
+#gestione-account{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--default-padding);
+}
+
+#gestione-account div{
+    width: auto;
+    margin: var(--default-margin);
+    text-align: left;
 }
