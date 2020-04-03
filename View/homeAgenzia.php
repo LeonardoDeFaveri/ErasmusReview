@@ -48,7 +48,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['agenzia'])){
 
         //Creazione dei riquadri delle esperiene completate
         $html .=<<<testo
-                <details id="completate" open>
+                <details id="completate">
                     <summary>Completate</summary>
                     <div class="contenitore-riquadri">\n
         testo;

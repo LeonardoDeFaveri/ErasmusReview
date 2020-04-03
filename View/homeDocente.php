@@ -77,6 +77,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                 </form>
             </div>
     testo;
+
+    //creazione barra laterale
     $html .=<<<testo
             <div class="barra-laterale">
                 <details open>
@@ -86,7 +88,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     testo;
     if(count($classi) > 0){
         foreach ($classi as $classe){
-            $html .= "<li>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</li>\n";
+            $html .= "<li><a href=\"#\">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a></li>\n";
         }
     }
     $html .=<<<testo
