@@ -33,7 +33,7 @@ foreach ($studenti as $studente) {
                     <td>{$studente->getNome()}</td>
                     <td>{$studente->getEmail()}</td>
                     <td>{$studente->getDataNascita()}</td>
-                    <td><i class="material-icons">mode_edit</i></td>
+                    <td><a href="#"><i class="material-icons">mode_edit</i></a></td>
                 </tr>\n
     testo;
 }
