@@ -21,7 +21,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $as = $as . "/" . date("Y");
     $html.=<<<testo
             <div>
-                <hr>
+            <h2>Crea classe</h2>
                 <form method="POST" action="../index.php?comando=crea-classe">
                     <label>Numero sezione</label>
                     <input type="number" name="numero_classe" min="1" required><br>

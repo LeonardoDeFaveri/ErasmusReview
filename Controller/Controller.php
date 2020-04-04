@@ -221,9 +221,6 @@ class Controller {
                     exit();
                 }
             break;
-
-            case 'crea-percorso':
-            break;
             case 'crea-classe':
                 header('Location: View/creaClasse.php');
                 if(isset($_POST['submit'])){
