@@ -30,6 +30,10 @@ function creaBarraMenu($emailUtente) {
         {$utente}    
             </div>
         </div>
+        <div id="menu-utente">
+            <a href="../index.php?comando=gestione-account">Gestione Account</a><br>
+            <a href="../index.php?comando=logout">Logout</a>
+        </div>
         <main>\n
     testo;
     return $html;

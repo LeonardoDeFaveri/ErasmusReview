@@ -130,7 +130,7 @@ class Controller {
             break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
-                /* $id = $_GET['id'] ?? -1; controlla se l id è settato e diverso da null.
+                /* $id = $_GET['id'] ?? -1; controlla se l'id è settato e diverso da null.
                  * Nel caso in cui $_GET[id] non sia settato o sia null, assegno un lavore -1,
                  * che rappresenta un id che nel db non esiste di conseguenza la query mi darà null.
                  */
@@ -188,7 +188,23 @@ class Controller {
             break;   
             
             case 'crea-percorso':
+                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                if ($docente != null) {
+                    $_SESSION['docente'] = serialize($docente);
+                    header('Location: View/creaPercorso.php');
+                    exit();
+                }else{
+                    if($scuola != null){
+                        $_SESSION['scuola'] = serialize($scuola);
+                        header('Location: View/creaPercorso.php');
+                        exit();
+                    }
+                    header('Location: View/creaPercorso.php?errore=1');
+                    exit();
+                }
             break;
+
             case 'modifica-percorso':
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
@@ -205,22 +221,23 @@ class Controller {
                     exit();
                 }
             break;
+
+            case 'crea-percorso':
+            break;
             case 'crea-classe':
-                $scuola = $_GET['codice_scuola'];
                 header('Location: View/creaClasse.php');
                 if(isset($_POST['submit'])){
                     
                 }
                 exit();
             break;
+            
             case 'gestione-account':
                 header('Location: View/gestioneAccount.php');
                 exit();
-            break; 
-            
+            break;
             case 'cambio-password':
                 $digest=hash('sha256', $_POST["password"]);
-                //modificaPassword restituisce true o false
                 if(!$this->modello->modificaPassword($digest)){
                     header('Location: View/gestioneAccount.php?errore=2');
                     exit();

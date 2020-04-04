@@ -88,7 +88,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     testo;
     if(count($classi) > 0){
         foreach ($classi as $classe){
-            $html .= "<li><a href=\"#\">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a></li>\n";
+            $html .= "<li><a href=\"#\">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<a/></li>\n";
         }
     }
     $html .=<<<testo
