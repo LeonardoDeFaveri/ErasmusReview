@@ -3,7 +3,7 @@
 function creaHeader($nomePagina) {
     $html = <<<testo
     <!DOCTYPE html>  
-    <html>
+    <html lang="it">
     <head>
         <title>{$nomePagina} - ErasmusReview</title>
         <meta charset="UTF-8">

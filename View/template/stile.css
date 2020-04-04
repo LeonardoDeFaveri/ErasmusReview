@@ -73,7 +73,7 @@ nav{
     background-color: var(--default-elements-background-color);
     cursor: pointer;
     font-size: large;
-    padding: auto;
+    padding: var(--default-padding);
 }
 
 #ricerca input[type="text"], #ricerca form button[type="submit"]{
@@ -288,7 +288,7 @@ button{
 .barra-laterale{
     float: right;
     min-width: 250px;
-    max-width: auto;
+    max-width:fit-content;
     text-align: left;
 }
 

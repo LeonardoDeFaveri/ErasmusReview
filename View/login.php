@@ -21,9 +21,9 @@ $html .= <<<testo
             <legend>Accedi al tuo account</legend>
             <form method="POST" action="../index.php">
                 <label for="email">Indirizzo email</label><br>
-                <input type="email" name="email" placeholder="Indirizzo email" autocomplete="" required><br>
+                <input type="email" name="email" placeholder="Indirizzo email"  required><br>
                 <label for="password">Password</label><br>
-                <input type="password" name="password" placeholder="Password" autocomplete="" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
                 <input type="submit" name="login" value="Accedi">
             </form>
         </fieldset>\n
