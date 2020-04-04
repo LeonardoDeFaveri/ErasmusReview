@@ -22,18 +22,29 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <form method="POST" action="../index.php?comando=crea-classe">
-                    <label>Numero sezione</label>
-                    <input type="number" name="numero_classe" min="1" required><br>
-                    <label>Sezione</label>
-                    <input type=text name="sezione_classe" reqiured><br>
-                    <label>Anno scolastico</label>
-                    <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
-                    <input type="submit" id="crea-classe" value="Crea classe">
-                </form>
+                <fieldset id="crea-classe">
+                    <legend>Creazione classe</legend>
+                    <form method="POST" action="../index.php?comando=crea-classe">
+                        <label>Numero sezione</label>
+                        <input type="number" name="numero_classe" min="1" required><br>
+                        <label>Sezione</label>
+                        <input type=text name="sezione_classe" reqiured><br>
+                        <label>Anno scolastico</label>
+                        <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
+                    
+    testo;
+    $studenti= unserialize($_SESSION['studenti']);
+    var_dump($studenti);
+    foreach($studenti as $studente){
+        $html.="<input type='checkbox' value='{$studente->getCognome()}'><br>";
+    }
+}
+    $html.=<<<testo
+                        <input type="submit" value="Crea classe">
+                    </form>
+                </fieldset>
             </div>
     testo;
-}
 
 $html .= creaFooter();
 echo $html;

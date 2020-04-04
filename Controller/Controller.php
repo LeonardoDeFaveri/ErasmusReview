@@ -222,6 +222,9 @@ class Controller {
                 }
             break;
             case 'crea-classe':
+                $scuola= unserialize($_SESSION['scuola']);
+                $studenti= $this->modello->getStudentiDaScuola($scuola->getId());
+                $_SESSION['studenti']=$studenti;
                 header('Location: View/creaClasse.php');
                 if(isset($_POST['submit'])){
                     
