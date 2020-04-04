@@ -58,7 +58,7 @@ class Controller {
             break;
 
             case 'home-admin':
-                $scuole = getScuole(); 
+                $scuole = $this->modello->getScuole(); 
                 $_SESSION["scuole"]=serialize($scuole);
                 header('Location: View/homeAdmin.php');
                 exit();

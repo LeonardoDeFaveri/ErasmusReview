@@ -33,7 +33,7 @@ class Modello {
 
     public function getScuole(){
         $query = "SELECT * FROM scuole;";
-        $risQuery = $connessione->query($query);
+        $risQuery = $this->connessione->query($query);
         $array = array();
         foreach($risQuery as $elemento){
             $array=new Scuola($elemento["codice_meccanografico"],$elemento["nome"],$elemento["email_utente"],$elemento["citta"],$elemento["indirizzo"]);

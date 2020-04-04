@@ -40,6 +40,7 @@ else{
             <td>{$elemento->getEmail()}</td>
             <td>{$elemento->getCitta()}</td>
             <td>{$elemento->getIndirizzo()}</td>
+            <td>{$elemento->getIndirizzo()}</td>
         </tr>\n
     testo;
     }

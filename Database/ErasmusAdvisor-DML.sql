@@ -12,7 +12,7 @@ INSERT INTO tipi_utenti (tipo_utente) VALUES
 
 DELETE FROM utenti;
 INSERT INTO utenti (email, password, tipo_utente) VALUES
-	('admin',SHA2('admin',256),'admin'),
+	('admin',SHA2('admin@gmail.com',256),'admin'),
     ('leonardo.defaveri@iisvittorioveneto.it', SHA2('leonardo', 256), 'studente'),
     ('riccardo.pavetta@iisvittorioveneto.it', SHA2('riccardo', 256), 'studente'),
     ('alessandro.rizzo@iisvittorioveneto.it', SHA2('alessandro', 256), 'studente'),
