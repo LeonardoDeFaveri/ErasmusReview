@@ -18,7 +18,7 @@ if(!isset($_SESSION['email_utente'])) {
         <h2>Devi aver eseguito l'accesso con un account per poter vedere questa pagina</h2>
         <a href="login.php">Accedi</a>
     testo;
-}else{
+}else if($_SESSION["tipo_utente"]!="admin"){
     $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
     $html .= creaBarraMenu($_SESSION["email_utente"]);
 
@@ -100,7 +100,43 @@ if(!isset($_SESSION['email_utente'])) {
         </fieldset>
         </div>\n
     testo; 
+}else{
+    $html.=<<<testo
+
+        </div>
+    testo;
 }
 
 $html.=creaFooter();
 echo $html;
+
+
+function creaForm(){
+    $html=<<<testo
+    </div class="contenitore-centrato">
+    <fieldset>
+    <legend>Modifica password</legend>
+        <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
+            <label>Cambia password:</label><br>
+            <input type="password" name="password" required><br>
+            <label>Conferma password</label><br>
+            <input type="password" name="passwordConferma" required><br>
+            <input type="submit">
+        </form>
+    </fieldset>
+    </div>\n
+    <div>
+    <fieldset>
+    <legend>Modifica email</legend>
+        <form method="POST" action="../index.php?comando=cambio-email">           
+            <label>Cambia email:</label><br>
+            <input type="email" name="password" required><br>
+            <label>Conferma email:</label><br>
+            <input type="email" name="passwordConferma" required><br>
+            <input type="submit">
+        </form>
+    </fieldset>
+    
+    </div>
+    testo;
+}

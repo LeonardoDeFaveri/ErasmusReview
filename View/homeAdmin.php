@@ -4,32 +4,36 @@
     $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 
-$html = creaHeader("Esperienze");
+$html = creaHeader("Home Admin");
 
-if(isset($_GET['errore']) || !isset($_SESSION['agenzia'])){
+if(isset($_GET['errore']) || !isset($_SESSION['tipo_utente']) || $_SESSION['tipo_utente']!='admin'){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come agenzia per poter vedere questa pagina</h2>
         <a href="login.php">Accedi</a>
     testo;
 }
-else{   
+else{ 
+    $html .= creaBarraMenu($_SESSION["email_utente"]);  
     $scuole=unserialize($_SESSION["scuole"]);
 
     $html.=<<<testo
-        <table>
-            <thead>
-                <tr>
-                    <th>Codeice Meccanografico</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Citt&agrave;</th>
-                    <th>Indirizzo</th>
-                    <th>Modifica</th>
-                </tr>
-            </thead>
-            <tbody>
+        <h2>Tutti gli account scuola</h2>
+        <div class="contenitore-centrato">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codeice Meccanografico</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Citt&agrave;</th>
+                        <th>Indirizzo</th>
+                        <th>Modifica</th>
+                    </tr>
+                </thead>
+                <tbody>
     testo;
 
     foreach($scuole as $elemento){  
@@ -40,10 +44,15 @@ else{
             <td>{$elemento->getEmail()}</td>
             <td>{$elemento->getCitta()}</td>
             <td>{$elemento->getIndirizzo()}</td>
-            <td>{$elemento->getIndirizzo()}</td>
+            <td><a href="?comando=modifica-account-scuole"><i class="material-icons">mode_edit</i></a></td>
         </tr>\n
     testo;
     }
+    $html.=<<<testo
+                </tbody>
+            </table>
+        </div>
+    testo;
 
     $html .= creaFooter();
     echo $html;
