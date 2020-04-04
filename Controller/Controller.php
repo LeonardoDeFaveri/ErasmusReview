@@ -184,9 +184,8 @@ class Controller {
                     header('Location: View/mostraEsperienza.php?errore=1');
                     exit();
                 }
-                
-            break;   
-            
+            break;
+
             case 'crea-percorso':
                 $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                 $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
@@ -204,7 +203,6 @@ class Controller {
                     exit();
                 }
             break;
-
             case 'modifica-percorso':
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
