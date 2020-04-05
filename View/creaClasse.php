@@ -24,7 +24,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <fieldset id="crea-classe">
+                <fieldset id="form-creazione-classe">
                     <legend>Creazione classe</legend>
                     <form method="POST" action="../index.php?comando=crea-classe">
                         <label>Numero sezione</label>
@@ -33,18 +33,23 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                         <input type=text name="sezione_classe" reqiured><br>
                         <label>Anno scolastico</label>
                         <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
-                    
+                        <div id="lista-studenti">\n
     testo;
     $studenti = unserialize($_SESSION['studenti']);
     foreach($studenti as $studente){
-        $html.="<input type='checkbox' value='{$studente->getCognome()}'><br>";
+        $email = $studente->getEmail();
+        $html .=<<<testo
+            <input type="checkbox" id="{$email}" name="studenti[]" value="{$email}"><br>
+            <label for="{$email}">{$studente->getCognome()} {$studente->getNome()}</label><br>\n
+        testo;
     }
 }
-    $html.=<<<testo
+    $html .=<<<testo
+                        </div>
                         <input type="submit" value="Crea classe">
                     </form>
                 </fieldset>
-            </div>
+            </div>\n
     testo;
 
 $html .= creaFooter();

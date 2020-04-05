@@ -184,6 +184,7 @@ class Modello {
             INNER JOIN docenti_scuole DS
             ON DS.id_docente = D.id
         WHERE DS.codice_scuola = '{$scuola->getId()}'
+        ORDER BY D.cognome, D.nome
         testo;
         $ris = $this->connessione->query($query);
         $docenti = array();
@@ -319,6 +320,7 @@ class Modello {
             INNER JOIN scuole SC
             ON SC.codice_meccanografico = C.codice_scuola
         WHERE SC.codice_meccanografico = '{$codiceMeccanografico}'
+        ORDER BY S.cognome, S.nome
         testo;
         $ris = $this->connessione->query($query);
         $studenti = array();
@@ -471,7 +473,7 @@ class Modello {
      * @return Scuola[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getScuole(){
-        $query = "SELECT * FROM scuole;";
+        $query = "SELECT * FROM scuole";
         $ris = $this->connessione->query($query);
         $scuole = array();
         if($ris && $ris->num_rows > 0){
@@ -523,7 +525,7 @@ class Modello {
      * @return Agenzia[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getEsperienzeDaAgenzia($agenzia){
-        $query="SELECT * FROM esperienze WHERE id_agenzia = {$agenzia->getId()}";
+        $query="SELECT * FROM esperienze WHERE id_agenzia = {$agenzia->getId()} ORDER BY dal DESC";
         $ris = $this->connessione->query($query);
         $esperienze = array();
         if($ris && $ris->num_rows > 0){
@@ -631,7 +633,7 @@ class Modello {
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaDocente($docente) {
-        $query = "SELECT * FROM percorsi WHERE id_docente = {$docente->getId()}";
+        $query = "SELECT * FROM percorsi WHERE id_docente = {$docente->getId()} ORDER BY dal DESC";
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
@@ -666,6 +668,7 @@ class Modello {
             INNER JOIN percorsi P
                 ON CS.id_classe = P.id_classe
         WHERE S.id = {$studente->getId()}
+        ORDER BY P.dal DESC
         testo;
         $ris = $this->connessione->query($query);
         $percorsi = array();
@@ -695,7 +698,8 @@ class Modello {
         SELECT P.* FROM percorsi P
             INNER JOIN classi C
             ON C.id = P.id_classe
-        WHERE C.codice_scuola = 'TVTF007017'
+        WHERE C.codice_scuola = '{$scuola->getId()}'
+        ORDER BY P.dal DESC
         testo;
         $ris = $this->connessione->query($query);
         $percorsi = array();

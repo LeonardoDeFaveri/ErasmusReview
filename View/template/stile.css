@@ -326,3 +326,12 @@ th{
     margin: var(--default-margin);
     text-align: left;
 }
+
+#form-creazione-classe{
+    height: unset;
+    width: unset;
+}
+
+#lista-studenti{
+    display: flex;
+}
