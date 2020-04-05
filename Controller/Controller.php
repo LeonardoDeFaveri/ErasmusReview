@@ -220,14 +220,15 @@ class Controller {
                 }
             break;
             case 'crea-classe':
-                $scuola= unserialize($_SESSION['scuola']);
-                $studenti= $this->modello->getStudentiDaScuola($scuola->getId());
-                $_SESSION['studenti']=$studenti;
-                header('Location: View/creaClasse.php');
+                $scuola = unserialize($_SESSION['scuola']);
+                $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
+                $_SESSION['studenti'] = serialize($studenti);
                 if(isset($_POST['submit'])){
                     
+                }else{
+                    header('Location: View/creaClasse.php');
+                    exit();
                 }
-                exit();
             break;
             
             case 'gestione-account':
@@ -235,8 +236,8 @@ class Controller {
                 exit();
             break;
             case 'cambio-password':
-                $digest=hash('sha256', $_POST["password"]);
-                if(!$this->modello->modificaPassword($digest)){
+                $digest = hash('sha256', $_POST["password"]);
+                if(!$this->modello->modificaPassword($_SESSION['email_utente'], $digest)){
                     header('Location: View/gestioneAccount.php?errore=2');
                     exit();
                 }
@@ -245,7 +246,7 @@ class Controller {
             break; 
 
             case 'cambio-email':
-                if(!$this->modello->modificaEmail($_POST["email"])){
+                if(!$this->modello->modificaEmail($_SESSION['email-utente'], $_POST["email"])){
                     header('Location: View/gestioneAccount.php?errore=2');
                     exit();
                 }

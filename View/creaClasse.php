@@ -1,10 +1,12 @@
 <?php
-    if(session_id() == ''){
+if(session_id() == ''){
     session_start();
     $_SESSION['root'] = __DIR__ . "/../";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Crea Classe");
@@ -33,8 +35,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                         <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
                     
     testo;
-    $studenti= unserialize($_SESSION['studenti']);
-    var_dump($studenti);
+    $studenti = unserialize($_SESSION['studenti']);
     foreach($studenti as $studente){
         $html.="<input type='checkbox' value='{$studente->getCognome()}'><br>";
     }
