@@ -27,20 +27,32 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                 <fieldset id="form-creazione-classe">
                     <legend>Creazione classe</legend>
                     <form method="POST" action="../index.php?comando=crea-classe">
-                        <label>Numero sezione</label>
-                        <input type="number" name="numero_classe" min="1" required><br>
-                        <label>Sezione</label>
-                        <input type=text name="sezione_classe" reqiured><br>
-                        <label>Anno scolastico</label>
-                        <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
-                        <div id="lista-studenti">\n
+                        <div class="dati">
+                            <div class="riga">
+                                <label>Numero sezione</label>
+                                <input type="number" name="numero_classe" min="1" required><br>
+                            </div>
+                            <div class="riga">
+                                <label>Sezione</label>
+                                <input type=text name="sezione_classe" reqiured><br>
+                            </div>
+                            <div class="riga">
+                                <label>Anno scolastico</label>
+                                <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
+                            </div>
+                        </div>
+                        <hr>
+                        <p>Assegna gli studenti alla classe</p>
+                        <div class="lista-checkbox">  
     testo;
     $studenti = unserialize($_SESSION['studenti']);
     foreach($studenti as $studente){
         $email = $studente->getEmail();
         $html .=<<<testo
-            <input type="checkbox" id="{$email}" name="studenti[]" value="{$email}"><br>
-            <label for="{$email}">{$studente->getCognome()} {$studente->getNome()}</label><br>\n
+            <label>
+                <input type="checkbox" id="{$email}" name="studenti[]" value="{$email}">
+                {$studente->getCognome()} {$studente->getNome()}
+            </label>
         testo;
     }
 }

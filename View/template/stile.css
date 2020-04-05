@@ -50,11 +50,6 @@ body{
     height: 90px;
 }
 
-nav{
-    padding: var(--default-padding);
-    flex-grow: 100;
-}
-
 #ricerca{
     display: flex;
     align-items: center;
@@ -329,9 +324,39 @@ th{
 
 #form-creazione-classe{
     height: unset;
-    width: unset;
+    width: fit-content;
 }
 
-#lista-studenti{
+#form-creazione-classe form{
+    text-align: left;
+}
+
+.dati{
     display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: left;
+}
+
+.riga{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.riga label{
+    flex-grow: 100;
+    margin-right: var(--default-margin);
+}
+
+.riga input{
+    width: 150px;
+}
+
+.lista-checkbox{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
