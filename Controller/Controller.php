@@ -242,6 +242,15 @@ class Controller {
                 }
                 header('Location: View/gestioneAccount.php?successo=true');
                 exit();
+            break; 
+
+            case 'cambio-email':
+                if(!$this->modello->modificaEmail($_POST["email"])){
+                    header('Location: View/gestioneAccount.php?errore=2');
+                    exit();
+                }
+                header('Location: View/gestioneAccount.php?successo=true');
+                exit();
             break;
             
             default:

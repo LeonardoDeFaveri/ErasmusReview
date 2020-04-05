@@ -12,6 +12,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 
 $html = creaHeader("Gestione Account");
 
+//controllo se ha effettuato l'accesso
 if(!isset($_SESSION['email_utente'])) {
     $html .= creaBarraMenu("");
     $html .=<<<testo
@@ -19,6 +20,7 @@ if(!isset($_SESSION['email_utente'])) {
         <a href="login.php">Accedi</a>
     testo;
 }else if($_SESSION["tipo_utente"]!="admin"){
+    //controllo se il tipo di utente è diverso da admin
     $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
     $html .= creaBarraMenu($_SESSION["email_utente"]);
 
@@ -80,16 +82,24 @@ if(!isset($_SESSION['email_utente'])) {
                     <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>\n
             testo;
         break;
-        case 'admin':
-            //da creare la classe per l admin
-            $html="";
-        break;
     }
     
-    $html.=<<<testo
-        </div>
+    $html.=creaFormCambioPassw();
+}else{
+    //se il tipo di utente è admin creo i form
+    $html.=creaFormCambioPassw();
+    $html.=creaFormCambioEmail();
+}
+
+$html.=creaFooter();
+echo $html;
+
+
+function creaFormCambioPassw(){
+    $html=<<<testo
+    <div>
         <fieldset>
-        <legend>Modifica password</legend>
+            <legend>Modifica password</legend>
             <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
                 <label>Cambia password:</label><br>
                 <input type="password" name="password" required><br>
@@ -98,45 +108,24 @@ if(!isset($_SESSION['email_utente'])) {
                 <input type="submit">
             </form>
         </fieldset>
-        </div>\n
-    testo; 
-}else{
-    $html.=<<<testo
-
-        </div>
-    testo;
-}
-
-$html.=creaFooter();
-echo $html;
-
-
-function creaForm(){
-    $html=<<<testo
-    </div class="contenitore-centrato">
-    <fieldset>
-    <legend>Modifica password</legend>
-        <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
-            <label>Cambia password:</label><br>
-            <input type="password" name="password" required><br>
-            <label>Conferma password</label><br>
-            <input type="password" name="passwordConferma" required><br>
-            <input type="submit">
-        </form>
-    </fieldset>
-    </div>\n
-    <div>
-    <fieldset>
-    <legend>Modifica email</legend>
-        <form method="POST" action="../index.php?comando=cambio-email">           
-            <label>Cambia email:</label><br>
-            <input type="email" name="password" required><br>
-            <label>Conferma email:</label><br>
-            <input type="email" name="passwordConferma" required><br>
-            <input type="submit">
-        </form>
-    </fieldset>
-    
     </div>
     testo;
+    return $html;
+}
+function creaFormCambioEmail(){
+    $html=<<<testo
+    <div>
+        <fieldset>
+            <legend>Modifica email</legend>
+            <form method="POST" action="../index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
+                <label>Cambia email:</label><br>
+                <input type="email" name="email" required><br>
+                <label>Conferma email:</label><br>
+                <input type="email" name="emailConferma" required><br>
+                <input type="submit">
+            </form>
+        </fieldset>
+    </div>
+    testo;
+    return $html;
 }

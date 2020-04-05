@@ -841,5 +841,14 @@ class Modello {
         }
         return $ris;
     }
+    
+    public function modificaEmail($email) {
+        $query = "UPDATE utenti SET email='{$email}' WHERE email='{$_SESSION["email_utente"]}'";
+        $ris=$this->connessione->query($query);
+        if($ris!=true){
+            $ris=false;    
+        }
+        return $ris;
+    }
 }
 ?>

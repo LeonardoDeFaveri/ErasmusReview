@@ -17,4 +17,15 @@ function controlloCorrispondezaPassword(form) {
 	}
 	alert ("Le password non corrispondono");
 	return false;
+}
+
+function controlloCorrispondezaEmail(form) { 
+	email1 = form.email.value;
+	email2 = form.emailConferma.value; 
+	   
+	if (email1 === email2) { 
+		return true;
+	}
+	alert ("Le email non corrispondono");
+	return false;
 } 
