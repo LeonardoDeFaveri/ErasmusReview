@@ -89,8 +89,10 @@ if(!isset($_SESSION['email_utente'])) {
 }else{
     //se il tipo di utente è admin creo i form
     $html.=creaBarraMenu($_SESSION['email_utente']); 
+    $html.="<div class=\"contenitore-centrato\">";
     $html.=creaFormCambioPassw();
     $html.=creaFormCambioEmail();
+    $html.="</div>";
 }
 
 $html.=creaFooter();
