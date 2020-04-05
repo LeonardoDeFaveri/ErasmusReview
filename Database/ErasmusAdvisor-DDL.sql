@@ -2,8 +2,9 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
 DROP DATABASE IF EXISTS erasmus_advisor;
-CREATE DATABASE erasmus_advisor;
-USE erasmus_advisor;
+DROP DATABASE IF EXISTS erasmus_review;
+CREATE DATABASE erasmus_review;
+USE erasmus_review;
 
 CREATE TABLE modelli (
 	id INTEGER NOT NULL AUTO_INCREMENT,

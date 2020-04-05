@@ -20,7 +20,7 @@ class Modello {
     private $connessione;
 
     public function __construct(){
-        $this->connessione = new mysqli("localhost", "root", "", "erasmus_advisor");
+        $this->connessione = new mysqli("localhost", "root", "", "erasmus_review");
         if ($this->connessione->connect_errno != 0) {
             throw new Exception("Server non raggungibile");
         }
