@@ -20,6 +20,7 @@ if(!isset($_SESSION['email_utente'])) {
         <a href="login.php">Accedi</a>
     testo;
 }else if($_SESSION["tipo_utente"]!="admin"){
+    $html.=creaBarraMenu($_SESSION['email_utente']); 
     //controllo se il tipo di utente è diverso da admin
     $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
     $html .= creaBarraMenu($_SESSION["email_utente"]);
@@ -87,6 +88,7 @@ if(!isset($_SESSION['email_utente'])) {
     $html.=creaFormCambioPassw();
 }else{
     //se il tipo di utente è admin creo i form
+    $html.=creaBarraMenu($_SESSION['email_utente']); 
     $html.=creaFormCambioPassw();
     $html.=creaFormCambioEmail();
 }
