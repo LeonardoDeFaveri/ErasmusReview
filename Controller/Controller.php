@@ -25,7 +25,7 @@ class Controller {
      * fornendole i dati necessari.
      */
     public function invoca() {
-        $comando = 'login';
+        $comando = (isset($_SESSION['tipo_utente'])) ? "home-{$_SESSION['tipo_utente']}" : "login" ; 
         if (isset($_GET['comando'])) {
             $comando = $_GET['comando'];
         }

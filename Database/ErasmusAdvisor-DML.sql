@@ -1,4 +1,5 @@
 START TRANSACTION;
+USE erasmus_review;
 
 DELETE FROM tipi_utenti;
 INSERT INTO tipi_utenti (tipo_utente) VALUES

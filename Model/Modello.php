@@ -29,27 +29,10 @@ class Modello {
         }
     }
 
-
-
-    public function getScuole(){
-        $query = "SELECT * FROM scuole;";
-        $ris = $this->connessione->query($query);
-        $array = array();
-        foreach($ris as $elemento){
-            $array[]=new Scuola($elemento["codice_meccanografico"],
-            $elemento["nome"],
-            $elemento["email_utente"],
-            $elemento["citta"],
-            $elemento["indirizzo"]);
-        }
-        return $array;
-    }
-
     /**
      * getAziendaDaId estrae dal database l'azienda associata all'id specificato.
      *
-     * @param int $id id dell'azienda da estrarre
-     *
+     * @param  int $id id dell'azienda da estrarre
      * @return Azienda se è stata trovata, altirmenti null
      */
     public function getAgenziaDaId($id) {
@@ -74,8 +57,7 @@ class Modello {
     /**
      * getAgenziaDaEmail estrae dal database l'agenzia associata all'email specificata.
      *
-     * @param string $email email dell'agenzia da estrarre
-     *
+     * @param  string $email email dell'agenzia da estrarre
      * @return Agenzia se è stata trovata, altrimenti null
      */
     public function getAgenziaDaEmail($email) {
@@ -99,8 +81,7 @@ class Modello {
     /**
      * getAziendaDaid estrae dal database l'azienda associata all'id specificato.
      *
-     * @param int $id id dell'azienda da estrarre
-     *
+     * @param  int $id id dell'azienda da estrarre
      * @return Azienda se è stata trovata, altirmenti null
      */
     public function getAziendaDaId($id) {
@@ -125,8 +106,7 @@ class Modello {
     /**
      * getAziendaDaEmail estrae dal database l'azienda associata all'email specificata.
      *
-     * @param string $email email dell'azienda da estrarre
-     *
+     * @param  string $email email dell'azienda da estrarre
      * @return Azienda se è stata trovata, altirmenti null
      */
     public function getAziendaDaEmail($email) {
@@ -151,8 +131,7 @@ class Modello {
     /**
      * getDocenteDaId estrae dal database il docente associato all'id specificato.
      *
-     * @param int $id id del docente da estrarre
-     *
+     * @param  int $id id del docente da estrarre
      * @return Docente se è stato trovato, altrimenti null
      */
     public function getDocenteDaId($id) {
@@ -174,8 +153,7 @@ class Modello {
     /**
      * getDocenteDaEmail estrae dal database il docente associato all'email specificata.
      *
-     * @param string $email email del docente da estrarre
-     *
+     * @param  string $email email del docente da estrarre
      * @return Docente se è stato trovato, altrimenti null
      */
     public function getDocenteDaEmail($email) {
@@ -197,7 +175,7 @@ class Modello {
     /**
      * getDocentiDaScuola estrae dal database tutti i docenti di una scuola.
      *
-     * @param Scuola $scuola scuola della quale estrarre gli studenti
+     * @param  Scuola $scuola scuola della quale estrarre gli studenti
      * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getDocentiDaScuola($scuola) {
@@ -210,7 +188,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $docenti = array();
         if ($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach($ris as $docente){
                 $docenti[] = new Docente(
                     $docente['id'],
@@ -227,7 +205,6 @@ class Modello {
      * getFamigliaDaId estrae dal database la famiglia associato all'id specificato.
      *
      * @param  int $id id della famiglia da estrarre
-     *
      * @return Famiglia se è stata trovata, altirmenti null
      */
     public function getFamigliaDaId($id) {
@@ -251,8 +228,7 @@ class Modello {
     /**
      * getStudenteDaId estrae dal database lo studente associato all'id specificato.
      *
-     * @param int $id id dello studente da estrarre
-     *
+     * @param  int $id id dello studente da estrarre
      * @return Studente se è stato trovato, altirmenti null
      */
     public function getStudenteDaId($id) {
@@ -275,8 +251,7 @@ class Modello {
     /**
      * getStudenteDaEmail estrae dal database lo studente associato all'email specificata.
      *
-     * @param string $email email dello studente da estrarre
-     *
+     * @param  string $email email dello studente da estrarre
      * @return Studente se è stato trovato, altirmenti null
      */
     public function getStudenteDaEmail($email) {
@@ -299,8 +274,7 @@ class Modello {
     /**
      * getStudentiDaClasse estrae dal database tutti gli studenti di una classe.
      *
-     * @param int $idClasse id della classe dalla quale estrarre gli studenti
-     *
+     * @param  int $idClasse id della classe dalla quale estrarre gli studenti
      * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getStudentiDaClasse($idClasse) {
@@ -314,7 +288,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $studenti = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $studente) {
                 $studenti[] = new Studente(
                     $studente['id'],
@@ -331,7 +305,7 @@ class Modello {
     /**
      * getStudentiDaScuola estrae dal database tutti gli studenti di una scuola.
      *
-     * @param string $codiceMeccanografico codice meccanografico della scuola
+     * @param  string $codiceMeccanografico codice meccanografico della scuola
      * per la quale estrarre gli studenti
      * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
      */
@@ -349,7 +323,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $studenti = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $studente) {
                 $studenti[] = new Studente(
                     $studente['id'],
@@ -366,8 +340,7 @@ class Modello {
     /**
      * getClasseDaId estrae dal database una classe e i relativi studenti.
      *
-     * @param int $id id della classe da estrarre
-     *
+     * @param  int $id id della classe da estrarre
      * @return Classe se è stata trovata, altrimenti null
      */
     public function getClasseDaId($id) {
@@ -391,7 +364,7 @@ class Modello {
     /**
      * getClassiDaScuola restitusice tutte le classi di una scuola.
      *
-     * @param Scuola $scuola scuola per la quale estrarre le classi
+     * @param  Scuola $scuola scuola per la quale estrarre le classi
      * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getClassiDaScuola($scuola) {
@@ -399,7 +372,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $classi = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $classe){
                 $classi[] = new Classe(
                     $classe['id'],
@@ -417,7 +390,7 @@ class Modello {
     /**
      * getClassiDaDocente restitusice tutte le classi di un docente.
      *
-     * @param Docente $docente docente per la quale estrarre le classi
+     * @param  Docente $docente docente per il quale estrarre le classi
      * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getClassiDaDocente($docente) {
@@ -431,7 +404,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $classi = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $classe){
                 $classi[] = new Classe(
                     $classe['id'],
@@ -449,7 +422,7 @@ class Modello {
     /**
      * getScuolaDaCodice estrae dal database una scuola.
      *
-     * @param string $codiceMeccanografico codice meccanografico della scuola da estrarre
+     * @param  string $codiceMeccanografico codice meccanografico della scuola da estrarre
      * @return Scuola se è stata trovata, altrimenti null
      */
     public function getScuolaDaCodice($codiceMeccanografico) {
@@ -472,7 +445,7 @@ class Modello {
     /**
      * getScuolaDaEmail estrae dal database una scuola.
      *
-     * @param string $email email del responsabile della scuola da estrarre
+     * @param  string $email email del responsabile della scuola da estrarre
      * @return Scuola se è stata trovata, altrimenti null
      */
     public function getScuolaDaEmail($email) {
@@ -493,10 +466,33 @@ class Modello {
     }
 
     /**
+     * getScuole estrae dal database tutte le scuole.
+     *
+     * @return Scuola[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getScuole(){
+        $query = "SELECT * FROM scuole;";
+        $ris = $this->connessione->query($query);
+        $scuole = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $scuola){
+                $scuole[] = new Scuola(
+                    $scuola["codice_meccanografico"],
+                    $scuola["nome"],
+                    $scuola["email_utente"],
+                    $scuola["citta"],
+                    $scuola["indirizzo"]
+                );
+            }
+        }
+        return $scuole;
+    }
+
+    /**
      * getEsperienzaDaId estrae dal database l'esperienza associata all'id dato.
      * 
-     * @param int $id id dell'esperienza da estrarre
-     * 
+     * @param  int $id id dell'esperienza da estrarre
      * @return Esperienza se è stata trovata, altrimenti null
      */
     public function getEsperienzaDaId($id) {
@@ -520,16 +516,18 @@ class Modello {
     }
     
     /**
-     * getEsperienzeDaAgenzia estrae dal database i dati delle esperienze con un id di un agenzia specificato
+     * getEsperienzeDaAgenzia estrae dal database tutte le esperienze
+     * associate ad un'agenzia.
      * 
-     * @param Agenzia $agenzia è l'agenzia per la quale voglio estrarre le esperienze
+     * @param  Agenzia $agenzia agenzia per la quale estrarre le esperienze
+     * @return Agenzia[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getEsperienzeDaAgenzia($agenzia){
         $query="SELECT * FROM esperienze WHERE id_agenzia = {$agenzia->getId()}";
         $ris = $this->connessione->query($query);
         $esperienze = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach($ris as $esperienza){
                 $esperienze[] = new Esperienza(
                     $esperienza['id'],
@@ -549,8 +547,7 @@ class Modello {
     /**
      * getEsperienzeDaStudente estrae dal database tutte le esperienze associate a uno studente.
      *
-     * @param Studente $studente studente del quale estrarre le esperienze
-     *
+     * @param  Studente $studente studente del quale estrarre le esperienze
      * @return Esperienza[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getEsperienzeDaStudente($studente) {
@@ -558,7 +555,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $esperienze = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $esperienza) {
                 $esperienze[] = new Esperienza(
                     $esperienza['id'],
@@ -578,8 +575,7 @@ class Modello {
     /**
      * getEsperienzeDaAzienda estrae dal database tutte le esperienze associate ad un'azienda.
      *
-     * @param Azienda $azienda azienda della quale estrarre le esperienze
-     *
+     * @param  Azienda $azienda azienda della quale estrarre le esperienze
      * @return Esperienza[] se ne sono state trovate, altrimenti un array vuoto
      */
     public function getEsperienzeDaAzienda($azienda) {
@@ -587,7 +583,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $esperienze = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $esperienza) {
                 $esperienze[] = new Esperienza(
                     $esperienza['id'],
@@ -607,8 +603,7 @@ class Modello {
     /**
      * getPercorsoDaId estrae dal database il percorso associato all'id specificato.
      *
-     * @param int $id id del percorso da estrarre
-     *
+     * @param  int $id id del percorso da estrarre
      * @return Percorso se è stato trovato, altrimenti null
      */
     public function getPercorsoDaId($id) {
@@ -630,9 +625,9 @@ class Modello {
 
     /**
      * getPercorsiDaDocente estrae dal database tutti i percorsi di 
-     * PCTO ed Erasmus di un Docente.
+     * PCTO ed Erasmus associati a un Docente.
      *
-     * @param Docente $docente docente per il quale estrarre i percorsi
+     * @param  Docente $docente docente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaDocente($docente) {
@@ -640,7 +635,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $percorso) {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
@@ -658,7 +653,7 @@ class Modello {
      * getPercorsiStudente estrae dal database tutti i percorsi di 
      * PCTO ed Erasmus ai quali ha pertecipato uno studente.
      *
-     * @param Studente $studente studente per il quale estrarre i percorsi
+     * @param  Studente $studente studente per il quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaStudente($studente) {
@@ -675,7 +670,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $percorso) {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
@@ -692,7 +687,7 @@ class Modello {
     /**
      * getPercorsiDaScuola estrae tutti i percorsi effettuati dalle classe di una scuola.
      *
-     * @param Scuola $scuola scuola perla quale estrarre i percorsi
+     * @param  Scuola $scuola scuola perla quale estrarre i percorsi
      * @return Percorso[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getPercorsiDaScuola($scuola) {
@@ -705,7 +700,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $percorsi = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_BOTH);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $percorso) {
                 $percorsi[] = new Percorso(
                     $percorso['id'],
@@ -720,11 +715,10 @@ class Modello {
     }
 
     /**
-     * verificaCredenziali verifica che le coppia email e password siano valide.
+     * verificaCredenziali verifica che la coppia email e password sia valida.
      *
      * @param  string $email indirizzo email
      * @param  string $password password
-     *
      * @return string tipo di utente identificato, altrimenti false
      */
     public function verificaCredenziali($email, $password) {
@@ -740,115 +734,120 @@ class Modello {
     }
 
     /**
+     * modificaPassword modifica la password di un utente.
+     *
+     * @param  string $email email associate all'utente del quale cambiare la password
+     * @param  string $password digest della password modificata
+     * @return bool true se la modifica è andata a buon fine, altrimenti false
+     */
+    public function modificaPassword($email, $password) {
+        $query = "UPDATE utenti SET password='{$password}' WHERE email='$email'";
+        return $this->connessione->query($query);
+    }
+        
+    /**
+     * modificaEmail modifica l'email associata ad un utente.
+     *
+     * @param  string $vecchiaEmail email associata all'utente del quale cambiare l'email
+     * @param  string $nuovaEmail nuova email da associare
+     * @return bool true se la modifica è andata a buon fine, altrimenti false
+     */
+    public function modificaEmail($vecchiaEmail, $nuovaEmail) {
+        $query = "UPDATE utenti SET email='{$nuovaEmail}' WHERE email='{$vecchiaEmail}'";
+        return $this->connessione->query($query);
+    }
+
+    /**
      * insertAgenzia inserisce un'agenzia nel database.
      *
-     * @param Agenzia $agenzia istanza di classe Agenzia da inserire
-     *
+     * @param  Agenzia $agenzia agenzia da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertAgenzia($agenzia) {
-        $query = "INSERT INTO agenzie (nome, email_utente, stato, provincia, citta, telefono) VALUES (";
-        $query .= "{$agenzia->getNome()}, ";
-        $query .= "{$agenzia->getEmail()}, ";
-        $query .= "{$agenzia->getStato()}, ";
-        $query .= "{$agenzia->getProvincia()}, ";
-        $query .= "{$agenzia->getCitta()}, ";
-        $query .= "{$agenzia->getTelefono()})";
-
-        $ris = $this->connessione->query($query);
-        return $ris;
+        $query =<<<testo
+        INSERT INTO agenzie (nome, email_utente, stato, citta, indirizzo, telefono) VALUES (
+            "{$agenzia->getNome()}",
+            "{$agenzia->getEmail()}",
+            "{$agenzia->getStato()}",
+            "{$agenzia->getCitta()}",
+            "{$agenzia->getIndirizzo()}",
+            "{$agenzia->getTelefono()}"
+        testo;
+        return $this->connessione->query($query);
     }
 
     /**
      * insertAzienda inserisce un'azienda nel database.
      *
-     * @param Azienda $azienda istanza di classe Azienda da inserire
-     *
+     * @param  Azienda $azienda azienda da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertAzienda($azienda) {
-        $query = "INSERT INTO agenzie (nome, email_utente, stato, citta, indirizzo, telefono) VALUES (";
-        $query .= "{$azienda->getNome()}, ";
-        $query .= "{$azienda->getEmail()}, ";
-        $query .= "{$azienda->getStato()}, ";
-        $query .= "{$azienda->getCitta()}, ";
-        $query .= "{$azienda->getIndirizzo()}, ";
-        $query .= "{$azienda->getTelefono()})";
-
-        $ris = $this->connessione->query($query);
-        return $ris;
+        $query =<<<testo
+        INSERT INTO agenzie (nome, email_utente, stato, citta, indirizzo, telefono) VALUES (
+            "{$azienda->getNome()}",
+            "{$azienda->getEmail()}",
+            "{$azienda->getStato()}",
+            "{$azienda->getCitta()}",
+            "{$azienda->getIndirizzo()}",
+            "{$azienda->getTelefono()}"
+        )
+        testo;
+        return $this->connessione->query($query);
     }
 
     /**
      * insertDocente inserisce un docente nel database.
      *
-     * @param Docente $docente istanza di classe Docente da inserire
-     *
+     * @param  Docente $docente docente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertDocente($docente) {
-        $query = "INSERT INTO agenzie (nome, cognome, email_utente) VALUES (";
-        $query .= "{$docente->getNome()}, ";
-        $query .= "{$docente->getCognome()}";
-        $query .= "{$docente->getEmail()})";
-        
-        $ris = $this->connessione->query($query);
-        return $ris;
+        $query =<<<testo
+        INSERT INTO agenzie (nome, cognome, email_utente) VALUES (
+            "{$docente->getNome()}",
+            "{$docente->getCognome()}",
+            "{$docente->getEmail()}"
+        )
+        testo;
+        return $this->connessione->query($query);
     }
 
     /**
      * insertFamiglia inserisce una famiglia nel database.
      *
-     * @param Famiglia $famiglia istanza di classe Famiglia da inserire
-     *
+     * @param  Famiglia $famiglia famiglia da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertFamiglia($famiglia) {
-        $query = "INSERT INTO agenzie (nome, cognome, stato, citta, indirizzo) VALUES (";
-        $query .= "{$famiglia->getNome()}, ";
-        $query .= "{$famiglia->getCognome()}";
-        $query .= "{$famiglia->getStato()}, ";
-        $query .= "{$famiglia->getCitta()}, ";
-        $query .= "{$famiglia->getIndirizzo()})";
-        
-        $ris = $this->connessione->query($query);
-        return $ris;
+        $query =<<<testo
+        INSERT INTO agenzie (nome, cognome, stato, citta, indirizzo) VALUES (
+            "{$famiglia->getNome()}",
+            "{$famiglia->getCognome()}",
+            "{$famiglia->getStato()}",
+            "{$famiglia->getCitta()}",
+            "{$famiglia->getIndirizzo()}"
+        )
+        testo;
+        return $this->connessione->query($query);
     }
 
     /**
      * insertStudente inserisce uno studente nel database.
      *
-     * @param Studente $studente istanza di classe Studente da inserire
-     *
+     * @param  Studente $studente studente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertStudente($studente) {
-        $query = "INSERT INTO agenzie (nome, cognome, email_utente, data_nascita) VALUES (";
-        $query .= "{$studente->getNome()}, ";
-        $query .= "{$studente->getCognome()}";
-        $query .= "{$studente->getEmail()}, ";
-        $query .= "{$studente->getDataNascita()})";
-        
-        $ris = $this->connessione->query($query);
-        return $ris;
-    }
-    
-    public function modificaPassword($digest) {
-        $query = "UPDATE utenti SET password='{$digest}' WHERE email='{$_SESSION["email_utente"]}'";
-        $ris=$this->connessione->query($query);
-        if($ris!=true){
-            $ris=false;    
-        }
-        return $ris;
-    }
-    
-    public function modificaEmail($email) {
-        $query = "UPDATE utenti SET email='{$email}' WHERE email='{$_SESSION["email_utente"]}'";
-        $ris=$this->connessione->query($query);
-        if($ris!=true){
-            $ris=false;    
-        }
-        return $ris;
+        $query =<<<testo
+        INSERT INTO agenzie (nome, cognome, email_utente, data_nascita) VALUES (
+            "{$studente->getNome()}",
+            "{$studente->getCognome()}",
+            "{$studente->getEmail()}",
+            "{$studente->getDataNascita()}"
+        )
+        testo;
+        return $this->connessione->query($query);
     }
 }
 ?>

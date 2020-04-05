@@ -25,7 +25,7 @@ else{
             <table>
                 <thead>
                     <tr>
-                        <th>Codeice Meccanografico</th>
+                        <th>Codice Meccanografico</th>
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Citt&agrave;</th>

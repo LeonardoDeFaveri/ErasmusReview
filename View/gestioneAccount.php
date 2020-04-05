@@ -19,117 +19,120 @@ if(!isset($_SESSION['email_utente'])) {
         <h2>Devi aver eseguito l'accesso con un account per poter vedere questa pagina</h2>
         <a href="login.php">Accedi</a>
     testo;
-}else if($_SESSION["tipo_utente"]!="admin"){
+}else{
     $html.=creaBarraMenu($_SESSION['email_utente']); 
-    //controllo se il tipo di utente è diverso da admin
-    $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
-    $html .= creaBarraMenu($_SESSION["email_utente"]);
 
     if(isset($_GET["errore"])){
         if($_GET["errore"]==2){
             $html .= "<h2>Errore generico, non sono riuscito a cambiare la password</h2>\n";
         }
     }
-    
+
     $html .=<<<testo
-        <h2>Gestione account</h2>
-        <div id="gestione-account">
-            <div>
-                <h3>I tuoi dati</h3>
+            <h2>Gestione account</h2>
+            <div id="gestione-account">\n
     testo;
 
-    switch($_SESSION["tipo_utente"]){
-        case 'azienda':
-            $html.=<<<testo
-                    <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
-                    <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
-                    <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
-                    <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
-                    <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
-                    <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>\n
-            testo;
-        break;
-        case 'agenzia':
-            $html.=<<<testo
-                    <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
-                    <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
-                    <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
-                    <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
-                    <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
-                    <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>\n
-            testo;
-        break;
-        case 'studente':
-            $html.=<<<testo
-                    <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
-                    <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
-                    <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>
-                    <p><strong>Data di nascita: </strong>{$soggetto->getDataNascita()}</p>\n
-            testo;
-        break;
-        case 'docente':
-            $html.=<<<testo
-                    <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
-                    <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
-                    <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>\n
-            testo;
-        break;
-        case 'scuola':
-            $html .=<<<testo
-                    <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
-                    <p><strong>Codice Meccanografico: </strong>{$soggetto->getId()}</p>
-                    <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
-                    <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
-                    <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>\n
-            testo;
-        break;
+    if($_SESSION["tipo_utente"]!="admin"){
+        //controllo se il tipo di utente è diverso da admin
+        $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
+        
+        $html .=<<<testo
+                <div>
+                    <h3>I tuoi dati</h3>\n
+        testo;
+
+        switch($_SESSION["tipo_utente"]){
+            case 'azienda':
+                $html.=<<<testo
+                        <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                        <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                        <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
+                        <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
+                        <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
+                        <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>\n
+                testo;
+            break;
+            case 'agenzia':
+                $html.=<<<testo
+                        <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                        <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                        <p><strong>Stato: </strong>{$soggetto->getStato()}</p>
+                        <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
+                        <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>
+                        <p><strong>Telefono: </strong>{$soggetto->getTelefono()}</p>\n
+                testo;
+            break;
+            case 'studente':
+                $html.=<<<testo
+                        <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                        <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                        <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>
+                        <p><strong>Data di nascita: </strong>{$soggetto->getDataNascita()}</p>\n
+                testo;
+            break;
+            case 'docente':
+                $html.=<<<testo
+                        <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                        <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                        <p><strong>Cognome: </strong>{$soggetto->getCognome()}</p>\n
+                testo;
+            break;
+            case 'scuola':
+                $html .=<<<testo
+                        <p><strong>Email: </strong>{$soggetto->getEmail()}</p>
+                        <p><strong>Codice Meccanografico: </strong>{$soggetto->getId()}</p>
+                        <p><strong>Nome: </strong>{$soggetto->getNome()}</p>
+                        <p><strong>Citt&agrave;: </strong>{$soggetto->getCitta()}</p>
+                        <p><strong>Indirizzo: </strong>{$soggetto->getIndirizzo()}</p>\n
+                testo;
+            break;
+        }
+        $html .= "\t\t</div>\n";
+    }else{
+        $html.=creaFormCambioEmail();
     }
-    
-    $html.=creaFormCambioPassw();
-}else{
-    //se il tipo di utente è admin creo i form
-    $html.=creaBarraMenu($_SESSION['email_utente']); 
-    $html.="<div class=\"contenitore-centrato\">";
-    $html.=creaFormCambioPassw();
-    $html.=creaFormCambioEmail();
-    $html.="</div>";
+
+    $html.=creaFormCambioPassword();
+    $html .= "\t</div>\n";
 }
 
 $html.=creaFooter();
 echo $html;
 
 
-function creaFormCambioPassw(){
+function creaFormCambioPassword(){
     $html=<<<testo
-    <div>
-        <fieldset>
-            <legend>Modifica password</legend>
-            <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
-                <label>Cambia password:</label><br>
-                <input type="password" name="password" required><br>
-                <label>Conferma password</label><br>
-                <input type="password" name="passwordConferma" required><br>
-                <input type="submit">
-            </form>
-        </fieldset>
-    </div>
+            <div>
+                <fieldset>
+                    <legend>Modifica password</legend>
+                    <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
+                        <label>Cambia password:</label><br>
+                        <input type="password" name="password" required><br>
+                        <label>Conferma password</label><br>
+                        <input type="password" name="passwordConferma" required><br>
+                        <input type="submit">
+                    </form>
+                </fieldset>
+            </div>\n
     testo;
     return $html;
 }
+
 function creaFormCambioEmail(){
     $html=<<<testo
-    <div>
-        <fieldset>
-            <legend>Modifica email</legend>
-            <form method="POST" action="../index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
-                <label>Cambia email:</label><br>
-                <input type="email" name="email" required><br>
-                <label>Conferma email:</label><br>
-                <input type="email" name="emailConferma" required><br>
-                <input type="submit">
-            </form>
-        </fieldset>
-    </div>
+            <div>
+                <fieldset>
+                    <legend>Modifica email</legend>
+                    <form method="POST" action="../index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
+                        <label>Cambia email:</label><br>
+                        <input type="email" name="email" required><br>
+                        <label>Conferma email:</label><br>
+                        <input type="email" name="emailConferma" required><br>
+                        <input type="submit">
+                    </form>
+                </fieldset>
+            </div>\n
     testo;
     return $html;
 }
