@@ -187,20 +187,28 @@ class Controller {
             break;
 
             case 'crea-percorso':
-                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                if ($docente != null) {
-                    $_SESSION['docente'] = serialize($docente);
-                    header('Location: View/creaPercorso.php');
-                    exit();
+                if(isset($_POST['submit'])){
+                    //richiamare metodo per l'inserimento del percorso nel db
                 }else{
-                    if($scuola != null){
-                        $_SESSION['scuola'] = serialize($scuola);
+                    $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                    $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                    if ($docente != null) {
+                        $classiDocente = $this->modello->getClassiDaDocente($docente); //ottengo tutte le classi assegnate a un docente
+                        $_SESSION['classiDocente'] = serialize($classiDocente);
+                        $_SESSION['docente'] = serialize($docente);
                         header('Location: View/creaPercorso.php');
                         exit();
+                    }else{
+                        if($scuola != null){
+                            $classiScuola =$this->modello->getClassiDaScuola($scuola); //ottengo tutte le classi presenti in una scuola
+                            $_SESSION['classiScuola'] = serialize($classiScuola); 
+                            $_SESSION['scuola'] = serialize($scuola);
+                            header('Location: View/creaPercorso.php');
+                            exit();
+                        }
+                        header('Location: View/creaPercorso.php?errore=1');
+                        exit();
                     }
-                    header('Location: View/creaPercorso.php?errore=1');
-                    exit();
                 }
             break;
             case 'modifica-percorso':

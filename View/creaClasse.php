@@ -34,7 +34,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                             </div>
                             <div class="riga">
                                 <label>Sezione</label>
-                                <input type=text name="sezione_classe" reqiured><br>
+                                <input type=text name="sezione_classe" required><br>
                             </div>
                             <div class="riga">
                                 <label>Anno scolastico</label>
