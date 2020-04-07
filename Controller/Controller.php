@@ -252,6 +252,21 @@ class Controller {
                 }
                 header('Location: View/gestioneAccount.php?successo=true');
                 exit();
+            break;   
+            
+            case 'aggiungi-account-scuola':
+                header('Location: View/aggiungiAccountScuola.php');
+                exit();
+            break;   
+            
+            case 'invio-dati-nuova-scuola':
+                $scuola=new Scuola($_POST["codice_meccanografico"],$_POST["nome"],$_POST["email"],$_POST["citta"],$_POST["indirizzo"]);
+                if( !$this->modello->insertScuola($scuola) && !$this->modello->insertUtenteScuola($_POST["email"],hash('sha256', $_POST["nome"])) ){
+                    header('Location: View/homeAdmin.php?errore=2');
+                    exit();                    
+                }
+                header('Location: View/homeAdmin.php?successo=true');
+                exit();
             break;
             
             default:

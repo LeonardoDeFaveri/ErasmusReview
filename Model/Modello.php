@@ -764,7 +764,7 @@ class Modello {
     /**
      * insertAgenzia inserisce un'agenzia nel database.
      *
-     * @param  Agenzia $agenzia agenzia da inserire
+     * @param  Agenzia $agenzia istanza della classe agenzia da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertAgenzia($agenzia) {
@@ -783,7 +783,7 @@ class Modello {
     /**
      * insertAzienda inserisce un'azienda nel database.
      *
-     * @param  Azienda $azienda azienda da inserire
+     * @param  Azienda $azienda istanza della classe azienda da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertAzienda($azienda) {
@@ -803,7 +803,7 @@ class Modello {
     /**
      * insertDocente inserisce un docente nel database.
      *
-     * @param  Docente $docente docente da inserire
+     * @param  Docente $docente istanza della classe docente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertDocente($docente) {
@@ -820,7 +820,7 @@ class Modello {
     /**
      * insertFamiglia inserisce una famiglia nel database.
      *
-     * @param  Famiglia $famiglia famiglia da inserire
+     * @param  Famiglia $famiglia istanza della classe famiglia da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertFamiglia($famiglia) {
@@ -839,7 +839,7 @@ class Modello {
     /**
      * insertStudente inserisce uno studente nel database.
      *
-     * @param  Studente $studente studente da inserire
+     * @param  Studente $studente istanza della classe studente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertStudente($studente) {
@@ -852,6 +852,37 @@ class Modello {
         )
         testo;
         return $this->connessione->query($query);
+    } 
+    
+    /**
+     * insertScuola inserisce una scuola nel database.
+     *
+     * @param  Scuola $scuola istanza della classe scuola da inserire
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertScuola($scuola) {
+        $query =<<<testo
+        INSERT INTO scuole (codice_meccanografico, email_utente, nome, citta, indirizzo ) VALUES (
+            "{$scuola->getId()}",
+            "{$scuola->getEmail()}",
+            "{$scuola->getNome()}",
+            "{$scuola->getCitta()}",
+            "{$scuola->getIndirizzo()}"
+        )
+        testo;
+        return $this->connessione->query($query);
+    } 
+    
+    /**
+     * insertUtenteScuola inserisce l'utente scuola nella tabella utenti del db
+     * @param email email dell'utente
+     * @param password la password dell'utente
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertUtenteScuola($email,$password) {
+        $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"scuola\")";
+        return $this->connessione->query($query);
     }
+    
 }
 ?>
