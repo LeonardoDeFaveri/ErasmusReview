@@ -18,7 +18,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     $html .= creaBarraMenu($_SESSION["email_utente"]);
     $html.=<<<testo
         <div>
-            <form action="../index.php?comando=invio-dati-nuova-scuola" method="POST">
+            <form action="../index.php?comando=aggiungi-scuola" method="POST">
                 <fieldset class="form-con-colonne">
                     <legend>Crea Scuola</legend>
                         <div class="dati">
@@ -43,7 +43,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                                 <input type="text" name="indirizzo" required><br>
                             </div>
                         </div>
-                    <input type="submit">
+                    <input name="submit" type="submit">
                 </fieldset>
             </form>
         </div>

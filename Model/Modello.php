@@ -766,10 +766,10 @@ class Modello {
             UPDATE 
                 scuola 
             SET 
-                nome="{$scuola->getNome()}",
-                citta="{$scuola->getCitta()}",     
-                indirizzo="{$scuola->getIndirizzo()}",     
-            WHERE codice_meccanografico="{$scuola->getCodiceMeccanografico()}";
+                nome = "{$scuola->getNome()}",
+                citta = "{$scuola->getCitta()}",     
+                indirizzo = "{$scuola->getIndirizzo()}",     
+            WHERE codice_meccanografico = "{$scuola->getId()}";
         testo;
         return $this->connessione->query($query);
     }

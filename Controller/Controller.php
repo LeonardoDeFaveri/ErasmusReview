@@ -263,7 +263,22 @@ class Controller {
             break;   
             
             case 'aggiungi-scuola':
-                header('Location: View/aggiungiScuola.php');
+                if(!isset($_POST['submit'])){
+                    header('Location: View/aggiungiScuola.php');
+                    exit();
+                }
+                $scuola=new Scuola(
+                    $_POST["codice_meccanografico"],
+                    $_POST["nome"],
+                    $_POST["email"],
+                    $_POST["citta"],
+                    $_POST["indirizzo"]
+                );
+                if(!$this->modello->insertScuola($scuola)){
+                    header('Location: View/homeAdmin.php?errore=2');
+                    exit();                    
+                }
+                header('Location: View/homeAdmin.php?successo=true');
                 exit();
             break;   
             
@@ -272,22 +287,6 @@ class Controller {
                 $_SESSION["scuola"]=serialize($scuola);
                 header('Location: View/modificaScuola.php');
                 exit();
-            break;
-
-            case 'invio-dati-nuova-scuola':
-                $scuola=new Scuola(
-                    $_POST["codice_meccanografico"],
-                    $_POST["nome"],$_POST["email"],
-                    $_POST["citta"],
-                    $_POST["indirizzo"]
-                );
-                if($this->modello->insertScuola($scuola)!=true){
-                    header('Location: View/homeAdmin.php?errore=2');
-                    exit();                    
-                }else{
-                    header('Location: View/homeAdmin.php?successo=true');
-                    exit();
-                }
             break;
             
             case 'invio-modifica-dati-scuola':
