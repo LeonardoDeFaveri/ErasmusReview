@@ -36,7 +36,6 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
             </form>
         </div>
     testo;
-
 }
 
 $html .= creaFooter();

@@ -862,16 +862,23 @@ class Modello {
      */
     public function insertScuola($scuola) {
         $query =<<<testo
+        START TRANSACTION;
+        INSERT INTO utenti (email,password,tipo_utente) VALUES (
+            "{$scuola->getEmail()}",
+            "{$scuola->getNome()}",
+            "scuola"
+        );
         INSERT INTO scuole (codice_meccanografico, email_utente, nome, citta, indirizzo ) VALUES (
             "{$scuola->getId()}",
             "{$scuola->getEmail()}",
             "{$scuola->getNome()}",
             "{$scuola->getCitta()}",
             "{$scuola->getIndirizzo()}"
-        )
+        );
+        COMMIT;
         testo;
-        return $this->connessione->query($query);
-    } 
+        return $this->connessione->multi_query($query);
+    }//password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
     
     /**
      * insertUtenteScuola inserisce l'utente scuola nella tabella utenti del db

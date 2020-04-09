@@ -57,6 +57,12 @@ else{
         </form>
     testo;
 
+    if(isset($_GET["successo"])){
+        //if($_GET["successo"]==true){
+            $html.="<p>Inserimento effettuato</p>";
+        //}
+    }
+
     $html .= creaFooter();
     echo $html;
 }
