@@ -179,6 +179,14 @@ class Controller {
                 header('Location: View/mostra/mostraEsperienza.php');
                 exit();
             break;
+            case 'mostra-percorso':
+                $id = $_GET['id'] ?? -1;
+                $percorso = $this->modello->getPercorsoDaId($id);
+                if ($percorso == null){
+                    header('Location: View/mostra/mostraPercorso.php?errore=1');
+                    exit();
+                }
+            break;
 
             case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
@@ -190,48 +198,50 @@ class Controller {
             break;
 
             case 'crea-percorso':
-                if(isset($_POST['submit'])){
-                    //TODO: ichiamare metodo per l'inserimento del percorso nel db
-                }else{
-                    $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                    $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                    if ($docente != null) {
+                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                if ($docente != null) { //se l'utente loggato è un docente
+                    if(isset($_POST['submit'])){
+                        $percorsoDaInserire = new Percorso(0,$docente->getId(),$_POST['idClasse'],$_POST['dal'],$_POST['al']);
+                        if($this->modello->insertPercorso($percorsoDaInserire)){
+                            header('Location: View/home/homeDocente.php');
+                            exit();
+                        }else{
+                            //errore nella query
+                        }
+                    }else{ //mando alla pagina di inserimento percorso
                         $classiDocente = $this->modello->getClassiDaDocente($docente); //ottengo tutte le classi assegnate a un docente
                         $_SESSION['classiDocente'] = serialize($classiDocente);
                         $_SESSION['docente'] = serialize($docente);
                         header('Location: View/creazione/creaPercorso.php');
                         exit();
-                    }else{
-                        if($scuola == null){
-                            header('Location: View/creazione/creaPercorso.php?errore=1');
-                            exit();   
+                    }
+                }else{
+                    if($scuola != null){ //se l'utente loggato è una scuola
+                        if(isset($_POST['submit'])){
+                            $percorsoDaInserire = new Percorso(0,$_POST['idDocente'],$_POST['idClasse'],$_POST['dal'],$_POST['al']);
+                            if($this->modello->insertPercorso($percorsoDaInserire)){
+                                header('Location: View/home/homeScuola.php');
+                                exit();
+                            }else{
+                                //errore nella query
+                            }
+                        }else{ //mando alla pagina di inserimento percorso
+                            $classiScuola =$this->modello->getClassiDaScuola($scuola); //ottengo tutte le classi presenti in una scuola
+                            $docentiScuola = $this->modello->getDocentiDaScuola($scuola);
+                            $_SESSION['classiScuola'] = serialize($classiScuola); 
+                            $_SESSION['docentiScuola'] = serialize($docentiScuola); 
+                            $_SESSION['scuola'] = serialize($scuola);
+                            header('Location: View/creazione/creaPercorso.php');
+                            exit();
                         }
-                        // Estraggo tutte le classi presenti in una scuola
-                        $classiScuola =$this->modello->getClassiDaScuola($scuola);
-                        $_SESSION['classiScuola'] = serialize($classiScuola); 
-                        $_SESSION['scuola'] = serialize($scuola);
-                        header('Location: View/creaPercorso.php');
+                    }else{
+                        //se l'utente loggato non è ne scuola ne docente
+                        header('Location: View/creazione/creaPercorso.php?errore=1');
                         exit();
                     }
                 }
             break;
-            case 'modifica-percorso':
-                $id = $_GET['id'] ?? -1;
-                $percorso = $this->modello->getPercorsoDaId($id);
-                if ($percorso == null){
-                    header('Location: View/modifica/modificaPercorso.php?errore=1');
-                    exit();
-                }
-            break;
-            case 'mostra-info-percorso':
-                $id = $_GET['id'] ?? -1;
-                $percorso = $this->modello->getPercorsoDaId($id);
-                if ($percorso == null){
-                    header('Location: View/mostra/mostraPercorso.php?errore=1');
-                    exit();
-                }
-            break;
-
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
                 $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
@@ -284,7 +294,7 @@ class Controller {
                 }
                 header('Location: View/gestioneAccount.php?successo=true');
                 exit();
-            break;   
+            break;
             
             case 'modifica-account-scuola':
                 $scuola=$this->modello->getScuolaDaCodice($_GET["codice_meccanografico"]);
@@ -292,7 +302,6 @@ class Controller {
                 header('Location: View/modifica/modificaScuola.php');
                 exit();
             break;
-            
             case 'modifica-dati-scuola':
                 $scuola=new Scuola(
                     $_POST["codiceMeccanografico"],
@@ -308,7 +317,6 @@ class Controller {
                 header('Location: View/modifica/modificaScuola.php?errore=2');
                 exit();
             break;
-            
             case 'modifica-credenziali-scuola':
                 if(isset($_POST["password"])){
                     if( $this->modello->modificaPassword($_POST["vecchiaEmail"], hash('sha256', $_POST["password"]))){
@@ -323,6 +331,14 @@ class Controller {
                         header('Location: View/modifica/modificaScuola.php?successo=true');
                         exit();                        
                     }
+                }
+            break;
+            case 'modifica-percorso':
+                $id = $_GET['id'] ?? -1;
+                $percorso = $this->modello->getPercorsoDaId($id);
+                if ($percorso == null){
+                    header('Location: View/modifica/modificaPercorso.php?errore=1');
+                    exit();
                 }
             break;
             

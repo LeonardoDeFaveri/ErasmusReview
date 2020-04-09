@@ -144,7 +144,7 @@ function creaRiquadroPercorso($percorso, $modificabile = false){
         testo;
     }else{
         $html .=<<<testo
-            <form action="{$_SESSION['web_root']}/index.php?comando=mostra-info-percorso&id={$percorso->getId()}" method="POST">
+            <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
                 <button type="submit">Mostra info</button>
             </form>\n
         testo;
