@@ -1,7 +1,9 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/../..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
@@ -13,7 +15,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['azienda'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come azienda per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $azienda = unserialize($_SESSION['azienda']);
@@ -61,6 +63,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['azienda'])){
         testo;
     }
 }
+
 $html .= creaFooter();
 echo $html;
 
@@ -83,7 +86,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
 
     if($daValutare){
         $riquadro .=<<<testo
-            \t\t\t\t<form action="../index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
+            \t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
                 \t\t\t\t<button type="submit">Valutazione</button>
             \t\t\t\t</form>\n
         testo;

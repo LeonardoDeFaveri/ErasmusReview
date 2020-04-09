@@ -1,8 +1,9 @@
 <?php
-
 if (session_id() == '') {
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
@@ -32,10 +33,12 @@ class Controller {
 
         switch ($comando) {
             case 'login':
-                if (!isset($_POST['login'])) {
+                if(!isset($_POST['submit'])){
                     header('Location: View/login.php');
                     exit();
                 }
+                //session_destroy();
+                //session_unset();
                 $tipoUtente = $this->modello->verificaCredenziali($_POST['email'], hash('sha256', $_POST['password']));
                 if (!$tipoUtente) {
                     header('Location: View/login.php?errore=1');
@@ -59,73 +62,73 @@ class Controller {
 
             case 'home-admin':
                 $scuole = $this->modello->getScuole(); 
-                $_SESSION["scuole"]=serialize($scuole);
-                header('Location: View/homeAdmin.php');
+                $_SESSION['scuole'] = serialize($scuole);
+                header('Location: View/home/homeAdmin.php');
                 exit();
             break;
 
             case 'home-studente':
                 $studente = $this->modello->getStudenteDaEmail($_SESSION['email_utente']);
                 if ($studente == null) {
-                    header('Location: View/homeStudente.php?errore=1');
+                    header('Location: View/home/homeStudente.php?errore=1');
                     exit();
                 }
                 $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
-                header('Location: View/homeStudente.php');
+                header('Location: View/home/homeStudente.php');
                 exit();
             break;
             
             case 'home-docente':
                 $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                 if ($docente == null) {
-                    header('Location: View/homeDocente.php?errore=1');
+                    header('Location: View/home/homeDocente.php?errore=1');
                     exit();
                 }
                 $_SESSION['classi'] = serialize($this->modello->getClassiDaDocente($docente));
                 $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
                 $_SESSION['docente'] = serialize($docente);
-                header('Location: View/homeDocente.php');
+                header('Location: View/home/homeDocente.php');
                 exit();
             break;
             case 'home-agenzia':
                 $agenzia = $this->modello->getAgenziaDaEmail($_SESSION['email_utente']);
                 if ($agenzia == null){
-                    header('Location: View/homeAgenzia.php?errore=1');
+                    header('Location: View/home/homeAgenzia.php?errore=1');
                     exit();
                 }
                 $_SESSION ['esperienze']= serialize($this->modello->getEsperienzeDaAgenzia($agenzia));
                 $_SESSION['agenzia'] = serialize($agenzia);
-                header('Location: View/homeAgenzia.php');
+                header('Location: View/home/homeAgenzia.php');
                 break;
             case 'home-azienda':
                 $azienda = $this->modello->getAziendaDaEmail($_SESSION['email_utente']);
                 if ($azienda == null){
-                    header('Location: View/homeAzienda.php?errore=1');
+                    header('Location: View/home/homeAzienda.php?errore=1');
                     exit();
                 }
                 $_SESSION['esperienze'] = serialize($this->modello->getEsperienzeDaAzienda($azienda));
                 $_SESSION['azienda'] = serialize($azienda);
-                header('Location: View/homeAzienda.php');
+                header('Location: View/home/homeAzienda.php');
                 exit();
             break;
             case 'home-scuola':
                 $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                 if ($scuola == null){
-                    header('Location: View/homeScuola.php?errore=1');
+                    header('Location: View/home/homeScuola.php?errore=1');
                     exit();
                 }
                 $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
                 $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
                 $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaScuola($scuola));
                 $_SESSION['scuola'] = serialize($scuola);
-                header('Location: View/homeScuola.php');
+                header('Location: View/home/homeScuola.php');
             break;
 
             case 'mostra-studenti':
                 $studenti = $this->modello->getStudentiDaScuola($_GET['codice_scuola']);
                 $_SESSION['studenti'] = serialize($studenti);
-                header('Location: View/mostraStudenti.php');
+                header('Location: View/mostra/mostraStudenti.php');
                 exit();
             break;
             case 'mostra-azienda':
@@ -136,44 +139,44 @@ class Controller {
                  */
                 $azienda = $this->modello->getAziendaDaId($id);
                 if ($azienda == null) {
-                    header('Location: View/mostraAzienda.php?errore=1');
+                    header('Location: View/mostra/mostraAzienda.php?errore=1');
                     exit();
                 }
                 $_SESSION['azienda'] = serialize($azienda);
-                header('Location: View/mostraAzienda.php');
+                header('Location: View/mostra/mostraAzienda.php');
                 exit();
             break;
             case 'mostra-famiglia':
                 $id = $_GET['id'] ?? -1;
                 $famiglia = $this->modello->getFamigliaDaId($id);
                 if ($famiglia == null) {
-                    header('Location: View/mostraFamiglia.php?errore=1');
+                    header('Location: View/mostra/mostraFamiglia.php?errore=1');
                     exit();
                 }
                 $_SESSION['famiglia'] = serialize($famiglia);
-                header('Location: View/mostraFamiglia.php');
+                header('Location: View/mostra/mostraFamiglia.php');
                 exit();
             break;
             case 'mostra-agenzia':
                 $id = $_GET['id'] ?? -1;
                 $agenzia = $this->modello->getAgenziaDaId($id);
                 if ($agenzia == null) {
-                    header('Location: View/mostraAgenzia.php?errore=1');
+                    header('Location: View/mostra/mostraAgenzia.php?errore=1');
                     exit();
                 }
                 $_SESSION['agenzia'] = serialize($agenzia);
-                header('Location: View/mostraAgenzia.php');
+                header('Location: View/mostra/mostraAgenzia.php');
                 exit();
             break;
             case 'mostra-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
-                    header('Location: View/mostraEsperienza.php?errore=1');
+                    header('Location: View/mostra/mostraEsperienza.php?errore=1');
                     exit();
                 }
                 $_SESSION['esperienza'] = serialize($esperienza);
-                header('Location: View/mostraEsperienza.php');
+                header('Location: View/mostra/mostraEsperienza.php');
                 exit();
             break;
 
@@ -181,14 +184,14 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
-                    header('Location: View/mostraEsperienza.php?errore=1');
+                    header('Location: View/mostra/mostraEsperienza.php?errore=1');
                     exit();
                 }
             break;
 
             case 'crea-percorso':
                 if(isset($_POST['submit'])){
-                    //richiamare metodo per l'inserimento del percorso nel db
+                    //TODO: ichiamare metodo per l'inserimento del percorso nel db
                 }else{
                     $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
@@ -196,17 +199,18 @@ class Controller {
                         $classiDocente = $this->modello->getClassiDaDocente($docente); //ottengo tutte le classi assegnate a un docente
                         $_SESSION['classiDocente'] = serialize($classiDocente);
                         $_SESSION['docente'] = serialize($docente);
-                        header('Location: View/creaPercorso.php');
+                        header('Location: View/creazione/creaPercorso.php');
                         exit();
                     }else{
-                        if($scuola != null){
-                            $classiScuola =$this->modello->getClassiDaScuola($scuola); //ottengo tutte le classi presenti in una scuola
-                            $_SESSION['classiScuola'] = serialize($classiScuola); 
-                            $_SESSION['scuola'] = serialize($scuola);
-                            header('Location: View/creaPercorso.php');
-                            exit();
+                        if($scuola == null){
+                            header('Location: View/creazione/creaPercorso.php?errore=1');
+                            exit();   
                         }
-                        header('Location: View/creaPercorso.php?errore=1');
+                        // Estraggo tutte le classi presenti in una scuola
+                        $classiScuola =$this->modello->getClassiDaScuola($scuola);
+                        $_SESSION['classiScuola'] = serialize($classiScuola); 
+                        $_SESSION['scuola'] = serialize($scuola);
+                        header('Location: View/creaPercorso.php');
                         exit();
                     }
                 }
@@ -215,7 +219,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
                 if ($percorso == null){
-                    header('Location: View/modificaPercorso.php?errore=1');
+                    header('Location: View/modifica/modificaPercorso.php?errore=1');
                     exit();
                 }
             break;
@@ -223,10 +227,11 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
                 if ($percorso == null){
-                    header('Location: View/mostraPercorso.php?errore=1');
+                    header('Location: View/mostra/mostraPercorso.php?errore=1');
                     exit();
                 }
             break;
+
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
                 $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
@@ -234,37 +239,13 @@ class Controller {
                 if(isset($_POST['Crea classe'])){
                     $this->modello->insertClasse($scuola->getId());
                 }else{
-                    header('Location: View/creaClasse.php');
+                    header('Location: View/creazione/creaClasse.php');
                     exit();
                 }
             break;
-            
-            case 'gestione-account':
-                header('Location: View/gestioneAccount.php');
-                exit();
-            break;
-            case 'cambio-password':
-                $digest = hash('sha256', $_POST["password"]);
-                if(!$this->modello->modificaPassword($_SESSION['email_utente'], $digest)){
-                    header('Location: View/gestioneAccount.php?errore=2');
-                    exit();
-                }
-                header('Location: View/gestioneAccount.php?successo=true');
-                exit();
-            break; 
-
-            case 'cambio-email':
-                if(!$this->modello->modificaEmail($_SESSION['email-utente'], $_POST["email"])){
-                    header('Location: View/gestioneAccount.php?errore=2');
-                    exit();
-                }
-                header('Location: View/gestioneAccount.php?successo=true');
-                exit();
-            break;   
-            
-            case 'aggiungi-scuola':
+            case 'crea-scuola':
                 if(!isset($_POST['submit'])){
-                    header('Location: View/aggiungiScuola.php');
+                    header('Location: View/creazione/creaScuola.php');
                     exit();
                 }
                 $scuola=new Scuola(
@@ -280,16 +261,39 @@ class Controller {
                 }
                 header('Location: View/homeAdmin.php?successo=true');
                 exit();
+            break;
+            
+            case 'gestione-account':
+                header('Location: View/gestioneAccount.php');
+                exit();
+            break;
+
+            case 'cambio-password':
+                $digest = hash('sha256', $_POST["password"]);
+                if(!$this->modello->modificaPassword($_SESSION['email_utente'], $digest)){
+                    header('Location: View/gestioneAccount.php?errore=2');
+                    exit();
+                }
+                header('Location: View/gestioneAccount.php?successo=true');
+                exit();
+            break; 
+            case 'cambio-email':
+                if(!$this->modello->modificaEmail($_SESSION['email-utente'], $_POST["email"])){
+                    header('Location: View/gestioneAccount.php?errore=2');
+                    exit();
+                }
+                header('Location: View/gestioneAccount.php?successo=true');
+                exit();
             break;   
             
-            case 'modifica-account-scuole':
+            case 'modifica-account-scuola':
                 $scuola=$this->modello->getScuolaDaCodice($_GET["codice_meccanografico"]);
                 $_SESSION["scuola"]=serialize($scuola);
-                header('Location: View/modificaScuola.php');
+                header('Location: View/modifica/modificaScuola.php');
                 exit();
             break;
             
-            case 'invio-modifica-dati-scuola':
+            case 'modifica-dati-scuola':
                 $scuola=new Scuola(
                     $_POST["codiceMeccanografico"],
                     $_POST["nome"],
@@ -297,27 +301,26 @@ class Controller {
                     $_POST["citta"],
                     $_POST["indirizzo"]
                 );
-                if($this->modello->modificaScuola($scuola)!=true){
-                    header('Location: View/modificaScuola.php?errore=2');
-                    exit();
-                }else{
-                    header('Location: View/modificaScuola.php?successo=true');
+                if($this->modello->modificaScuola($scuola)){
+                    header('Location: View/modifica/modificaScuola.php?successo=true');
                     exit();
                 }
+                header('Location: View/modifica/modificaScuola.php?errore=2');
+                exit();
             break;
             
-            case 'invio-modifica-credenziali-scuola':
+            case 'modifica-credenziali-scuola':
                 if(isset($_POST["password"])){
-                    if( $this->modello->modificaPassword($_POST["vecchiaEmail"],hash('sha256',$_POST["password"]))){
-                        header('Location: View/modificaScuola.php?errore=2');
+                    if( $this->modello->modificaPassword($_POST["vecchiaEmail"], hash('sha256', $_POST["password"]))){
+                        header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
                     }
                 }else if(isset($_POST["email"])){
-                    if($this->modello->modificaEmail($_POST["vecchiaEmail"],$_POST["email"])){
-                        header('Location: View/modificaScuola.php?errore=2');
+                    if($this->modello->modificaEmail($_POST["vecchiaEmail"], $_POST["email"])){
+                        header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
                     }else{
-                        header('Location: View/modificaScuola.php?successo=true');
+                        header('Location: View/modifica/modificaScuola.php?successo=true');
                         exit();                        
                     }
                 }

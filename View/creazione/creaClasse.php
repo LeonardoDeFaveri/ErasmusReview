@@ -1,7 +1,9 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/../..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
@@ -14,7 +16,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
 }else{
     $scuola = unserialize($_SESSION['scuola']);
@@ -26,7 +28,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
             <h2>Crea classe</h2>
                 <fieldset class="form-con-colonne">
                     <legend>Creazione classe</legend>
-                    <form method="POST" action="../index.php?comando=crea-classe">
+                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe">
                         <div class="dati">
                             <div class="riga">
                                 <label>Numero sezione</label>
@@ -59,7 +61,6 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
             </label>
         testo;
     }
-}
     $html .=<<<testo
                         </div>
                         <input type="submit" value="Crea classe">
@@ -67,7 +68,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                 </fieldset>
             </div>\n
     testo;
-
+}
 $html .= creaFooter();
 echo $html;
 ?>

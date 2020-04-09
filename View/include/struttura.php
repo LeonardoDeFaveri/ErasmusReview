@@ -1,4 +1,10 @@
 <?php
+if (session_id() == '') {
+    session_start();
+    $_SESSION['root'] = __DIR__ . "/..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
+}
 
 function creaHeader($nomePagina) {
     $html = <<<testo
@@ -8,14 +14,14 @@ function creaHeader($nomePagina) {
         <title>{$nomePagina} - ErasmusReview</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="template/stile.css">
-        <script src="include/funzioni.js"></script>
+        <link href="{$_SESSION['web_root']}/View/template/stile.css" rel="stylesheet" type="text/css">
+        <script src="{$_SESSION['web_root']}/View/include/funzioni.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
         <div id="barra-superiore">
             <header id="header-principale">
-                <h1><a href="../index.php">ErasmusReview</a></h1>
+                <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a></h1>
             </header>\n
     testo;
     return $html;
@@ -31,8 +37,8 @@ function creaBarraMenu($emailUtente) {
             </div>
         </div>
         <div id="menu-utente">
-            <a href="../index.php?comando=gestione-account">Gestione Account</a><br>
-            <a href="../index.php?comando=logout">Logout</a>
+            <a href="{$_SESSION['web_root']}/index.php?comando=gestione-account">Gestione Account</a><br>
+            <a href="{$_SESSION['web_root']}/index.php?comando=logout">Logout</a>
         </div>
         <main>\n
     testo;
@@ -42,7 +48,7 @@ function creaBarraMenu($emailUtente) {
 function creaSezioneRicerca() {
     $html = <<<testo
             <div id="ricerca">
-                <form method="POST" action="../index.php?comando=cerca">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cerca">
                     <input type="text" placeholder="Cerca.." name="cerca">
                     <button type="submit"><i id="icona-ricerca" class="material-icons">search</i></button>
                 </form>

@@ -1,7 +1,9 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/../..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 
 include_once "{$_SESSION['root']}/View/include/struttura.php";
@@ -12,13 +14,13 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $html .= creaBarraMenu($_SESSION["email_utente"]);
     $html.=<<<testo
         <div>
-            <form action="../index.php?comando=aggiungi-scuola" method="POST">
+            <form action="{$_SESSION['web_root']}/index.php?comando=aggiungi-scuola" method="POST">
                 <fieldset class="form-con-colonne">
                     <legend>Crea Scuola</legend>
                         <div class="dati">

@@ -1,7 +1,9 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
@@ -17,7 +19,7 @@ if(!isset($_SESSION['email_utente'])) {
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso con un account per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $html.=creaBarraMenu($_SESSION['email_utente']); 
@@ -106,7 +108,7 @@ function creaFormCambioPassword(){
             <div>
                 <fieldset>
                     <legend>Modifica password</legend>
-                    <form method="POST" action="../index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
+                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
                         <label>Cambia password:</label><br>
                         <input type="password" name="password" required><br>
                         <label>Conferma password</label><br>
@@ -124,7 +126,7 @@ function creaFormCambioEmail(){
             <div>
                 <fieldset>
                     <legend>Modifica email</legend>
-                    <form method="POST" action="../index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
+                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
                         <label>Cambia email:</label><br>
                         <input type="email" name="email" required><br>
                         <label>Conferma email:</label><br>

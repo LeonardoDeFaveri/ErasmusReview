@@ -4,7 +4,9 @@
  */
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../";
+    $_SESSION['root'] = __DIR__ . "/../..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
@@ -16,7 +18,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $docente = unserialize($_SESSION['docente']);
@@ -72,7 +74,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     }
     $html.=<<<testo
                 <hr>
-                <form method="POST" action="../index.php?comando=crea-percorso">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
                     <button type="submit" id="crea-percorso">Crea percorso</button>
                 </form>
             </div>

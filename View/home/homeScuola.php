@@ -1,7 +1,9 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . '/../';
+    $_SESSION['root'] = __DIR__ . "/../..";
+    $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
@@ -14,7 +16,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come amministratore scolastico per poter vedere questa pagina</h2>
-        <a href="login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $scuola = unserialize($_SESSION['scuola']);
@@ -80,7 +82,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
 
     $html .=<<<testo
                 <hr>
-                <form method="POST" action="../index.php?comando=crea-percorso">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
                     <button type="submit" id="crea-percorso">Crea percorso</button>
                 </form>
             </div>
@@ -103,8 +105,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                 <details open>
                     <summary>Classi e studenti</summary>
                     <div>
-                        <a href="../index.php?comando=mostra-studenti&codice_scuola={$scuola->getId()}">Tutti gli studenti</a><br>
-                        <a href="../index.php?comando=crea-classe&codice_scuola={$scuola->getId()}">Aggiungi Classe</a>
+                        <a href="{$_SESSION['web_root']}/index.php?comando=mostra-studenti&codice_scuola={$scuola->getId()}">Tutti gli studenti</a><br>
+                        <a href="{$_SESSION['web_root']}/index.php?comando=crea-classe&codice_scuola={$scuola->getId()}">Aggiungi Classe</a>
                         <ul>\n
     testo;
     if(count($classi) > 0){
@@ -120,6 +122,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
         </main>\n
     testo;
 }
+
 $html .= creaFooter();
 echo $html;
 
@@ -135,13 +138,13 @@ function creaRiquadroPercorso($percorso, $modificabile = false){
     testo;
     if($modificabile){
         $html .=<<<testo
-            <form action="../index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
+            <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
                 <button type="submit">Modifica</button>
             </form>\n
         testo;
     }else{
         $html .=<<<testo
-            <form action="../index.php?comando=mostra-info-percorso&id={$percorso->getId()}" method="POST">
+            <form action="{$_SESSION['web_root']}/index.php?comando=mostra-info-percorso&id={$percorso->getId()}" method="POST">
                 <button type="submit">Mostra info</button>
             </form>\n
         testo;
