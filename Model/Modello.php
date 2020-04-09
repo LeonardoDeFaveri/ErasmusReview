@@ -890,7 +890,6 @@ class Modello {
     public function insertUtenteScuola($email,$password) {
         $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"scuola\")";
         return $this->connessione->query($query);
-    }
-    
+    }    
 }
 ?>

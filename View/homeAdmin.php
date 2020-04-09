@@ -44,7 +44,7 @@ else{
             <td>{$elemento->getEmail()}</td>
             <td>{$elemento->getCitta()}</td>
             <td>{$elemento->getIndirizzo()}</td>
-            <td><a href="?comando=modifica-account-scuole"><i class="material-icons">mode_edit</i></a></td>
+            <td><a href="../index.php?comando=modifica-account-scuole&codice_meccanografico={$elemento->getId()}"><i class="material-icons">mode_edit</i></a></td>
         </tr>\n
     testo;
     }

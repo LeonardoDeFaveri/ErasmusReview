@@ -267,6 +267,13 @@ class Controller {
                 exit();
             break;   
             
+            case 'modifica-account-scuole':
+                $scuola=$this->modello->getScuolaDaCodice($_GET["codice_meccanografico"]);
+                $_SESSION["scuola"]=serialize($scuola);
+                header('Location: View/modificaScuola.php');
+                exit();
+            break;
+
             case 'invio-dati-nuova-scuola':
                 $scuola=new Scuola($_POST["codice_meccanografico"],$_POST["nome"],$_POST["email"],$_POST["citta"],$_POST["indirizzo"]);
                 if($this->modello->insertScuola($scuola)!=true){
@@ -276,6 +283,9 @@ class Controller {
                     header('Location: View/homeAdmin.php?successo=true');
                     exit();
                 }
+            break;
+            
+            case 'invio-dati-modifica-scuola':
             break;
             
             default:
