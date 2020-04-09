@@ -322,12 +322,11 @@ th{
     text-align: left;
 }
 
-#form-creazione-classe{
-    height: unset;
+.form-con-colonne{
     width: fit-content;
 }
 
-#form-creazione-classe form{
+.form-con-colonne form{
     text-align: left;
 }
 

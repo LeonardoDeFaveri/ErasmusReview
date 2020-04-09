@@ -19,18 +19,30 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     $html.=<<<testo
         <div>
             <form action="../index.php?comando=invio-dati-nuova-scuola" method="POST">
-                <fieldset>
-                    <legend>Nuova Scuola</legend>
-                    <label>Codice meccanografico</label>
-                    <input type="text" name="codice_meccanografico" required><br>
-                    <label>Email</label>
-                    <input type="email" name="email" required><br>
-                    <label>Nome</label>
-                    <input type="text" name="nome" required><br>
-                    <label>Citt&agrave;</label>
-                    <input type="text" name="citta" required><br>
-                    <label>Indirizzo</label>
-                    <input type="text" name="indirizzo" required><br>
+                <fieldset class="form-con-colonne">
+                    <legend>Crea Scuola</legend>
+                        <div class="dati">
+                            <div class="riga">
+                                <label>Codice meccanografico</label>
+                                <input type="text" name="codice_meccanografico" required>
+                            </div>
+                            <div class="riga">
+                                <label>Email</label>
+                                <input type="email" name="email" required><br>
+                            </div>
+                            <div class="riga">
+                                <label>Nome</label>
+                                <input type="text" name="nome" required><br>
+                            </div>
+                            <div class="riga">
+                                <label>Citt&agrave;</label>
+                                <input type="text" name="citta" required><br>
+                            </div>
+                            <div class="riga">
+                                <label>Indirizzo</label>
+                                <input type="text" name="indirizzo" required><br>
+                            </div>
+                        </div>
                     <input type="submit">
                 </fieldset>
             </form>

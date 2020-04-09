@@ -275,7 +275,12 @@ class Controller {
             break;
 
             case 'invio-dati-nuova-scuola':
-                $scuola=new Scuola($_POST["codice_meccanografico"],$_POST["nome"],$_POST["email"],$_POST["citta"],$_POST["indirizzo"]);
+                $scuola=new Scuola(
+                    $_POST["codice_meccanografico"],
+                    $_POST["nome"],$_POST["email"],
+                    $_POST["citta"],
+                    $_POST["indirizzo"]
+                );
                 if($this->modello->insertScuola($scuola)!=true){
                     header('Location: View/homeAdmin.php?errore=2');
                     exit();                    
@@ -285,7 +290,38 @@ class Controller {
                 }
             break;
             
-            case 'invio-dati-modifica-scuola':
+            case 'invio-modifica-dati-scuola':
+                $scuola=new Scuola(
+                    $_POST["codiceMeccanografico"],
+                    $_POST["nome"],
+                    "",//l'email non è impostata, ma in questo caso non serve
+                    $_POST["citta"],
+                    $_POST["indirizzo"]
+                );
+                if($this->modello->modificaScuola($scuola)!=true){
+                    header('Location: View/modificaScuola.php?errore=2');
+                    exit();
+                }else{
+                    header('Location: View/modificaScuola.php?successo=true');
+                    exit();
+                }
+            break;
+            
+            case 'invio-modifica-credenziali-scuola':
+                if(isset($_POST["password"])){
+                    if( $this->modello->modificaPassword($_POST["vecchiaEmail"],hash('sha256',$_POST["password"]))){
+                        header('Location: View/modificaScuola.php?errore=2');
+                        exit();
+                    }
+                }else if(isset($_POST["email"])){
+                    if($this->modello->modificaEmail($_POST["vecchiaEmail"],$_POST["email"])){
+                        header('Location: View/modificaScuola.php?errore=2');
+                        exit();
+                    }else{
+                        header('Location: View/modificaScuola.php?successo=true');
+                        exit();                        
+                    }
+                }
             break;
             
             default:

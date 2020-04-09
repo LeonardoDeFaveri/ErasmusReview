@@ -760,6 +760,19 @@ class Modello {
         $query = "UPDATE utenti SET email='{$nuovaEmail}' WHERE email='{$vecchiaEmail}'";
         return $this->connessione->query($query);
     }
+    
+    public function modificaScuola($scuola) {
+        $query =<<<testo
+            UPDATE 
+                scuola 
+            SET 
+                nome="{$scuola->getNome()}",
+                citta="{$scuola->getCitta()}",     
+                indirizzo="{$scuola->getIndirizzo()}",     
+            WHERE codice_meccanografico="{$scuola->getCodiceMeccanografico()}";
+        testo;
+        return $this->connessione->query($query);
+    }
 
     /**
      * insertAgenzia inserisce un'agenzia nel database.
@@ -880,16 +893,17 @@ class Modello {
         testo;
         return $this->connessione->multi_query($query);
     }//password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
-    
+
     /**
      * insertUtenteScuola inserisce l'utente scuola nella tabella utenti del db
      * @param email email dell'utente
      * @param password la password dell'utente
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertUtenteScuola($email,$password) {
-        $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"scuola\")";
+    public function insertUtente($email,$password,$tipoUtente) {
+        $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"$tipoUtente\")";
         return $this->connessione->query($query);
+<<<<<<< HEAD
     }    
     /**
      * 
@@ -928,5 +942,8 @@ class Modello {
                 . "'{$_POST['as_al']}');";
         return $this->connessione->query($query);        
     }
+=======
+    }   
+>>>>>>> 723399dcbc9065888e206f8268096eb686f71f8c
 }
 ?>

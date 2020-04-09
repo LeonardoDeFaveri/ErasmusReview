@@ -58,12 +58,10 @@ else{
     testo;
 
     if(isset($_GET["successo"])){
-        //if($_GET["successo"]==true){
-            $html.="<p>Inserimento effettuato</p>";
-        //}
+        $html.="<p>Inserimento effettuato</p>";
     }else if(isset($_GET["errore"])){
-        if($_GET["errore"]=='2'){
-            $html.="<p>Inserimento effettuato</p> Qualcosa è andato storto con l'inserimeto";
+        if($_GET["errore"] == '2'){
+            $html.="<p>Qualcosa è andato storto con l'inserimeto</p>";
         }
     }
 
