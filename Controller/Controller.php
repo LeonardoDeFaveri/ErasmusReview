@@ -262,8 +262,8 @@ class Controller {
                 exit();
             break;   
             
-            case 'aggiungi-account-scuola':
-                header('Location: View/aggiungiAccountScuola.php');
+            case 'aggiungi-scuola':
+                header('Location: View/aggiungiScuola.php');
                 exit();
             break;   
             

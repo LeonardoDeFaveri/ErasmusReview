@@ -52,8 +52,8 @@ else{
                 </tbody>
             </table>
         </div>
-        <form action="../index.php?comando=aggiungi-account-scuola" method="POST">
-            <button type="submit" id="aggiungi-account-scuola">Aggiungi scuola</button>
+        <form action="../index.php?comando=aggiungi-scuola" method="POST">
+            <button type="submit">Aggiungi scuola</button>
         </form>
     testo;
 
