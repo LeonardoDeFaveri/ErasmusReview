@@ -37,8 +37,12 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                                 <input type=text name="sezione_classe" required><br>
                             </div>
                             <div class="riga">
-                                <label>Anno scolastico</label>
-                                <input type=text name="as_classe" value="{$as}" maxlength="9" required><br>
+                                <label>Inizio anno scolastico</label>
+                                <input type="date" name="as_inizio" required>
+                            </div>
+                            <div class="riga">
+                                <label>Fine anno scolastico</label>
+                                <input type="date" name="as_fine" required>
                             </div>
                         </div>
                         <hr>
@@ -50,7 +54,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
         $email = $studente->getEmail();
         $html .=<<<testo
             <label>
-                <input type="checkbox" id="{$email}" name="studenti[]" value="{$email}">
+                <input type="checkbox" name="studenti[]" value="{$email}">
                 {$studente->getCognome()} {$studente->getNome()}
             </label>
         testo;

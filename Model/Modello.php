@@ -891,5 +891,37 @@ class Modello {
         $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"scuola\")";
         return $this->connessione->query($query);
     }    
+    /**
+     * 
+     * @param $cod_scuola codice della scuola
+     * @return bool true se l'inserimento è andato a buon fine
+     */
+    public function insertClasse($cod_scuola){
+        $query="INSERT INTO classi (codice_scuola,numero,sezione,anno_scolastico) VALUES "
+                . "($cod_scuola,'{$_POST['numero_classe']}','{$_POST['sezione_classe']}',"
+                . "'{$_POST['as_classe']}');";
+        
+        $ris=$this->connessione->query($query);
+        if($ris){
+            $query="SELECT id FROM classi WHERE codice_scuola='{$cod_scuola}' "
+            . "AND numero='{$_POST['numero_classe']}'"
+            . "AND sezione='{$_POST['sezione_classe']}'"
+            . "AND anno_scolastico='{$_POST['as_classe']}';";
+            $ris=$this->connessione->query($query);
+            if($ris && $ris->num_rows==1){
+                $id_classe=$ris->fetch_row()[0];
+                foreach($_POST['studenti'] as $studente){
+                    $this->insertClassiStudenti($id_classe,$studente->getId());
+                }
+            }
+        }   
+    }
+    public function insertClassiStudenti($id_classe,$id_studente){
+        $query="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES "
+                . "('{$id_studente}','{$id_classe}','{$_POST['as_dal']}',"
+                . "'{$_POST['as_al']}');";
+    
+        $this->connessione->query($query);        
+    }
 }
 ?>
