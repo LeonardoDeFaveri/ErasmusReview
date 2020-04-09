@@ -61,6 +61,10 @@ else{
         //if($_GET["successo"]==true){
             $html.="<p>Inserimento effettuato</p>";
         //}
+    }else if(isset($_GET["errore"])){
+        if($_GET["errore"]=='2'){
+            $html.="<p>Inserimento effettuato</p> Qualcosa è andato storto con l'inserimeto";
+        }
     }
 
     $html .= creaFooter();

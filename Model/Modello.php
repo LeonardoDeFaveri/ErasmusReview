@@ -861,11 +861,12 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertScuola($scuola) {
+        $digest=hash('sha256',$scuola->getNome());
         $query =<<<testo
         START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
             "{$scuola->getEmail()}",
-            "{$scuola->getNome()}",
+            "$digest",
             "scuola"
         );
         INSERT INTO scuole (codice_meccanografico, email_utente, nome, citta, indirizzo ) VALUES (
