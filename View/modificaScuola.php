@@ -20,7 +20,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $scuola = unserialize($_SESSION['scuola']);
     $html .= creaBarraMenu($scuola->getEmail());
     $html.=<<<testo
-        <form aciotn="invio-dati-modifica-scuola" method="POST" onsubmit="return controlloCorrispondezaPassword(this)">
+        <form aciotn="invio-dati-modifica-scuola" method="POST" onSubmit="return controlloCorrispondezaPassword(this)">
             <fieldset>
                 <legend>Modifica Scuola</legend>
                 <label>Codice meccanografico</label>
