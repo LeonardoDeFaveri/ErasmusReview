@@ -903,7 +903,6 @@ class Modello {
     public function insertUtente($email,$password,$tipoUtente) {
         $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"$tipoUtente\")";
         return $this->connessione->query($query);
-<<<<<<< HEAD
     }    
     /**
      * 
@@ -942,8 +941,5 @@ class Modello {
                 . "'{$_POST['as_al']}');";
         return $this->connessione->query($query);        
     }
-=======
-    }   
->>>>>>> 723399dcbc9065888e206f8268096eb686f71f8c
 }
 ?>
