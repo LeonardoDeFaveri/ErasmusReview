@@ -941,5 +941,23 @@ class Modello {
                 . "'{$_POST['as_al']}');";
         return $this->connessione->query($query);        
     }
+
+    /**
+     * insertPercorso inserisce un percorso nel database.
+     *
+     * @param  Percorso $percorso istanza della classe percorso da inserire
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertPercorso($percorso) {
+        $query =<<<testo
+        INSERT INTO percorsi (id_docente, id_classe, dal, al) VALUES (
+            "{$percorso->getDocente()}",
+            "{$percorso->getClasse()}",
+            "{$percorso->getDal()}",
+            "{$percorso->getAl()}"
+        )
+        testo;
+        return $this->connessione->query($query);
+    }
 }
 ?>

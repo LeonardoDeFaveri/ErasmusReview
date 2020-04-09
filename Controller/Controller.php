@@ -187,30 +187,49 @@ class Controller {
             break;
 
             case 'crea-percorso':
-                if(isset($_POST['submit'])){
-                    //richiamare metodo per l'inserimento del percorso nel db
-                }else{
-                    $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                    $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                    if ($docente != null) {
+                $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                if ($docente != null) { //se l'utente loggato è un docente
+                    if(isset($_POST['submit'])){
+                        $percorsoDaInserire = new Percorso(0,$docente->getId(),$_POST['idClasse'],$_POST['dal'],$_POST['al']);
+                        if($this->modello->insertPercorso($percorsoDaInserire)){
+                            //query riuscita
+                        }else{
+                            //errore nella query
+                        }
+                    }else{ //mando alla pagina di inserimento percorso
                         $classiDocente = $this->modello->getClassiDaDocente($docente); //ottengo tutte le classi assegnate a un docente
                         $_SESSION['classiDocente'] = serialize($classiDocente);
                         $_SESSION['docente'] = serialize($docente);
                         header('Location: View/creaPercorso.php');
                         exit();
-                    }else{
-                        if($scuola != null){
+                    }
+                }else{
+                    if($scuola != null){ //se l'utente loggato è una scuola
+                        if(isset($_POST['submit'])){
+                            $percorsoDaInserire = new Percorso(0,$_POST['idDocente'],$_POST['idClasse'],$_POST['dal'],$_POST['al']);
+                            if($this->modello->insertPercorso($percorsoDaInserire)){
+                                echo "inserito";
+                                //query riuscita
+                            }else{
+                                //errore nella query
+                            }
+                        }else{ //mando alla pagina di inserimento percorso
                             $classiScuola =$this->modello->getClassiDaScuola($scuola); //ottengo tutte le classi presenti in una scuola
+                            $docentiScuola = $this->modello->getDocentiDaScuola($scuola);
                             $_SESSION['classiScuola'] = serialize($classiScuola); 
+                            $_SESSION['docentiScuola'] = serialize($docentiScuola); 
                             $_SESSION['scuola'] = serialize($scuola);
                             header('Location: View/creaPercorso.php');
                             exit();
                         }
-                        header('Location: View/creaPercorso.php?errore=1');
-                        exit();
                     }
+                    //se l'utente loggato non è ne scuola ne docente
+                    header('Location: View/creaPercorso.php?errore=1');
+                    exit();
                 }
             break;
+
             case 'modifica-percorso':
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
