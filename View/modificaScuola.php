@@ -18,29 +18,39 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     testo;
 }else{
     $scuola = unserialize($_SESSION['scuola']);
-    $html .= creaBarraMenu($scuola->getEmail());
+    $html .= creaBarraMenu($_SESSION["email_utente"]);
     $html.=<<<testo
-        <form aciotn="invio-dati-modifica-scuola" method="POST" onSubmit="return controlloCorrispondezaPassword(this)">
+        <form aciotn="../index?comando=invio-modifica-dati-scuola" method="POST">
             <fieldset>
                 <legend>Modifica Scuola</legend>
                 <label>Codice meccanografico</label>
-                <input type="text" name="codice_meccanografico" value="{$scuola->getId()}" required><br>
-                <label>Email</label>
-                <input type="email" name="email" value="{$scuola->getEmail()}" required><br>
+                <input type="text" name="codiceMeccanografico" placeholder="{$scuola->getId()}" readonly><br>
                 <label>Nome</label>
                 <input type="text" name="nome" value="{$scuola->getNome()}" required><br>
                 <label>Citt&agrave;</label>
                 <input type="text" name="citta" value="{$scuola->getCitta()}" required><br>
                 <label>Indirizzo</label>
                 <input type="text" name="indirizzo" value="{$scuola->getIndirizzo()}" required><br>
+                <input type="submit">
+            </fieldset>
+        </form>
+        <form action="../index?comando=invio-modifica-credenziali-scuola" method="POST" onSubmit="return controlloCorrispondezaPassword(this)">
+            <fieldset>
+                <legend>Modifica Credenziali</legend>
+                <label>Vecchia Email</label>
+                <input type="email" name="vecchiaEmail" placeholder="{$scuola->getEmail()}" readonly><br>
+                <label>Email</label>
+                <input type="email" name="email" value="{$scuola->getEmail()}" required><br>
                 <label>Nuova password</label>
-                <input type="passsword" name="nuovaPassowrd"><br>
+                <input type="password" name="nuovaPassowrd"><br>
                 <label>Conferma Nuova password</label>
-                <input type="passsword" name="confermaNuovaPassowrd"><br>
+                <input type="password" name="confermaNuovaPassowrd"><br>
                 <input type="submit">
             </fieldset>
         </form>
     testo;
 
 }
+
+$html.=creaFooter();
 echo $html;
