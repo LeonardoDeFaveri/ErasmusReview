@@ -24,7 +24,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <fieldset id="form-creazione-classe">
+                <fieldset class="form-con-colonne">
                     <legend>Creazione classe</legend>
                     <form method="POST" action="../index.php?comando=crea-classe">
                         <div class="dati">
