@@ -193,7 +193,8 @@ class Controller {
                     if(isset($_POST['submit'])){
                         $percorsoDaInserire = new Percorso(0,$docente->getId(),$_POST['idClasse'],$_POST['dal'],$_POST['al']);
                         if($this->modello->insertPercorso($percorsoDaInserire)){
-                            //query riuscita
+                            header('Location: View/homeDocente.php');
+                            exit();
                         }else{
                             //errore nella query
                         }
@@ -209,8 +210,8 @@ class Controller {
                         if(isset($_POST['submit'])){
                             $percorsoDaInserire = new Percorso(0,$_POST['idDocente'],$_POST['idClasse'],$_POST['dal'],$_POST['al']);
                             if($this->modello->insertPercorso($percorsoDaInserire)){
-                                echo "inserito";
-                                //query riuscita
+                                header('Location: View/homeScuola.php');
+                                exit();
                             }else{
                                 //errore nella query
                             }
@@ -223,10 +224,11 @@ class Controller {
                             header('Location: View/creaPercorso.php');
                             exit();
                         }
+                    }else{
+                        //se l'utente loggato non è ne scuola ne docente
+                        header('Location: View/creaPercorso.php?errore=1');
+                        exit();
                     }
-                    //se l'utente loggato non è ne scuola ne docente
-                    header('Location: View/creaPercorso.php?errore=1');
-                    exit();
                 }
             break;
 
