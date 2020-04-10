@@ -204,7 +204,7 @@ class Controller {
                 if ($docente != null) { //se l'utente loggato è un docente
                     if(isset($_POST['submit'])){
                         $percorsoDaInserire = new Percorso(0, $docente->getId(),$_POST['idClasse'],$_POST['dal'],$_POST['al']);
-                        if($this->modello->insertPercorso($percorsoDaInserire)){
+                        if($this->modello->insertPercorso($percorsoDaInserire)){                      
                             header('Location: View/home/homeDocente.php');
                             exit();
                         }else{

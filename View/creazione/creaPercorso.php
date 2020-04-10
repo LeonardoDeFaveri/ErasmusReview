@@ -36,19 +36,20 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                         <div class="dati">
                             <div class="riga">
                                 <label>Seleziona Classe:</label>
-                                <select name ='idClasse' required>
+                                <select name ='idClasse' required>\n
         testo;
         foreach($classiDocente as $classe){
             $html.=<<<testo
-                                <option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>
-                                </select>
-                            </div>
+                                \t\t<option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>
+                                
             testo;
         }
         $html.=<<<testo
+            </select>
+                            </div>
                             <div class="riga">
                                 <label>Dal:</label>
-                                <input type=date name="dal" reqiured><br>
+                                <input type=date name="dal" required><br>
                             </div>
                             <div class="riga">
                                 <label>Al</label>
@@ -58,7 +59,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                         <input type="submit" name="submit">
                     </form>
                 </fieldset>
-            </div>
+            </div>\n
         testo;
     }else{ // accesso effettuato come scuola
         $scuola = unserialize($_SESSION['scuola']);
@@ -75,11 +76,11 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                         <div class="dati">
                             <div class="riga">
                                 <label>Seleziona Docente:</label>
-                                <select name="idDocente" required>
+                                <select name="idDocente" required>\n
         testo;
         foreach($docentiScuola as $docente){
             $html.=<<<testo
-                                    <option value ='{$docente->getId()}'>{$docente->getNome()} {$docente->getCognome()}</option>
+                                    \t<option value ='{$docente->getId()}'>{$docente->getNome()} {$docente->getCognome()}</option>\n
             testo;
         }
         $html.=<<<testo
@@ -87,16 +88,15 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                             </div>
                             <div class="riga">
                                 <label>Seleziona Classe:</label>
-                                <select name ='idClasse' required>
+                                <select name ='idClasse' required>\n
         testo;
         foreach($classiScuola as $classe){
             $html.=<<<testo
-                                    <option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>
-                                
+                                    \t<option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>\n                  
             testo;
         }
         $html.=<<<testo
-                                </select>
+            </select>
                             </div>
                             <div class="riga">
                                 <label>Dal:</label>
@@ -110,7 +110,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                         <input type="submit" name="submit">
                     </form>
                 </fieldset>
-            </div>
+            </div>\n
         testo;
     }
     $html .= creaFooter();
