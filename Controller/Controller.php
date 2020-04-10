@@ -324,19 +324,18 @@ class Controller {
             break;
             case 'modifica-credenziali-scuola':
                 if(isset($_POST["password"])){
-                    if( $this->modello->modificaPassword($_POST["vecchiaEmail"], hash('sha256', $_POST["password"]))){
+                    if(!$this->modello->modificaPassword($_POST["vecchiaEmail"], hash('sha256', $_POST["password"]))){
                         header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
                     }
                 }else if(isset($_POST["email"])){
-                    if($this->modello->modificaEmail($_POST["vecchiaEmail"], $_POST["email"])){
+                    if(!$this->modello->modificaEmail($_POST["vecchiaEmail"], $_POST["email"])){
                         header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
-                    }else{
-                        header('Location: View/modifica/modificaScuola.php?successo=true');
-                        exit();                        
                     }
                 }
+                header('Location: View/modifica/modificaScuola.php?successo=true');
+                exit();
             break;
             case 'modifica-percorso':
                 $id = $_GET['id'] ?? -1;
@@ -355,9 +354,9 @@ class Controller {
     }
 }
 /*
-In alcuni casi di errore si viene reindirizzati alla pagina di "origine" con un parametro del
-tipo (?errore=1) il numero rappresenta un tipo di errore, la lista che associa il numero con
-l'errore è sulla wiki di github al seguente link:
-(https://github.com/LeonardoDeFaveri/ErasmusAdvisor/wiki/Struttura-del-sito)
-*/
+ * In alcuni casi di errore si viene reindirizzati alla pagina di "origine" con un parametro del
+ * tipo (?errore=1) il numero rappresenta un tipo di errore, la lista che associa il numero con
+ * l'errore è sulla wiki di github al seguente link:
+ *(https://github.com/LeonardoDeFaveri/ErasmusAdvisor/wiki/Struttura-del-sito)
+ */
 ?>
