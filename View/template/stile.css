@@ -173,7 +173,7 @@ form input[type="submit"]{
 }
 
 select{
-    background-color: var(--default-background-color);
+    background-color: #FFF;
     border: var(--default-border);
     border-radius: var(--default-border-radius);
     padding: var(--default-padding);
