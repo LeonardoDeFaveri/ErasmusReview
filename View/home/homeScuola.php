@@ -51,32 +51,44 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
         if(count($futuri) > 0){
             $html .=<<<testo
                 <details open>
-                    <summary>Percorsi Futuri</summary>\n
+                    <summary>Percorsi Futuri</summary>
+                    <div class="contenitore-riquadri">\n
             testo;
             foreach ($futuri as $percorso) {
-                $html .= creaRiquadroPercorso($percorso, true);
+                $html .= creaRiquadroPercorso($percorso);
             }
-            $html .= "</details>\n";
+            $html .=<<<testo
+                    </div>
+                </details>\n
+            testo;
         }
         if(count($inCorso) > 0){
             $html .=<<<testo
                 <details open>
-                    <summary>Percorsi Attivi</summary>\n
+                    <summary>Percorsi Attivi</summary>
+                    <div class="contenitore-riquadri">\n
             testo;
             foreach ($inCorso as $percorso) {
-                $html .= creaRiquadroPercorso($percorso, true);
+                $html .= creaRiquadroPercorso($percorso);
             }
-            $html .= "</details>\n";
+            $html .=<<<testo
+                    </div>
+                </details>\n
+            testo;
         }
         if(count($conclusi) > 0){
             $html .=<<<testo
                 <details>
-                    <summary>Percorsi Conclusi</summary>\n
+                    <summary>Percorsi Conclusi</summary>
+                    <div class="contenitore-riquadri">\n
             testo;
             foreach ($conclusi as $percorso) {
-                $html .= creaRiquadroPercorso($percorso);
+                $html .= creaRiquadroPercorso($percorso, true);
             }
-            $html .= "</details>\n";
+            $html .=<<<testo
+                    </div>
+                </details>\n
+            testo;
         }
     }
 
@@ -126,7 +138,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
 $html .= creaFooter();
 echo $html;
 
-function creaRiquadroPercorso($percorso, $modificabile = false){
+function creaRiquadroPercorso($percorso, $terminato = false) {
     $classe = $percorso->getClasse();
     $scuola = $classe->getScuola();
     $html =<<<testo
@@ -134,22 +146,23 @@ function creaRiquadroPercorso($percorso, $modificabile = false){
             \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
             \t\t\t<a href="#">{$scuola->getNome()}</a>
             \t\t\t<hr>
-            \t\t\t<a href="#">{$percorso->getDal()} {$percorso->getAl()}</a><br>\n
+            \t\t\t<a href="#">{$percorso->getDal()} {$percorso->getAl()}</a><br>
+            <div class="contenitore-bottoni-riquadro">\n
     testo;
-    if($modificabile){
+    if(!$terminato){
         $html .=<<<testo
             <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
                 <button type="submit">Modifica</button>
             </form>\n
         testo;
-    }else{
-        $html .=<<<testo
-            <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
-                <button type="submit">Mostra info</button>
-            </form>\n
-        testo;
     }
-    $html .= "\t\t\t\t</div>\n";
+    $html .=<<<testo
+                <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
+                    <button type="submit">Mostra info</button>
+                </form>
+            </div>
+        </div>
+    testo;
     return $html;
 }
 ?>

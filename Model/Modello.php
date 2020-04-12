@@ -951,8 +951,8 @@ class Modello {
     public function insertPercorso($percorso) {
         $query =<<<testo
         INSERT INTO percorsi (id_docente, id_classe, dal, al) VALUES (
-            "{$percorso->getDocente()}",
-            "{$percorso->getClasse()}",
+            "{$percorso->getDocente()->getId()}",
+            "{$percorso->getClasse()->getId()}",
             "{$percorso->getDal()}",
             "{$percorso->getAl()}"
         )

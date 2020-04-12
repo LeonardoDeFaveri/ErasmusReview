@@ -199,49 +199,50 @@ class Controller {
 
             // Case per la creazione di nuove istanze di soggetti o entità
             case 'crea-percorso':
+                if($_SESSION['tipo_utente'] != 'docente' && $_SESSION['tipo_utente'] != 'scuola'){
+                    //se l'utente loggato non è ne scuola ne docente
+                    header('Location: View/creazione/creaPercorso.php?errore=1');
+                    exit();
+                }
                 $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                if ($docente != null) { //se l'utente loggato è un docente
-                    if(isset($_POST['submit'])){
-                        $percorsoDaInserire = new Percorso(0, $docente->getId(),$_POST['idClasse'],$_POST['dal'],$_POST['al']);
-                        if($this->modello->insertPercorso($percorsoDaInserire)){                      
-                            header('Location: View/home/homeDocente.php');
-                            exit();
-                        }else{
-                            //errore nella query
-                        }
-                    }else{ //mando alla pagina di inserimento percorso
-                        $classiDocente = $this->modello->getClassiDaDocente($docente); //ottengo tutte le classi assegnate a un docente
-                        $_SESSION['classiDocente'] = serialize($classiDocente);
-                        $_SESSION['docente'] = serialize($docente);
-                        header('Location: View/creazione/creaPercorso.php');
-                        exit();
-                    }
-                }else{
-                    if($scuola != null){ //se l'utente loggato è una scuola
-                        if(isset($_POST['submit'])){
-                            $percorso = new Percorso(0, $_POST['idDocente'], $_POST['idClasse'], $_POST['dal'], $_POST['al']);
-                            if($this->modello->insertPercorso($percorso)){
-                                header('Location: View/home/homeScuola.php');
-                                exit();
-                            }else{
-                                //errore nella query
-                            }
-                        }else{ //mando alla pagina di inserimento percorso
-                            $classiScuola =$this->modello->getClassiDaScuola($scuola); //ottengo tutte le classi presenti in una scuola
-                            $docentiScuola = $this->modello->getDocentiDaScuola($scuola);
-                            $_SESSION['classiScuola'] = serialize($classiScuola); 
-                            $_SESSION['docentiScuola'] = serialize($docentiScuola); 
-                            $_SESSION['scuola'] = serialize($scuola);
-                            header('Location: View/creazione/creaPercorso.php');
-                            exit();
-                        }
+                if(isset($_POST['submit'])){
+                    $percorso = null;
+                    if(isset($_POST['id_docente'])){
+                        $percorso = new Percorso(
+                            null,
+                            $this->modello->getDocenteDaId($_POST['id_docente']),
+                            $this->modello->getClasseDaId($_POST['id_classe']),
+                            $_POST['dal'],
+                            $_POST['al']
+                        );
                     }else{
-                        //se l'utente loggato non è ne scuola ne docente
-                        header('Location: View/creazione/creaPercorso.php?errore=1');
+                        $percorso = new Percorso(
+                            null,
+                            $docente,
+                            $this->modello->getClasseDaId($_POST['id_classe']),
+                            $_POST['dal'],
+                            $_POST['al']
+                        );
+                    }
+                    if($this->modello->insertPercorso($percorso)){
+                        header('Location: index.php');
+                        exit();
+                    }else{
+                        header('Location: View/creazione/creaPercorso.php?errore=2');
                         exit();
                     }
                 }
+                if($_SESSION['tipo_utente'] == 'docente'){
+                    $_SESSION['classi'] = serialize($this->modello->getClassiDaDocente($docente));
+                    $_SESSION['docente'] = serialize($docente);
+                }else{
+                    $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                    $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
+                    $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    $_SESSION['scuola'] = serialize($scuola);
+                }
+                header('Location: View/creazione/creaPercorso.php');
+                exit();
             break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
@@ -259,7 +260,7 @@ class Controller {
                     header('Location: View/creazione/creaScuola.php');
                     exit();
                 }
-                $scuola=new Scuola(
+                $scuola = new Scuola(
                     $_POST["codice_meccanografico"],
                     $_POST["nome"],
                     $_POST["email"],
@@ -270,7 +271,7 @@ class Controller {
                     header('Location: View/homeAdmin.php?errore=2');
                     exit();                    
                 }
-                header('Location: View/homeAdmin.php?successo=true');
+                header('Location: index.php');
                 exit();
             break;
             

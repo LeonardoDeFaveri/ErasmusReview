@@ -10,7 +10,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 
 $html = creaHeader("Home Admin");
 
-if(isset($_GET['errore']) || !isset($_SESSION['tipo_utente']) || $_SESSION['tipo_utente']!='admin'){
+if(isset($_GET['errore']) || !isset($_SESSION['tipo_utente']) || $_SESSION['tipo_utente'] != 'admin'){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come admin per poter vedere questa pagina</h2>
@@ -59,13 +59,7 @@ else{
         </form>
     testo;
 
-    if(isset($_GET["successo"])){
-        $html .=<<<testo
-            <script>
-                alert("Inserimento effettuato con successo");
-            </script>
-        testo;
-    }else if(isset($_GET["errore"])){
+    if(isset($_GET["errore"])){
         if($_GET["errore"] == '2'){
             $html .=<<<testo
                 <script>
