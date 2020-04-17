@@ -248,7 +248,7 @@ class Controller {
                 $scuola = unserialize($_SESSION['scuola']);
                 $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
                 $_SESSION['studenti'] = serialize($studenti);
-                if(isset($_POST['Crea classe'])){
+                if(isset($_POST['submit'])){
                     $this->modello->insertClasse($scuola->getId());
                 }else{
                     header('Location: View/creazione/creaClasse.php');
