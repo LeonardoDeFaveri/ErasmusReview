@@ -63,7 +63,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     }
     $html .=<<<testo
                         </div>
-                        <input type="submit" value="Crea classe">
+                        <input type="submit" name="submit" value="Crea classe">
                     </form>
                 </fieldset>
             </div>\n
