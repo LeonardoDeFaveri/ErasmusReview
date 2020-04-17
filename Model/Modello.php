@@ -931,7 +931,7 @@ class Modello {
                 }
                 $query.="COMMIT";
                 $ris=$this->connessione->query($query);
-            }
+            }   
         } 
         return $ris;
     }
