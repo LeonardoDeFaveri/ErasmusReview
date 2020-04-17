@@ -244,6 +244,9 @@ class Controller {
                 header('Location: View/creazione/creaPercorso.php');
                 exit();
             break;
+            case 'crea-esperienza':
+                
+            break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
                 if(isset($_POST['submit'])){
