@@ -911,21 +911,23 @@ class Modello {
      */
     public function insertClasse($classe){
         //echo gettype($classe->getAnnoScolastico());
-        $query="INSERT INTO classi (codice_scuola,numero,sezione,anno_scolastico) VALUES "
-                . "'{$classe->getScuola()}','{$classe->getNumero()}','{$classe->getSezione()}'";
-        $query.",".'{$classe->getAnnoScolastico()}'.")";
+        $query="INSERT INTO classi (codice_scuola,numero,sezione,anno_scolastico) VALUES ("
+                . "'{$classe->getScuola()}',{$classe->getNumero()},'{$classe->getSezione()}',"
+                . "'{$classe->getAnnoScolastico()}');";
+        //echo $query;
         $ris=$this->connessione->query($query);
         if($ris){
             $query="SELECT id FROM classi WHERE codice_scuola='{$classe->getScuola()}' "
             . "AND numero='{$classe->getNumero()}'"
             . "AND sezione='{$classe->getSezione()}'"
             . "AND anno_scolastico='{$classe->getAnnoScolastico()}';";
+            echo $query;
             $ris=$this->connessione->query($query);
             if($ris && $ris->num_rows==1){
-                $id_classe=$ris->fetch_row()[0];
+                //$id_classe=$ris->fetch_row()[0];
                 $query="START TRANSACTION";
                 $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
-                foreach($classe->getStudenti as $studente){
+                foreach($classe->getStudenti() as $studente){
                     $query.="('{$studente->getId()}','{$classe->getId()}','{$_POST["as_inizio"]}',"
                     . "'{$_POST["as_fine"]}')";
                 }
@@ -934,6 +936,7 @@ class Modello {
                     . "'{$_POST['as_al']}')";
                 }*/
                 $query.="COMMIT";
+                echo $query;
                 $ris=$this->connessione->query($query);
             }   
         } 
