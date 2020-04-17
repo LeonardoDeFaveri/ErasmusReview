@@ -188,14 +188,14 @@ class Controller {
                 exit();
             break;
 
-            case 'valutazione-esperienza':
+            /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
                     header('Location: View/mostra/mostraEsperienza.php?errore=1');
                     exit();
                 }
-            break;
+            break;*/
 
             // Case per la creazione di nuove istanze di soggetti o entità
             case 'crea-percorso':
