@@ -746,7 +746,8 @@ class Modello {
      */
     public function modificaPassword($email, $password) {
         $query = "UPDATE utenti SET password='{$password}' WHERE email='$email'";
-        return $this->connessione->query($query);
+        $ri = $this->connessione->query($query);
+        return $ri;
     }
         
     /**

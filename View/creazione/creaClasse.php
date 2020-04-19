@@ -26,9 +26,9 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <fieldset class="form-con-colonne">
-                    <legend>Creazione classe</legend>
-                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe">
+                    <fieldset class="form-con-colonne">
+                        <legend>Creazione classe</legend>
                         <div class="dati">
                             <div class="riga">
                                 <label>Numero sezione</label>
@@ -64,8 +64,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html .=<<<testo
                         </div>
                         <input type="submit" name="submit" value="Crea classe">
-                    </form>
-                </fieldset>
+                    </fieldset>
+                </form>
             </div>\n
     testo;
 }

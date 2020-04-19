@@ -28,10 +28,10 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
     $html .=<<<testo
         <div>
             <h2>Crea Percorso</h2>
-                <fieldset id="form-creazione-classe">
-                    <legend>Creazione Percorso</legend>
-                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
-                        <div class="dati">\n
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
+                    <fieldset id="form-creazione-classe">
+                        <legend>Creazione Percorso</legend>
+                            <div class="dati">\n
     testo;
     if($_SESSION['tipo_utente'] == 'scuola'){
         $docenti = unserialize($_SESSION['docenti']);
@@ -73,8 +73,8 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                             </div>
                         </div>
                         <input type="submit" name="submit">
-                    </form>
-                </fieldset>
+                    </fieldset>
+                </form>
             </div>\n
     testo;
 

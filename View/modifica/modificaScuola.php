@@ -30,7 +30,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     $scuola = unserialize($_SESSION['scuola']);
     $html .= creaBarraMenu($_SESSION["email_utente"]);
     $html.=<<<testo
-        <form aciotn="{$_SESSION['web_root']}/index.php?comando=invio-modifica-dati-scuola" method="POST">
+        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-dati-scuola" method="POST">
             <fieldset class="form-con-colonne">
                 <legend>Modifica Scuola</legend>
                 <div class="dati">
@@ -54,7 +54,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                 <input type="submit">
             </fieldset>
         </form>
-        <form action="{$_SESSION['web_root']}/index.php?comando=invio-modifica-credenziali-scuola" method="POST" onSubmit="return controlloCorrispondezaPassword(this)">
+        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-credenziali-scuola" method="POST" onSubmit="return controlloPassword(this)">
             <fieldset>
                 <legend>Modifica Credenziali</legend>
                 <div class="dati">
@@ -64,11 +64,11 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                     </div>
                     <div class="riga">
                         <label>Email</label>
-                        <input type="email" name="email" value="{$scuola->getEmail()}" required>
+                        <input type="email" name="email">
                     </div>
                     <div class="riga">
                         <label>Nuova password</label>
-                        <input type="password" name="nuovaPassowrd">
+                        <input type="password" name="password">
                     </div>
                     <div class="riga">
                         <label>Conferma Nuova password</label>

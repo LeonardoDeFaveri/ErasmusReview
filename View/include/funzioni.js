@@ -1,5 +1,4 @@
 function mostraMenuUtente(){
-	// $("#menu-utente").show();
 	var menuUtente = document.getElementById("menu-utente");
 	if(menuUtente.style.visibility == "visible") {
 		menuUtente.style.visibility = "hidden";
@@ -8,9 +7,9 @@ function mostraMenuUtente(){
 	}
 }
 
-function controlloCorrispondezaPassword(form) { 
-	password1 = form.password.value;
-	password2 = form.passwordConferma.value; 
+function controlloPassword(form) { 
+	password1 = form.fieldset.password.value;
+	password2 = form.fieldset.passwordConferma.value; 
 	   
 	if (password1 === password2) { 
 		return true;
@@ -19,9 +18,9 @@ function controlloCorrispondezaPassword(form) {
 	return false;
 }
 
-function controlloCorrispondezaEmail(form) { 
-	email1 = form.email.value;
-	email2 = form.emailConferma.value; 
+function controlloEmail(form) { 
+	email1 = form.fieldset.email.value;
+	email2 = form.fieldset.emailConferma.value; 
 	   
 	if (email1 === email2) { 
 		return true;

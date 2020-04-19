@@ -106,16 +106,16 @@ echo $html;
 function creaFormCambioPassword(){
     $html=<<<testo
             <div>
-                <fieldset>
-                    <legend>Modifica password</legend>
-                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-password" onsubmit="return controlloCorrispondezaPassword(this)">           
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-password" onsubmit="return controlloPassword(this)">
+                    <fieldset>
+                        <legend>Modifica password</legend>
                         <label>Cambia password:</label><br>
                         <input type="password" name="password" required><br>
                         <label>Conferma password</label><br>
                         <input type="password" name="passwordConferma" required><br>
                         <input type="submit">
-                    </form>
-                </fieldset>
+                    </fieldset>
+                </form>
             </div>\n
     testo;
     return $html;
@@ -124,16 +124,16 @@ function creaFormCambioPassword(){
 function creaFormCambioEmail(){
     $html=<<<testo
             <div>
-                <fieldset>
-                    <legend>Modifica email</legend>
-                    <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-email" onsubmit="return controlloCorrispondezaEmail(this)">           
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cambio-email" onsubmit="return controlloEmail(this)">
+                    <fieldset>
+                        <legend>Modifica email</legend>
                         <label>Cambia email:</label><br>
                         <input type="email" name="email" required><br>
                         <label>Conferma email:</label><br>
                         <input type="email" name="emailConferma" required><br>
                         <input type="submit">
-                    </form>
-                </fieldset>
+                    </fieldset>
+                </form>
             </div>\n
     testo;
     return $html;
