@@ -25,8 +25,15 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                 alert("Qualcosa &egrave; andato storto nella modifica");
             </script>
         testo;
-    }    
+    }
 }else{
+    if(isset($_GET['successo'])){
+        $html .=<<<testo
+            <script>
+                alert("Modifica effettuata con successo");
+            </script>
+        testo;
+    }
     $scuola = unserialize($_SESSION['scuola']);
     $html .= creaBarraMenu($_SESSION["email_utente"]);
     $html.=<<<testo
@@ -54,13 +61,13 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                 <input type="submit">
             </fieldset>
         </form>
-        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-credenziali-scuola" method="POST" onSubmit="return controlloPassword(this)">
+        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-credenziali-scuola" method="POST" onSubmit="return controlloPassword()">
             <fieldset>
                 <legend>Modifica Credenziali</legend>
                 <div class="dati">
                     <div class="riga">
                         <label>Vecchia Email</label>
-                        <input type="email" name="vecchiaEmail" placeholder="{$scuola->getEmail()}" readonly>
+                        <input type="email" name="vecchiaEmail" value="{$scuola->getEmail()}" readonly>
                     </div>
                     <div class="riga">
                         <label>Email</label>
@@ -68,11 +75,11 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                     </div>
                     <div class="riga">
                         <label>Nuova password</label>
-                        <input type="password" name="password">
+                        <input type="password" name="password" id="password">
                     </div>
                     <div class="riga">
                         <label>Conferma Nuova password</label>
-                        <input type="password" name="confermaNuovaPassowrd">
+                        <input type="password" name="confermaNuovaPassowrd" id="passwordConferma">
                     </div>
                 </div>
                 <input type="submit">

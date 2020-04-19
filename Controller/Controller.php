@@ -302,7 +302,7 @@ class Controller {
                 exit();
             break; 
             case 'cambio-email':
-                if(!$this->modello->modificaEmail($_SESSION['email-utente'], $_POST["email"])){
+                if(!$this->modello->modificaEmail($_SESSION['email_utente'], $_POST["email"])){
                     header('Location: View/gestioneAccount.php?errore=2');
                     exit();
                 }
@@ -341,11 +341,14 @@ class Controller {
                         header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
                     }
-                }else if(isset($_POST["email"])){
+                }
+                if(isset($_POST['email'])){
                     if(!$this->modello->modificaEmail($_POST["vecchiaEmail"], $_POST["email"])){
                         header('Location: View/modifica/modificaScuola.php?errore=2');
                         exit();
                     }
+                    $_SESSION['scuole'] = serialize($this->modello->getScuole());
+                    $_SESSION['scuola'] = serialize($this->modello->getScuolaDaEmail($_POST['email']));
                 }
                 header('Location: View/modifica/modificaScuola.php?successo=true');
                 exit();

@@ -68,7 +68,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                                 <input type=date name="dal" required><br>
                             </div>
                             <div class="riga">
-                                <label>Al</label>
+                                <label>Al:</label>
                                 <input type=date name="al" required><br>
                             </div>
                         </div>

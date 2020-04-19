@@ -57,11 +57,6 @@ body{
     width: fit-content;
 }
 
-#ricerca form{
-    min-width: unset;
-    min-height: unset;
-}
-
 #ricerca input[type="text"]{
     font-size: medium;
     padding: 0px;
@@ -69,14 +64,14 @@ body{
     padding-right: var(--default-padding);
 }
 
-#ricerca button[type="submit"]{
+#ricerca form button[type="submit"]{
     background-color: var(--default-elements-background-color);
     cursor: pointer;
     font-size: large;
     padding: var(--default-padding);
 }
 
-#ricerca input[type="text"], #ricerca button[type="submit"]{
+#ricerca input[type="text"], #ricerca form button[type="submit"]{
     vertical-align: middle;
     margin: 0px;
     border: var(--default-border);
@@ -139,41 +134,15 @@ main{
 }
 
 /*Regole per i form*/
-/*form{
+fieldset{
     margin: var(--default-margin);
     font-size: larger;
-    width: fit-content;
-    height: fit-content;
-    display: inline-block;
-}
-
-fieldset{
     min-height: 250px;
     min-width: 250px;
     border: var(--default-border);
     border-radius: var(--default-border-radius);
-}*/
-/*form{
-    font-size: large;
-    margin: var(--default-margin);
-    display: inline-block;
-    min-height: 250px;
-    min-width: 250px;
-}*/
-form{
-    width: fit-content;
-    height: fit-content;
     display: inline-block;
     text-align: center;
-}
-
-fieldset{
-    border: var(--default-border);
-    border-radius: var(--default-border-radius);
-    font-size: large;
-    min-width: 250px;
-    min-height: 250px;
-    margin: var(--default-margin);
 }
 
 fieldset legend {
@@ -181,7 +150,13 @@ fieldset legend {
     text-decoration: underline;
 }
 
-fieldset input{
+form{
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+
+form input{
     border: var(--default-border);
     font-size: large;
     background: #FFF;
@@ -190,7 +165,7 @@ fieldset input{
     border-radius: var(--default-border-radius);
 }
 
-fieldset input[type="submit"]{
+form input[type="submit"]{
     float: right;
     margin: var(--default-margin);
     margin-right: 0px;
@@ -212,7 +187,7 @@ footer{
     grid-area: footer;
     align-self: flex-end;
     background: var(--default-elements-background-color);
-    padding: var(--default-padding);
+    padding: 5px;
     height: fit-content;
 }
 
@@ -296,22 +271,6 @@ button{
 
 #crea-percorso{
     float: right;
-}
-
-.riquadro-percorso{
-    position: relative;
-}
-
-.riquadro-percorso p{
-    display: block;
-    margin: var(--default-margin);
-}
-
-.riquadro-percorso button{
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
 }
 
 .barra-laterale{
