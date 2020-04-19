@@ -188,14 +188,14 @@ class Controller {
                 exit();
             break;
 
-            case 'valutazione-esperienza':
+            /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
                     header('Location: View/mostra/mostraEsperienza.php?errore=1');
                     exit();
                 }
-            break;
+            break;*/
 
             // Case per la creazione di nuove istanze di soggetti o entità
             case 'crea-percorso':
@@ -244,10 +244,22 @@ class Controller {
                 header('Location: View/creazione/creaPercorso.php');
                 exit();
             break;
+            case 'crea-esperienza':
+                
+            break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
+                $as=substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
                 if(isset($_POST['submit'])){
-                    $this->modello->insertClasse($scuola->getId());
+                    $classe=new Classe(
+                        $scuola->getId(),
+                        $_POST["numero_classe"],
+                        $_POST["sezione_classe"],
+                        $as,
+                        $_POST["studenti"]
+                    );
+                    echo $as;
+                    $this->modello->insertClasse($classe);
                 }else{
                     $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
                     $_SESSION['studenti'] = serialize($studenti);
