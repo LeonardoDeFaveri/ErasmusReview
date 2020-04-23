@@ -267,7 +267,8 @@ class Controller {
                     $_POST["citta"],
                     $_POST["indirizzo"]
                 );
-                if(!$this->modello->insertScuola($scuola)){
+                $controllo=$this->modello->insertScuola($scuola);
+                if(!$controllo){
                     header('Location: View/homeAdmin.php?errore=2');
                     exit();                    
                 }
@@ -280,6 +281,7 @@ class Controller {
                 header('Location: View/gestioneAccount.php');
                 exit();
             break;
+            
             case 'cambio-password':
                 $password = hash('sha256', $_POST["password"]);
                 if(!$this->modello->modificaPassword($_SESSION['email_utente'], $password)){
