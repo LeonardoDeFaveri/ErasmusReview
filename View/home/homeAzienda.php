@@ -80,19 +80,23 @@ function creaRiquadro($esperienza, $daValutare = false) {
             \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>
             {$studente->getCognome()} {$studente->getNome()}<br>
             {$studente->getEmail()}<br>
-            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t<a href="#">{$scuola->getNome()}</a><br>
             \t\t\t{$tutor->getCognome()}<br>\n
+            \t\t\t<div class="contenitore-bottoni-riquadro">\n
     testo;
 
     if($daValutare){
         $riquadro .=<<<testo
-            \t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
-                \t\t\t\t<button type="submit">Valutazione</button>
-            \t\t\t\t</form>\n
+            \t\t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
+                \t\t\t\t\t<button type="submit">Valutazione</button>
+            \t\t\t\t\t</form>\n
         testo;
     }
 
-    $riquadro .= "\t\t\t\t</div>\n";
+    $riquadro .=<<<testo
+            \t\t\t</div>
+        \t\t\t</div>\n
+    testo;
     return $riquadro;
 }
 ?>

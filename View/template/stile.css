@@ -142,6 +142,7 @@ fieldset{
     border: var(--default-border);
     border-radius: var(--default-border-radius);
     display: inline-block;
+    text-align: center;
 }
 
 fieldset legend {
@@ -270,18 +271,6 @@ button{
 
 #crea-percorso{
     float: right;
-}
-
-.riquadro-percorso p{
-    display: block;
-    margin: var(--default-margin);
-}
-
-.riquadro-percorso button{
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
 }
 
 .barra-laterale{

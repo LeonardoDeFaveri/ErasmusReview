@@ -53,7 +53,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
 
         //Creazione dei riquadri delle esperiene completate
         $html .=<<<testo
-                <details id="completate" open>
+                <details id="completate">
                     <summary>Completate</summary>
                     <div class="contenitore-riquadri">\n
         testo;
@@ -90,16 +90,20 @@ function creaRiquadro($esperienza, $daValutare = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
     }
+    $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
 
     if($daValutare){
         $riquadro .=<<<testo
-            \t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
-                \t\t\t\t<button type="submit">Valutazione</button>
-            \t\t\t\t</form>\n
+            \t\t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
+                \t\t\t\t\t<button type="submit">Valutazione</button>
+            \t\t\t\t\t</form>\n
         testo;
     }
 
-    $riquadro .= "\t\t\t\t</div>\n";
+    $riquadro .=<<<testo
+            \t\t\t</div>
+        \t\t\t</div>\n
+    testo;
     return $riquadro;
 }
 ?>
