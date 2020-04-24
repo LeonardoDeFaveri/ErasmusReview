@@ -281,7 +281,7 @@ class Controller {
                 );
                 $controllo=$this->modello->insertScuola($scuola);
                 if(!$controllo){
-                    header('Location: View/homeAdmin.php?errore=2');
+                    header('Location: index.php?errore=2');
                     exit();                    
                 }
                 header('Location: index.php');
