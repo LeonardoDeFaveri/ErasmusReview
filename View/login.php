@@ -19,16 +19,16 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1) {
     testo;
 }
 $html .= <<<testo
-        <fieldset>
-            <legend>Accedi al tuo account</legend>
-            <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=login">
+        <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=login">
+            <fieldset>
+                <legend>Accedi al tuo account</legend>
                 <label for="email">Indirizzo email</label><br>
                 <input type="email" name="email" placeholder="Indirizzo email"  required><br>
                 <label for="password">Password</label><br>
                 <input type="password" name="password" placeholder="Password" required><br>
                 <input type="submit" name="submit" value="Accedi">
-            </form>
-        </fieldset>\n
+            </fieldset>        
+        </form>
 testo;
 
 $html .= creaFooter();

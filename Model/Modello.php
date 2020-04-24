@@ -875,8 +875,8 @@ class Modello {
      */
     public function insertScuola($scuola) {
         $digest=hash('sha256',$scuola->getNome());
+        
         $query =<<<testo
-        START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
             "{$scuola->getEmail()}",
             "$digest",
@@ -889,9 +889,15 @@ class Modello {
             "{$scuola->getCitta()}",
             "{$scuola->getIndirizzo()}"
         );
-        COMMIT;
         testo;
-        return $this->connessione->multi_query($query);
+        //$nextResult1=$this->connessione->next_result();
+        $this->connessione->begin_transaction();
+        $this->connessione->multi_query($query);
+        $controllo=$this->connessione->commit();
+    
+    
+    
+        return $controllo;
     }//password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
 
     /**
