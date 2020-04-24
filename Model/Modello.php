@@ -716,6 +716,31 @@ class Modello {
             }
         }
         return $percorsi;
+    }  
+    
+    public function getDocentiDaClasse($idClasse) {
+        $query=<<<testo
+        SELECT 
+            D.* 
+        FROM
+            docenti D
+        INNER JOIN classi_docenti CD 
+            ON D.id=CD.id_docente
+        INNER JOIN classi C
+            ON C.id=CD.id_classe
+        WHERE id_classe={$idClasse}
+        testo;
+        $ris=$this->connessione->query($query);
+        $docenti=array();
+        foreach($ris as $elemento){
+            $docenti[]=new Docente(
+                $elemento["id"],
+                $elemento["nome"],
+                $elemento["cognome"],
+                $elemento["email_utente"]
+            );
+        }
+        return $docenti;
     }
 
     /**
@@ -939,10 +964,34 @@ class Modello {
                 AND sezione = "{$classe->getSezione()}"
                 AND anno_scolastico="{$classe->getAnnoScolastico()}"
             testo;
+<<<<<<< HEAD
             $ris = $this->connessione->query($query);
             if($ris && $ris->num_rows == 1){
                 $ris = intval($ris->fetch_row()[0]);
             }
+=======
+            $ris=$this->connessione->query($query);
+            if($ris && $ris->num_rows==1){
+                $id_classe=$ris->fetch_row()[0];
+                $query="START TRANSACTION;";
+                $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
+                foreach($classe->getStudenti() as $studente){
+                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}';";
+                    //echo $queryStudente;
+                    $ris=$this->connessione->query($queryStudente);
+                    $id_studente=$ris->fetch_row()[0]; 
+                    $query.="({$id_studente},{$id_classe},'{$_POST["as_inizio"]}',"
+                    . "'{$_POST["as_fine"]}'),";
+                    
+                }
+                $query=substr($query,0,strlen($query)-1);
+                $query.=";";
+                $query.="COMMIT;";
+                echo $query;
+                $ris=$this->connessione->query($query);
+                var_dump($ris);
+            }   
+>>>>>>> 12d441fb4656ac14c52b140b9a3547d348683a1c
         } 
         return $ris;
     }
@@ -977,6 +1026,37 @@ class Modello {
             "{$percorso->getClasse()->getId()}",
             "{$percorso->getDal()}",
             "{$percorso->getAl()}"
+        )
+        testo;
+        return $this->connessione->query($query);
+    }
+    /**
+     * insertEsperienza inserisce un'esperienza nel database.
+     *
+     * @param  Esperienza $esperienza istanza della classe esperienza da inserire
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertEsperienza($esperienza) {
+        $query =<<<testo
+        INSERT INTO esperienze (id_studente, id_azienda, id_percorso, id_agenzia, id_famiglia, dal, al) VALUES (
+            "{$esperienza->getStudente()->getId()}",
+            "{$esperienza->getAzienda()->getId()}",
+            "{$esperienza->getPercorso()->getId()}",
+        testo;
+        if($esperienza->getAgenzia() != null && $esperienza->getFAmiglia() != null){
+            $query.=<<<testo
+            "{$esperienza->getAgenzia()->getId()}",
+            "{$esperienza->getFamiglia()->getId()}",
+            testo;
+        }else{
+            $query.=<<<testo
+            null,
+            null,
+            testo;
+        }
+        $query.=<<<testo
+            "{$esperienza->getDal()}",
+            "{$esperienza->getAl()}"
         )
         testo;
         return $this->connessione->query($query);
