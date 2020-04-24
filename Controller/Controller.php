@@ -187,6 +187,13 @@ class Controller {
                 header('Location: View/mostra/mostraStudenti.php');
                 exit();
             break;
+            
+            case 'mostra-classe':
+                $_SESSION["classe"]=serialize($this->modello->getClasseDaId($_GET["id"]));
+                $_SESSION["docenti"]=serialize($this->modello->getDocentiDaClasse($_GET["id"]));
+                header('Location: View/mostra/mostraClasse.php');
+                exit();
+            break;
 
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
