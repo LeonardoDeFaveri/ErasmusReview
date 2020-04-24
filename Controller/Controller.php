@@ -187,6 +187,13 @@ class Controller {
                 header('Location: View/mostra/mostraStudenti.php');
                 exit();
             break;
+            
+            case 'mostra-classe':
+                $_SESSION["classe"]=serialize($this->modello->getClasseDaId($_GET["id"]));
+                $_SESSION["docenti"]=serialize($this->modello->getDocentiDaClasse($_GET["id"]));
+                header('Location: View/mostra/mostraClasse.php');
+                exit();
+            break;
 
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
@@ -283,16 +290,20 @@ class Controller {
             break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
-                $as=substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
                 if(isset($_POST['submit'])){
-                    $classe=new Classe(
+                    $as = substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
+                    $studenti = array();
+                    foreach($_POST['studenti'] as $emailStudente){
+                        $studenti[] = $this->modello->getStudenteDaEmail($emailStudente);
+                    }
+                    $classe = new Classe(
+                        null,
                         $scuola->getId(),
                         $_POST["numero_classe"],
                         $_POST["sezione_classe"],
                         $as,
-                        $_POST["studenti"]
+                        $studenti
                     );
-                    echo $as;
                     $this->modello->insertClasse($classe);
                 }else{
                     $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
@@ -315,7 +326,7 @@ class Controller {
                 );
                 $controllo=$this->modello->insertScuola($scuola);
                 if(!$controllo){
-                    header('Location: index.php?errore=2');
+                    header('Location: View/creazione/creaScuola.php?errore=2');
                     exit();                    
                 }
                 header('Location: index.php');
