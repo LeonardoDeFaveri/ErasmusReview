@@ -249,17 +249,20 @@ class Controller {
             break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);
-                $as=substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
                 if(isset($_POST['submit'])){
-                    $classe=new Classe(
+                    $as = substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
+                    $studenti = array();
+                    foreach($_POST['studenti'] as $emailStudente){
+                        $studenti[] = $this->modello->getStudenteDaEmail($emailStudente);
+                    }
+                    $classe = new Classe(
                         null,
                         $scuola->getId(),
                         $_POST["numero_classe"],
                         $_POST["sezione_classe"],
                         $as,
-                        $_POST["studenti"]
+                        $studenti
                     );
-                    echo $as;
                     $this->modello->insertClasse($classe);
                 }else{
                     $studenti = $this->modello->getStudentiDaScuola($scuola->getId());

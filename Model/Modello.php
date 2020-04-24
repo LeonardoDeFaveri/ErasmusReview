@@ -922,30 +922,35 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine
      */
     public function insertClasse($classe){
-        //echo gettype($classe->getAnnoScolastico());
-        $query="INSERT INTO classi (codice_scuola,numero,sezione,anno_scolastico) VALUES ("
-                . "'{$classe->getScuola()}',{$classe->getNumero()},'{$classe->getSezione()}',"
-                . "'{$classe->getAnnoScolastico()}');";
-        //echo $query;
+        $query =<<<testo
+        INSERT INTO classi (codice_scuola, numero, sezione, anno_scolastico) VALUES (
+            "{$classe->getScuola()}",
+            {$classe->getNumero()},
+            "{$classe->getSezione()}",
+            "{$classe->getAnnoScolastico()}"
+        )
+        testo;
         $ris=$this->connessione->query($query);
         if($ris){
-            $query="SELECT id FROM classi WHERE codice_scuola='{$classe->getScuola()}' "
-            . "AND numero='{$classe->getNumero()}'"
-            . "AND sezione='{$classe->getSezione()}'"
-            . "AND anno_scolastico='{$classe->getAnnoScolastico()}';";
+            $query=<<<testo
+            SELECT id FROM classi WHERE codice_scuola="{$classe->getScuola()}"
+                AND numero = {$classe->getNumero()}
+                AND sezione = "{$classe->getSezione()}"
+                AND anno_scolastico="{$classe->getAnnoScolastico()}"
+            testo;
             $ris=$this->connessione->query($query);
+            var_dump($ris);
             if($ris && $ris->num_rows==1){
-                //$id_classe=$ris->fetch_row()[0];
+                $id_classe=$ris->fetch_row()[0];
                 $query="START TRANSACTION";
                 $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
                 foreach($classe->getStudenti() as $studente){
-                    $query.="('{$studente->getId()}','{$classe->getId()}','{$_POST["as_inizio"]}',"
+                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}'";
+                    $ris=$this->connessione->query($queryStudente);
+                    $id_studente=$ris->fetch_row()[0]; 
+                    $query.="('{$id_studente}','{$id_classe}','{$_POST["as_inizio"]}',"
                     . "'{$_POST["as_fine"]}')";
                 }
-                /*foreach($_POST['studenti'] as $studente){
-                    $query .="('{$studente->getId()}','{$id_classe}','{$_POST['as_dal']}',"
-                    . "'{$_POST['as_al']}')";
-                }*/
                 $query.="COMMIT";
                 echo $query;
                 $ris=$this->connessione->query($query);
