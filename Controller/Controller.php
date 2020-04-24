@@ -245,7 +245,41 @@ class Controller {
                 exit();
             break;
             case 'crea-esperienza':
-                
+                if($_SESSION['tipo_utente'] != 'docente' && $_SESSION['tipo_utente'] != 'scuola'){
+                    //se l'utente loggato non è ne scuola ne docente
+                    header('Location: View/creazione/creaEsperienza.php?errore=1');
+                    exit();
+                }
+                if(isset($_POST['submit'])){
+                    $esperienza = null;
+                    //inserire esperienza
+                    if($this->modello->insertEsperienza($esperienza)){
+                        header('Location: index.php');
+                        exit();
+                    }else{
+                        header('Location: View/creazione/creaEsperienza.php?errore=2');
+                        exit();
+                    }
+                }
+                if($_SESSION['tipo_utente'] == 'docente'){
+                    $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                    $classiDocente = serialize($this->modello->getClassiDaDocente($docente));
+                    $studenti = null;
+                    foreach($classiDocente as $classe){ //dubbi su questo controllo
+                        $anni = explode("/",$classe->getAnnoScolastico());
+                        if(date("Y") == $anni[0] || date("Y") == $anni[1]){
+                            
+                        }
+                    }
+                    $_SESSION['docente'] = serialize($docente);
+                }else{
+                    $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
+                    $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
+                    $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    $_SESSION['scuola'] = serialize($scuola);
+                }
+                header('Location: View/creazione/creaEsperienza.php');
+                exit();
             break;
             case 'crea-classe':
                 $scuola = unserialize($_SESSION['scuola']);

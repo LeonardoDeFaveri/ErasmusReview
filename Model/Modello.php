@@ -969,5 +969,36 @@ class Modello {
         testo;
         return $this->connessione->query($query);
     }
+    /**
+     * insertEsperienza inserisce un'esperienza nel database.
+     *
+     * @param  Esperienza $esperienza istanza della classe esperienza da inserire
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertEsperienza($esperienza) {
+        $query =<<<testo
+        INSERT INTO esperienze (id_studente, id_azienda, id_percorso, id_agenzia, id_famiglia, dal, al) VALUES (
+            "{$esperienza->getStudente()->getId()}",
+            "{$esperienza->getAzienda()->getId()}",
+            "{$esperienza->getPercorso()->getId()}",
+        testo;
+        if($esperienza->getAgenzia() != null && $esperienza->getFAmiglia() != null){
+            $query.=<<<testo
+            "{$esperienza->getAgenzia()->getId()}",
+            "{$esperienza->getFamiglia()->getId()}",
+            testo;
+        }else{
+            $query.=<<<testo
+            null,
+            null,
+            testo;
+        }
+        $query.=<<<testo
+            "{$esperienza->getDal()}",
+            "{$esperienza->getAl()}"
+        )
+        testo;
+        return $this->connessione->query($query);
+    }
 }
 ?>

@@ -29,7 +29,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
         <div>
             <h2>Crea Percorso</h2>
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
-                    <fieldset id="form-creazione-classe">
+                    <fieldset>
                         <legend>Creazione Percorso</legend>
                             <div class="dati">\n
     testo;
