@@ -252,6 +252,7 @@ class Controller {
                 $as=substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
                 if(isset($_POST['submit'])){
                     $classe=new Classe(
+                        null,
                         $scuola->getId(),
                         $_POST["numero_classe"],
                         $_POST["sezione_classe"],
