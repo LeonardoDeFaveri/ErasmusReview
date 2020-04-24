@@ -917,9 +917,10 @@ class Modello {
         return $this->connessione->query($query);
     }    
     /**
+     * insertClasse inserisce una nuova classe nel database
      * 
-     * @param $cod_scuola codice della scuola
-     * @return bool true se l'inserimento è andato a buon fine
+     * @param  Classe $classe classe da inserire
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertClasse($classe){
         $query =<<<testo
@@ -930,7 +931,7 @@ class Modello {
             "{$classe->getAnnoScolastico()}"
         )
         testo;
-        $ris=$this->connessione->query($query);
+        $ris = $this->connessione->query($query);
         if($ris){
             $query=<<<testo
             SELECT id FROM classi WHERE codice_scuola="{$classe->getScuola()}"
@@ -938,30 +939,28 @@ class Modello {
                 AND sezione = "{$classe->getSezione()}"
                 AND anno_scolastico="{$classe->getAnnoScolastico()}"
             testo;
-            $ris=$this->connessione->query($query);
-            if($ris && $ris->num_rows==1){
-                $id_classe=$ris->fetch_row()[0];
-                $query="START TRANSACTION";
-                $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
-                var_dump($classe->getStudenti());
-                foreach($classe->getStudenti() as $studente){
-                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}'";
-                    echo $queryStudente;
-                    $ris=$this->connessione->query($queryStudente);
-                    $id_studente=$ris->fetch_row()[0]; 
-                    $query.="('{$id_studente}','{$id_classe}','{$_POST["as_inizio"]}',"
-                    . "'{$_POST["as_fine"]}')";
-                }
-                $query.="COMMIT";
-                $ris=$this->connessione->query($query);
-            }   
+            $ris = $this->connessione->query($query);
+            if($ris && $ris->num_rows == 1){
+                $ris = intval($ris->fetch_row()[0]);
+            }
         } 
         return $ris;
     }
-    public function insertStudenteInClasse($id_classe,$id_studente){
-        $query="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES "
-                . "('{$id_studente}','{$id_classe}','{$_POST['as_dal']}',"
-                . "'{$_POST['as_al']}');";
+    
+    /**
+     * insertStudenteInClasse inserisce uno studente in una classe
+     *
+     * @param  int $idClasse id della classe nella quale inserire lo studente
+     * @param  int $idStudente id dello studente da inserire
+     * @param  string $dal data in formato YYYY-MM-DD
+     * @param  string $al data in formato YYYY-MM-DD
+     * @return bool true se lo studente è stato inserito altrimenti false
+     */
+    public function insertStudenteInClasse($idClasse, $idStudente, $dal, $al){
+        $query =<<<testo
+        INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES (
+            {$idStudente}, {$idClasse}, "{$dal}", "{$al}")
+        testo;
         return $this->connessione->query($query);        
     }
 

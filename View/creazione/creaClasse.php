@@ -12,7 +12,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Crea Classe");
-if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
+if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
@@ -21,6 +21,24 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
 }else{
     $scuola = unserialize($_SESSION['scuola']);
     $html .= creaBarraMenu($scuola->getEmail());
+    if(isset($_GET['errore']) && $_GET['errore'] == 2){
+        switch($_GET['errore']){
+            case 2:
+                $html .=<<<testo
+                    <script>
+                        alert("Non sono riuscito ad inserire la classe; probabilmente esiste già");
+                    </script>
+                testo;
+            break;
+            case 3:
+                $html .=<<<testo
+                    <script>
+                        alert("Non sono riucito ad inserire tutti gli studenti");
+                    </script>
+                testo;
+            break;
+        }
+    }
     $as = date("Y") - 1;
     $as = $as . "/" . date("Y");
     $html.=<<<testo
@@ -53,10 +71,10 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     testo;
     $studenti = unserialize($_SESSION['studenti']);
     foreach($studenti as $studente){
-        $email = $studente->getEmail();
+        $id = $studente->getId();
         $html .=<<<testo
             <label>
-                <input type="checkbox" name="studenti[]" value="{$email}">
+                <input type="checkbox" name="studenti[]" value={$id}>
                 {$studente->getCognome()} {$studente->getNome()}
             </label>
         testo;

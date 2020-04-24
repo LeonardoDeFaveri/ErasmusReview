@@ -251,19 +251,34 @@ class Controller {
                 $scuola = unserialize($_SESSION['scuola']);
                 if(isset($_POST['submit'])){
                     $as = substr($_POST['as_inizio'],0,4)."/".substr($_POST['as_fine'],0,4);
-                    $studenti = array();
-                    foreach($_POST['studenti'] as $emailStudente){
-                        $studenti[] = $this->modello->getStudenteDaEmail($emailStudente);
-                    }
                     $classe = new Classe(
                         null,
                         $scuola->getId(),
                         $_POST["numero_classe"],
                         $_POST["sezione_classe"],
                         $as,
-                        $studenti
+                        null
                     );
-                    $this->modello->insertClasse($classe);
+                    if($idClasse = $this->modello->insertClasse($classe)){
+                        if(isset($_POST['studenti'])){
+                            $dal = $_POST['as_inizio'];
+                            $al = $_POST['as_fine'];
+                            $erroreInserimento = false;
+                            foreach($_POST['studenti'] as $idStudente){
+                                if(!$this->modello->insertStudenteInClasse($idClasse, $idStudente, $dal, $al)){
+                                    $erroreInserimento = true;
+                                }
+                            }
+                            if($erroreInserimento){
+                                header('Location: View/creazione/creaClasse.php?errore=3');
+                                exit();
+                            }
+                        }
+                        header('Location: index.php');
+                        exit();
+                    }
+                    header('Location: View/creazione/creaClasse.php?errore=2');
+                    exit();
                 }else{
                     $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
                     $_SESSION['studenti'] = serialize($studenti);
