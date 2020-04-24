@@ -123,7 +123,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     testo;
     if(count($classi) > 0){
         foreach ($classi as $classe){
-            $html .= "<li>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</li>\n";
+            $html .= "<li><a href=\"{$_SESSION['web_root']}/index.php?comando=mostra-classe&id={$classe->getId()}\">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a></li>\n";
         }
     }
     $html .=<<<testo

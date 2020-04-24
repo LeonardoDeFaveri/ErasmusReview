@@ -716,6 +716,31 @@ class Modello {
             }
         }
         return $percorsi;
+    }  
+    
+    public function getDocentiDaClasse($idClasse) {
+        $query=<<<testo
+        SELECT 
+            D.* 
+        FROM
+            docenti D
+        INNER JOIN classi_docenti CD 
+            ON D.id=CD.id_docente
+        INNER JOIN classi C
+            ON C.id=CD.id_classe
+        WHERE id_classe={$idClasse}
+        testo;
+        $ris=$this->connessione->query($query);
+        $docenti=array();
+        foreach($ris as $elemento){
+            $docenti[]=new Docente(
+                $elemento["id"],
+                $elemento["nome"],
+                $elemento["cognome"],
+                $elemento["email_utente"]
+            );
+        }
+        return $docenti;
     }
 
     /**
