@@ -73,6 +73,18 @@ INSERT INTO scuole (codice_meccanografico, email_utente, nome, citta, indirizzo)
     ('TVTD007011', 'ite@iisvittorioveneto.it', 'ITE - IIS Vittorio Veneto', 'Vittorio Veneto', 'Via Pontavai, 121'),
     ('TVRI00701A', 'ipsia@iisvittorioveneto.it', 'IPSIA - IIS Vittorio Veneto', 'Vittorio Veneto', 'Via Vittorio Emanuele II, 97');
 
+DELETE FROM studenti_scuole;
+INSERT INTO studenti_scuole (codice_scuola, id_studente, dal, al) VALUES
+	('TVTF007017', 1, '2015-09-01', NULL),
+	('TVTF007017', 2, '2015-09-01', NULL),
+	('TVTF007017', 3, '2015-09-01', NULL),
+	('TVTF007017', 4, '2015-09-01', NULL),
+	('TVTF007017', 5, '2015-09-01', NULL),
+	('TVTF007017', 6, '2015-09-01', NULL),
+	('TVTF007017', 7, '2015-09-01', NULL),
+	('TVTF007017', 8, '2015-09-01', '2016-08-31'),
+	('TVTF007017', 9, '2015-09-01', '2019-08-31');
+
 DELETE FROM docenti_scuole;
 INSERT INTO docenti_scuole (codice_scuola, id_docente, dal, al) VALUES
     ('TVTF007017', 1, '1998-09-01', NULL),

@@ -305,6 +305,7 @@ class Modello {
     
     /**
      * getStudentiDaScuola estrae dal database tutti gli studenti di una scuola.
+     * Vengono estratti anche gli studenti che non sono più iscritti.
      *
      * @param  string $codiceMeccanografico codice meccanografico della scuola
      * per la quale estrarre gli studenti
@@ -313,13 +314,46 @@ class Modello {
     public function getStudentiDaScuola($codiceMeccanografico) {
         $query =<<<testo
         SELECT S.* FROM studenti S
-            INNER JOIN classi_studenti CS
-            ON CS.id_studente = S.id
-            INNER JOIN classi C
-            ON C.id = CS.id_classe
-            INNER JOIN scuole SC
-            ON SC.codice_meccanografico = C.codice_scuola
-        WHERE SC.codice_meccanografico = '{$codiceMeccanografico}'
+            INNER JOIN studenti_scuole SS ON
+            S.id = SS.id_studente
+            INNER JOIN scuole SC ON
+            SC.codice_meccanografico = SS.codice_scuola
+        WHERE SS.codice_scuola = '{$codiceMeccanografico}'
+        ORDER BY S.cognome, S.nome
+        testo;
+        $ris = $this->connessione->query($query);
+        $studenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $studente) {
+                $studenti[] = new Studente(
+                    $studente['id'],
+                    $studente['nome'],
+                    $studente['cognome'],
+                    $studente['email_utente'],
+                    $studente['data_nascita']
+                );
+            }
+        }
+        return $studenti;
+    }
+    
+    /**
+     * getStudentiAttiviDaScuola estrae dal database tutti gli studenti
+     * ancora iscritti alla scuoola.
+     *
+     * @param  string $codiceMeccanografico codice meccanografico della scuola
+     * per la quale estrarre gli studenti
+     * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getStudentiAttiviDaScuola($codiceMeccanografico){
+        $query =<<<testo
+        SELECT S.* FROM studenti S
+            INNER JOIN studenti_scuole SS ON
+            S.id = SS.id_studente
+            INNER JOIN scuole SC ON
+            SC.codice_meccanografico = SS.codice_scuola
+        WHERE SS.codice_scuola = 'TVTF007017' AND SS.al IS NULL OR SS.al > NOW()
         ORDER BY S.cognome, S.nome
         testo;
         $ris = $this->connessione->query($query);
@@ -717,18 +751,22 @@ class Modello {
         }
         return $percorsi;
     }  
-    
+        
+    /**
+     * getDocentiDaClasse estrae dal database tutti i docenti associati
+     * as una classe.
+     *
+     * @param  int $idClasse id della classe per la quale estrarre i docenti
+     * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
     public function getDocentiDaClasse($idClasse) {
         $query=<<<testo
-        SELECT 
-            D.* 
-        FROM
-            docenti D
-        INNER JOIN classi_docenti CD 
-            ON D.id=CD.id_docente
-        INNER JOIN classi C
-            ON C.id=CD.id_classe
-        WHERE id_classe={$idClasse}
+        SELECT D.* FROM docenti D
+            INNER JOIN classi_docenti CD 
+            ON D.id = CD.id_docente
+            INNER JOIN classi C
+            ON C.id = CD.id_classe
+        WHERE id_classe = {$idClasse}
         testo;
         $ris=$this->connessione->query($query);
         $docenti=array();
@@ -964,34 +1002,10 @@ class Modello {
                 AND sezione = "{$classe->getSezione()}"
                 AND anno_scolastico="{$classe->getAnnoScolastico()}"
             testo;
-<<<<<<< HEAD
             $ris = $this->connessione->query($query);
             if($ris && $ris->num_rows == 1){
                 $ris = intval($ris->fetch_row()[0]);
             }
-=======
-            $ris=$this->connessione->query($query);
-            if($ris && $ris->num_rows==1){
-                $id_classe=$ris->fetch_row()[0];
-                $query="START TRANSACTION;";
-                $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
-                foreach($classe->getStudenti() as $studente){
-                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}';";
-                    //echo $queryStudente;
-                    $ris=$this->connessione->query($queryStudente);
-                    $id_studente=$ris->fetch_row()[0]; 
-                    $query.="({$id_studente},{$id_classe},'{$_POST["as_inizio"]}',"
-                    . "'{$_POST["as_fine"]}'),";
-                    
-                }
-                $query=substr($query,0,strlen($query)-1);
-                $query.=";";
-                $query.="COMMIT;";
-                echo $query;
-                $ris=$this->connessione->query($query);
-                var_dump($ris);
-            }   
->>>>>>> 12d441fb4656ac14c52b140b9a3547d348683a1c
         } 
         return $ris;
     }

@@ -321,7 +321,7 @@ class Controller {
                     header('Location: View/creazione/creaClasse.php?errore=2');
                     exit();
                 }else{
-                    $studenti = $this->modello->getStudentiDaScuola($scuola->getId());
+                    $studenti = $this->modello->getStudentiAttiviDaScuola($scuola->getId());
                     $_SESSION['studenti'] = serialize($studenti);
                     header('Location: View/creazione/creaClasse.php');
                     exit();

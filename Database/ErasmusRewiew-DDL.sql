@@ -126,6 +126,22 @@ CREATE TABLE scuole(
         ON UPDATE CASCADE
 );
 
+CREATE TABLE studenti_scuole(
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	codice_scuola VARCHAR (30) NOT NULL,
+	id_studente INTEGER NOT NULL,
+	dal DATE NOT NULL,
+	al DATE,
+	PRIMARY KEY (id),
+	UNIQUE(id_studente, dal),
+	FOREIGN KEY (codice_scuola) REFERENCES scuole (codice_meccanografico)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id_studente) REFERENCES studenti (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
 CREATE TABLE docenti_scuole(
     id INTEGER NOT NULL AUTO_INCREMENT,
     codice_scuola VARCHAR (30) NOT NULL,
