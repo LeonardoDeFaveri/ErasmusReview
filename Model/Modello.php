@@ -935,8 +935,10 @@ class Modello {
                 $id_classe=$ris->fetch_row()[0];
                 $query="START TRANSACTION";
                 $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
+                var_dump($classe->getStudenti());
                 foreach($classe->getStudenti() as $studente){
                     $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}'";
+                    echo $queryStudente;
                     $ris=$this->connessione->query($queryStudente);
                     $id_studente=$ris->fetche_row()[0]; 
                     $query.="('{$id_studente}','{$id_classe}','{$_POST["as_inizio"]}',"
