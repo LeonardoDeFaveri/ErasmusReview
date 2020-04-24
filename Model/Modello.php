@@ -939,7 +939,6 @@ class Modello {
                 AND anno_scolastico="{$classe->getAnnoScolastico()}"
             testo;
             $ris=$this->connessione->query($query);
-            var_dump($ris);
             if($ris && $ris->num_rows==1){
                 $id_classe=$ris->fetch_row()[0];
                 $query="START TRANSACTION";
@@ -954,7 +953,6 @@ class Modello {
                     . "'{$_POST["as_fine"]}')";
                 }
                 $query.="COMMIT";
-                echo $query;
                 $ris=$this->connessione->query($query);
             }   
         } 
