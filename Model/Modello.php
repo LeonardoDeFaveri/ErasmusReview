@@ -941,19 +941,23 @@ class Modello {
             $ris=$this->connessione->query($query);
             if($ris && $ris->num_rows==1){
                 $id_classe=$ris->fetch_row()[0];
-                $query="START TRANSACTION";
+                $query="START TRANSACTION;";
                 $query.="INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES ";
-                var_dump($classe->getStudenti());
                 foreach($classe->getStudenti() as $studente){
-                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}'";
-                    echo $queryStudente;
+                    $queryStudente="SELECT id FROM studenti WHERE email_utente='{$studente->getEmail()}';";
+                    //echo $queryStudente;
                     $ris=$this->connessione->query($queryStudente);
                     $id_studente=$ris->fetch_row()[0]; 
-                    $query.="('{$id_studente}','{$id_classe}','{$_POST["as_inizio"]}',"
-                    . "'{$_POST["as_fine"]}')";
+                    $query.="({$id_studente},{$id_classe},'{$_POST["as_inizio"]}',"
+                    . "'{$_POST["as_fine"]}'),";
+                    
                 }
-                $query.="COMMIT";
+                $query=substr($query,0,strlen($query)-1);
+                $query.=";";
+                $query.="COMMIT;";
+                echo $query;
                 $ris=$this->connessione->query($query);
+                var_dump($ris);
             }   
         } 
         return $ris;
