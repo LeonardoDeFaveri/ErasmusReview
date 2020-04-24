@@ -894,9 +894,7 @@ class Modello {
         $this->connessione->begin_transaction();
         $this->connessione->multi_query($query);
         $controllo=$this->connessione->commit();
-    
-    
-    
+        
         return $controllo;
     }//password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
 
