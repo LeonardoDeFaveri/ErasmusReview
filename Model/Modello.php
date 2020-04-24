@@ -876,7 +876,9 @@ class Modello {
     public function insertScuola($scuola) {
         $digest=hash('sha256',$scuola->getNome());
         
+        //password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
         $query =<<<testo
+        START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
             "{$scuola->getEmail()}",
             "$digest",
@@ -889,14 +891,20 @@ class Modello {
             "{$scuola->getCitta()}",
             "{$scuola->getIndirizzo()}"
         );
+        COMMIT;
         testo;
-        //$nextResult1=$this->connessione->next_result();
-        $this->connessione->begin_transaction();
-        $this->connessione->multi_query($query);
-        $controllo=$this->connessione->commit();
         
-        return $controllo;
-    }//password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
+        $ris = $this->connessione->multi_query($query);
+
+        do{
+            // Prende un risultato
+            if (!$result = $this->connessione->store_result()) {
+                return false;
+            }
+            // Prende il prossimo risultato
+        } while ($this->connessione->next_result());
+        return true;
+    }
 
     /**
      * insertUtenteScuola inserisce l'utente scuola nella tabella utenti del db
@@ -925,7 +933,6 @@ class Modello {
             . "AND numero='{$classe->getNumero()}'"
             . "AND sezione='{$classe->getSezione()}'"
             . "AND anno_scolastico='{$classe->getAnnoScolastico()}';";
-            echo $query;
             $ris=$this->connessione->query($query);
             if($ris && $ris->num_rows==1){
                 //$id_classe=$ris->fetch_row()[0];

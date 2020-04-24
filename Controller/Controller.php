@@ -282,7 +282,7 @@ class Controller {
                 );
                 $controllo=$this->modello->insertScuola($scuola);
                 if(!$controllo){
-                    header('Location: index.php?errore=2');
+                    header('Location: View/creazione/creaScuola.php?errore=2');
                     exit();                    
                 }
                 header('Location: index.php');
