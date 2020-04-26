@@ -23,7 +23,7 @@ $html .= <<<testo
             <fieldset>
                 <legend>Accedi al tuo account</legend>
                 <label for="email">Indirizzo email</label><br>
-                <input type="email" name="email" placeholder="Indirizzo email"  required><br>
+                <input type="email" name="email" placeholder="Indirizzo email" autofocus required><br>
                 <label for="password">Password</label><br>
                 <input type="password" name="password" placeholder="Password" required><br>
                 <input type="submit" name="submit" value="Accedi">

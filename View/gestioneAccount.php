@@ -35,8 +35,7 @@ if(!isset($_SESSION['email_utente'])) {
             <div id="gestione-account">\n
     testo;
 
-    if($_SESSION["tipo_utente"]!="admin"){
-        //controllo se il tipo di utente è diverso da admin
+    if($_SESSION["tipo_utente"] != "admin"){
         $soggetto = unserialize($_SESSION[$_SESSION["tipo_utente"]]);
         
         $html .=<<<testo
@@ -109,7 +108,7 @@ function creaFormCambioPassword(){
                     <fieldset>
                         <legend>Modifica password</legend>
                         <label>Cambia password:</label><br>
-                        <input type="password" name="password" id="password" required><br>
+                        <input type="password" name="password" id="password" autofocus required><br>
                         <label>Conferma password</label><br>
                         <input type="password" name="passwordConferma" id="passwordConferma" required><br>
                         <input type="submit">

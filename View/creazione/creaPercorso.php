@@ -38,7 +38,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
         $html .=<<<testo
                             <div class="riga">
                                 <label for="id_docente">Seleziona Docente:</label>
-                                <select name="id_docente" required>\n
+                                <select name="id_docente" autofocus required>\n
         testo;
         foreach($docenti as $docente){
             $html.=<<<testo

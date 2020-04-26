@@ -37,7 +37,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                         <div class="dati">
                             <div class="riga">
                                 <label>Codice meccanografico</label>
-                                <input type="text" name="codice_meccanografico" required>
+                                <input type="text" name="codice_meccanografico" autofocus required>
                             </div>
                             <div class="riga">
                                 <label>Email</label>

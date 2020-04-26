@@ -50,7 +50,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                         <div class="dati">
                             <div class="riga">
                                 <label>Numero sezione</label>
-                                <input type="number" name="numero_classe" min="1" required><br>
+                                <input type="number" name="numero_classe" min="1" autofocus required><br>
                             </div>
                             <div class="riga">
                                 <label>Sezione</label>
