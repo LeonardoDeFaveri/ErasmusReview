@@ -1,6 +1,6 @@
 <?php
 /**
- * creaPercorso permette di creare un percorso.
+ * creaEsperienza permette di creare un'esperienza.
  */
 if(session_id() == ''){
     session_start();
