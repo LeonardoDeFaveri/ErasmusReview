@@ -349,9 +349,12 @@ class Controller {
                         $_POST["cognome_docente"],
                         $_POST["email_docente"]
                     );
-                $this->modello->insertDocente($docente);
-                header('Location: index.php');
-                exit();
+                    if(!$this->modello->insertDocente($docente)){
+                        header('Location: View/creazione/creaDocente.php?errore=2');
+                        exit();
+                    }
+                    header('Location: index.php');
+                    exit();
                 }else{
                     header('Location: View/creazione/creaDocente.php');
                     exit(); 
