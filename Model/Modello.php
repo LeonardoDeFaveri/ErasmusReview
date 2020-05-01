@@ -883,14 +883,33 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertDocente($docente) {
+        $digest=hash('sha256',$docente->getNome());
+        
         $query =<<<testo
-        INSERT INTO agenzie (nome, cognome, email_utente) VALUES (
+        START TRANSACTION;
+        INSERT INTO utenti (email,password,tipo_utente) VALUES (
+            "{$docente->getEmail()}",
+            "$digest",
+            "docente"
+        );
+        INSERT INTO docenti (email_utente,nome,cognome) VALUES (
+            "{$docente->getEmail()}",
             "{$docente->getNome()}",
-            "{$docente->getCognome()}",
-            "{$docente->getEmail()}"
-        )
+            "{$docente->getCognome()}"
+        );
+        COMMIT;
         testo;
-        return $this->connessione->query($query);
+        
+        $ris = $this->connessione->multi_query($query);
+
+        do{
+            // Prende un risultato
+            if (!$result = $this->connessione->store_result()) {
+                return false;
+            }
+            // Prende il prossimo risultato
+        } while ($this->connessione->next_result());
+        return true;
     }
 
     /**

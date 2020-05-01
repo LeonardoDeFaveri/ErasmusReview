@@ -327,6 +327,24 @@ class Controller {
                     exit();
                 }
             break;
+            case 'crea-docente':
+                $scuola = unserialize($_SESSION['scuola']);
+                if(isset($_POST['submit'])){
+                    $nome=$_POST["nome_docente"];
+                    $docente=new Docente(
+                        null,
+                        $nome,
+                        $_POST["cognome_docente"],
+                        $_POST["email_docente"]
+                    );
+                $this->modello->insertDocente($docente);
+                header('Location: index.php');
+                exit();
+                }else{
+                    header('Location: View/creazione/creaDocente.php');
+                    exit(); 
+                }
+            break;
             case 'crea-scuola':
                 if(!isset($_POST['submit'])){
                     header('Location: View/creazione/creaScuola.php');

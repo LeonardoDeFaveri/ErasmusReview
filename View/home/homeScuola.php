@@ -102,7 +102,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
                 <details open>
                     <summary>Docenti</summary>
                     <div>
-                        <a href="#">Aggiungi Docente</a>
+                        <a href="{$_SESSION['web_root']}/index.php?comando=crea-docente&codice_scuola={$scuola->getId()}">Aggiungi Docente</a>
                         <ul>\n
     testo;
     if(count($docenti) > 0){
