@@ -280,11 +280,12 @@ class Modello {
      */
     public function getStudentiDaClasse($idClasse) {
         $query =<<<testo
-            SELECT S.* FROM classi_studenti CS
-                INNER JOIN studenti S
-                    ON CS.id_studente = S.id
-            WHERE CS.id_classe = {$idClasse}
-            ORDER BY S.cognome, S.nome;
+        SELECT S.*
+        FROM classi_studenti CS
+            INNER JOIN studenti S
+            ON CS.id_studente = S.id
+        WHERE CS.id_classe = {$idClasse}
+        ORDER BY S.cognome, S.nome;
         testo;
         $ris = $this->connessione->query($query);
         $studenti = array();
@@ -768,17 +769,76 @@ class Modello {
             ON C.id = CD.id_classe
         WHERE id_classe = {$idClasse}
         testo;
-        $ris=$this->connessione->query($query);
-        $docenti=array();
-        foreach($ris as $elemento){
-            $docenti[]=new Docente(
-                $elemento["id"],
-                $elemento["nome"],
-                $elemento["cognome"],
-                $elemento["email_utente"]
-            );
+        $ris = $this->connessione->query($query);
+        $docenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQL_ASSOC);
+            foreach($ris as $elemento){
+                $docenti[]=new Docente(
+                    $elemento["id"],
+                    $elemento["nome"],
+                    $elemento["cognome"],
+                    $elemento["email_utente"]
+                );
+            }
         }
         return $docenti;
+    }
+    
+    /**
+     * getModelloDaId estrae dal database un modello dal quale
+     * è possibile creare una scheda di valutazione.
+     *
+     * @param  int $id id del modello da estrarre
+     * @return ModelloSchedaValutazione se è stato trovato, altrimenti null
+     */
+    public function getModelloDaId($id) {
+        $query .=<<<testo
+        SELECT M.* FROM modelli M WHERE M.id = {$id}
+        testo;
+        $ris = $this->connessione->query($query);
+        $modello = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $modello = new ModelloSchedaValutazione(
+                $ris['id'],
+                $ris['tipo_recensore'],
+                $ris['tipo_recensito'],
+                $this->getAspettiDaModello($id)
+            );
+        }
+        return $modello;
+    }
+    
+    /**
+     * getAspettiDaModello estrae dal database tutti gli aspetti
+     * associati ad un modello.
+     *
+     * @param  int $idModello id del modello per il quale estarre gli aspetti 
+     * @return Aspetto[] se no sono stati trovati, altrimenti un array vuoto
+     */
+    public function getAspettiDaModello($idModello) {
+        $query =<<<testo
+        SELECT A.*
+        FROM aspetti A
+            INNER JOIN modelli_aspetti MA
+            ON A.id = MA.id_aspetto
+            INNER JOIN modelli M
+            ON MA.id_modello = M.id
+        WHERE M.id = 1
+        testo;
+        $ris = $this->connessione->query($query);
+        $aspetti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQL_ASSOC);
+            foreach ($ris as $aspetto) {
+                $aspetti[] = new Aspetto(
+                    $ris['id'],
+                    $ris['nome']
+                );
+            }
+        }
+        return $aspetti;
     }
 
     /**
@@ -956,7 +1016,7 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertScuola($scuola) {
-        $digest=hash('sha256',$scuola->getNome());
+        $digest = hash('sha256',$scuola->getNome());
         
         //password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
         $query =<<<testo

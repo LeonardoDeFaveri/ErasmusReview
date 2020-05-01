@@ -13,7 +13,7 @@ class Classe implements Serializable {
     private $sezione;
     private $annoScolastico;
     private $studenti;
-    
+      
     /**
      * __construct crea una nuova classe.
      *
@@ -69,7 +69,7 @@ class Classe implements Serializable {
         $this->numero = $valori[2];
         $this->sezione = $valori[3];
         $this->annoScolastico = $valori[4];
-        $this->getStudenti = $valori[5];
+        $this->studenti = $valori[5];
     }
 }
 ?>

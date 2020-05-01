@@ -10,14 +10,15 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $classe = unserialize($_SESSION['classe']);
-$docenti=unserialize($_SESSION['docenti']);
+$docenti = unserialize($_SESSION['docenti']);
+
 $html = creaHeader("{$classe->getNumero()}.{$classe->getSezione()}.{$classe->getAnnoscolastico()}");
 $html .= creaBarraMenu($_SESSION['email_utente']);
 
-$html=<<<testo
+$html.=<<<testo
     <p><strong>Classe:</strong> {$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoscolastico()}</p>
     <div class="contenitore-centrato">
-        <p>Studenti:</p> 
+        <p><strong>Studenti:</strong></p> 
         <table>
             <thead>
                 <tr>
@@ -29,45 +30,47 @@ $html=<<<testo
             </thead>
             <tbody>
 testo;
-$studenti=$scuola->getStudenti();
+
+$studenti = $classe->getStudenti();
+
 foreach($studenti as $elemento){
-    $html.<<<testo
+    $html .=<<<testo
         <tr>
-            <td>{$elemento["nome"]}</td>
-            <td>{$elemento["cognome"]}</td>
-            <td>{$elemento["email"]}</td>
-            <td>{$elemento["data_nascita"]}</td>
+            <td>{$elemento->getNome()}</td>
+            <td>{$elemento->getCognome()}</td>
+            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$elemento->getId()}">{$elemento->getEmail()}</a></td>
+            <td>{$elemento->getDataNascita()}</td>
         </tr>
     testo;
 }
-$html.=<<<testo
+$html .=<<<testo
         </tbody>
     </table>
 testo;
 
-$html.=<<<testo
-    <div class="contenitore-centrato">
-        <p>Docenti:</p> 
-        <table>
-            <thead>
-                <tr>
-                    <td>Nome</td>
-                    <td>Cognome</td>
-                    <td>Email</td>
-                </tr>
-            </thead>
-            <tbody>
+$html .=<<<testo
+    <p><strong>Docenti:</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Cognome</td>
+                <td>Email</td>
+            </tr>
+        </thead>
+        <tbody>
 testo;
+
 foreach($docenti as $elemento){
-    $html.<<<testo
+    $html.=<<<testo
         <tr>
-            <td>{$elemento["nome"]}</td>
-            <td>{$elemento["cognome"]}</td>
-            <td>{$elemento["email"]}</td>
+            <td>{$elemento->getNome()}</td>
+            <td>{$elemento->getCognome()}</td>
+            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$elemento->getId()}">{$elemento->getEmail()}</a></td>
         </tr>
     testo;
-
 }
+
 $html.=<<<testo
         </tbody>
     </table>
