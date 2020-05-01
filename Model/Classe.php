@@ -14,6 +14,14 @@ class Classe implements Serializable {
     private $annoScolastico;
     private $studenti;
 
+    /**
+     * @param id  
+     * @param scuola istanza della classe Scuola
+     * @param numero 
+     * @param  sezione 
+     * @param string $annoScolastico 
+     * @param Studente[] $studenti array di istanze della classe Studente
+     */
     public function __construct($id, $scuola, $numero, $sezione, $annoScolastico, $studenti = array()) {
         $this->id = $id;
         $this->scuola = $scuola;
@@ -59,7 +67,7 @@ class Classe implements Serializable {
         $this->numero = $valori[2];
         $this->sezione = $valori[3];
         $this->annoScolastico = $valori[4];
-        $this->getStudenti = $valori[5];
+        $this->studenti = $valori[5];
     }
 }
 ?>

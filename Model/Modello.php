@@ -280,11 +280,12 @@ class Modello {
      */
     public function getStudentiDaClasse($idClasse) {
         $query =<<<testo
-            SELECT S.* FROM classi_studenti CS
-                INNER JOIN studenti S
-                    ON CS.id_studente = S.id
-            WHERE CS.id_classe = {$idClasse}
-            ORDER BY S.cognome, S.nome;
+        SELECT S.*
+        FROM classi_studenti CS
+            INNER JOIN studenti S
+            ON CS.id_studente = S.id
+        WHERE CS.id_classe = {$idClasse}
+        ORDER BY S.cognome, S.nome;
         testo;
         $ris = $this->connessione->query($query);
         $studenti = array();
