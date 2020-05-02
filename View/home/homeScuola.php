@@ -95,7 +95,10 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     $html .=<<<testo
                 <hr>
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
-                    <button type="submit" id="crea-percorso">Crea percorso</button>
+                    <button type="submit" id="crea-percorso">Crea Percorso</button>
+                </form>
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza">
+                    <button type="submit" id="crea-percorso">Crea Esperienza</button>
                 </form>
             </div>
             <div class="barra-laterale">

@@ -290,6 +290,10 @@ class Controller {
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                     $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
                     $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    $_SESSION['studenti'] = serialize($this->modello->getStudentiAttiviDaScuola($scuola->getId()));
+                    $_SESSION['aziende'] = serialize($this->modello->getAziendeTutte());
+                    $_SESSION['agenzie'] = serialize($this->modello->getAgenzieTutte());
+                    $_SESSION['famiglie'] = serialize($this->modello->getFamiglieTutte());
                     $_SESSION['scuola'] = serialize($scuola);
                 }
                 header('Location: View/creazione/creaEsperienza.php');
