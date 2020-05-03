@@ -78,7 +78,8 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
             </div>\n
     testo;
 
-    $html .= creaFooter();
-    echo $html;
+    
 }
+$html .= creaFooter();
+echo $html;
 ?>

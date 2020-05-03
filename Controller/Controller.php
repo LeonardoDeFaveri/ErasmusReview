@@ -276,7 +276,7 @@ class Controller {
                 }
                 if(isset($_POST['submit'])){
                     $esperienza = null;
-                    //inserire esperienza
+                    //creazone oggetto Esperienza
                     if($this->modello->insertEsperienza($esperienza)){
                         header('Location: index.php');
                         exit();
@@ -288,18 +288,17 @@ class Controller {
                 if($_SESSION['tipo_utente'] == 'docente'){
                     $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                     $classiDocente = serialize($this->modello->getClassiDaDocente($docente));
-                    $studenti = null;
-                    foreach($classiDocente as $classe){ //dubbi su questo controllo
-                        $anni = explode("/",$classe->getAnnoScolastico());
-                        if(date("Y") == $anni[0] || date("Y") == $anni[1]){
-                            
-                        }
-                    }
+
+
                     $_SESSION['docente'] = serialize($docente);
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                     $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
                     $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    $_SESSION['studenti'] = serialize($this->modello->getStudentiAttiviDaScuola($scuola->getId()));
+                    $_SESSION['aziende'] = serialize($this->modello->getAziendeTutte());
+                    $_SESSION['agenzie'] = serialize($this->modello->getAgenzieTutte());
+                    $_SESSION['famiglie'] = serialize($this->modello->getFamiglieTutte());
                     $_SESSION['scuola'] = serialize($scuola);
                 }
                 header('Location: View/creazione/creaEsperienza.php');

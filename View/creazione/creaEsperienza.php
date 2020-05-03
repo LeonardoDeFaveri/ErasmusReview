@@ -1,6 +1,6 @@
 <?php
 /**
- * creaPercorso permette di creare un percorso.
+ * creaEsperienza permette di creare un'esperienza.
  */
 if(session_id() == ''){
     session_start();
@@ -12,6 +12,10 @@ if(session_id() == ''){
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
 include_once "{$_SESSION['root']}/Model/Classe.php";
 
 $html = creaHeader("Creazione Esperienza");
@@ -24,6 +28,9 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
 }else{
     $html .= creaBarraMenu($_SESSION['email_utente']);
     $studenti = unserialize($_SESSION['studenti']);
+    $aziende = unserialize($_SESSION['aziende']);
+    $agenzie = unserialize($_SESSION['agenzie']);
+    $famiglie = unserialize($_SESSION['famiglie']);
     $html .=<<<testo
         <div>
             <h2>Crea Esperienza</h2>
@@ -61,7 +68,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
     $html .=<<<testo
                             <div class="riga">
                                 <label for="id_agenzia">Seleziona Agenzia:</label>
-                                <select name ='id_agenzia' required>\n
+                                <select name ='id_agenzia'>\n
     testo;
     foreach($agenzie as $agenzia){
         $html.=<<<testo
@@ -72,6 +79,20 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                                 </select>
                             </div>\n
         testo;
+    $html .=<<<testo
+    <div class="riga">
+        <label for="id_famiglia">Seleziona Famiglia:</label>
+        <select name ='id_famiglia'>\n
+    testo;
+    foreach($famiglie as $famiglia){
+    $html.=<<<testo
+                \t\t<option value ='{$famiglia->getId()}'>{$famiglia->getNome()}{$famiglia->getCognome()}{$famiglia->getStato()}</option>\n
+    testo;
+    }
+    $html.=<<<testo
+                </select>
+            </div>\n
+    testo;
 }
 
 $html .= creaFooter();

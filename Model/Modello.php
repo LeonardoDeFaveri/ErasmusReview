@@ -78,6 +78,34 @@ class Modello {
         }
         return $agenzia;
     }
+
+    /**
+     * getAgenzieTutte estrae dal database tutte le agenzie.
+     *
+     * 
+     * @return $agenzie, un'array di tutte le agenzie del db
+     */
+    public function getAgenzieTutte() {
+        $query = "SELECT * FROM agenzie";
+        $ris = $this->connessione->query($query);
+        $agenzie = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $agenzia){
+                $agenzie[] = new Agenzia(
+                    $agenzia['id'],
+                    $agenzia['nome'],
+                    $agenzia['email_utente'],
+                    $agenzia['stato'],
+                    $agenzia['citta'],
+                    $agenzia['telefono'],
+                    $agenzia['indirizzo']
+                );
+            }
+        }
+        return $agenzie;
+    }
+
     /**
      * getAziendaDaid estrae dal database l'azienda associata all'id specificato.
      *
@@ -126,6 +154,33 @@ class Modello {
             );
         }
         return $azienda;
+    }
+
+    /**
+     * getAziendeTutte estrae dal database tutte le aziende.
+     *
+     * 
+     * @return $aziende un array di tutte le aziende disponibili nel db
+     */
+    public function getAziendeTutte() {
+        $query = "SELECT * FROM aziende";
+        $ris = $this->connessione->query($query);
+        $aziende = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $azienda){
+                $aziende[] = new Azienda(
+                    $azienda['id'],
+                    $azienda['nome'],
+                    $azienda['email_utente'],
+                    $azienda['stato'],
+                    $azienda['citta'],
+                    $azienda['indirizzo'],
+                    $azienda['telefono']
+                );
+            }
+        }
+        return $aziende;
     }
 
     /**
@@ -224,6 +279,32 @@ class Modello {
             );
         }
         return $famiglia;
+    }
+
+    /**
+     * getFamiglieTutte estrae tutte le famiglie dal database.
+     *
+     * 
+     * @return Famiglia[], un'array di tutte le famiglie del db
+     */
+    public function getFamiglieTutte() {
+        $query = "SELECT * FROM famiglie";
+        $ris = $this->connessione->query($query);
+        $famiglie = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $famiglia){
+                $famiglie[] = new Famiglia(
+                    $famiglia['id'],
+                    $famiglia['nome'],
+                    $famiglia['cognome'],
+                    $famiglia['stato'],
+                    $famiglia['citta'],
+                    $famiglia['indirizzo']
+                );
+            }
+        }
+        return $famiglie;
     }
 
     /**
