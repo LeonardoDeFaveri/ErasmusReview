@@ -290,6 +290,10 @@ button{
     justify-content: center;
 }
 
+.contenitore-centrato-lista{
+    width: fit-content;
+}
+
 table, tr, th, td{
     border: var(--default-border);
     border-collapse: collapse;

@@ -32,5 +32,17 @@ class ModelloSchedaValutazione implements Serializable {
     public function getAspetti() {
         return $this->aspetti;
     }
+
+    public function serialize() {
+        return serialize([$this->id, $this->tipoRecensore, $this->tipoRecensito, $this->aspetti]);
+    }
+
+    public function unserialize($stringa) {
+        $valori = unserialize($stringa);
+        $this->id = $valori[0];
+        $this->tipoRecensore = $valori[1];
+        $this->tipoRecensito = $valori[2];
+        $this->aspetti = $valori[3];
+    }
 }
 ?>

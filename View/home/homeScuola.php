@@ -107,7 +107,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
     testo;
     if(count($docenti) > 0){
         foreach ($docenti as $docente) {
-            $html .= "<li>{$docente->getCognome()} {$docente->getNome()}</li>\n";
+            $html .= "<li><a href='{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$docente->getId()}'>{$docente->getCognome()} {$docente->getNome()}</a></li>\n";
         }
     }
     $html .=<<<testo
@@ -143,10 +143,10 @@ function creaRiquadroPercorso($percorso, $terminato = false) {
     $scuola = $classe->getScuola();
     $html =<<<testo
         \t\t\t<div class="riquadro">
-            \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
-            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+            \t\t\t{$scuola->getNome()}
             \t\t\t<hr>
-            \t\t\t<a href="#">{$percorso->getDal()} {$percorso->getAl()}</a><br>
+            \t\t\t{$percorso->getDal()} {$percorso->getAl()}<br>
             <div class="contenitore-bottoni-riquadro">\n
     testo;
     if(!$terminato){

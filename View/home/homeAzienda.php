@@ -75,13 +75,12 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $azienda = $esperienza->getAzienda();
     $riquadro =<<<testo
         \t\t\t<div class="riquadro">
-            \t\t\t<a href="#">{$azienda->getNome()}</a><br>
+            \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a><br>
+            \t\t\t{$studente->getEmail()}<br>
             \t\t\t<hr>
-            \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>
-            {$studente->getCognome()} {$studente->getNome()}<br>
-            {$studente->getEmail()}<br>
-            \t\t\t<a href="#">{$scuola->getNome()}</a><br>
-            \t\t\t{$tutor->getCognome()}<br>\n
+            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
+            \t\t\t{$scuola->getNome()}<br>
+            \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$tutor->getId()}">{$tutor->getCognome()} {$tutor->getNome()}</a><br>\n
             \t\t\t<div class="contenitore-bottoni-riquadro">\n
     testo;
 

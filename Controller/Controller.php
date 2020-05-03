@@ -196,13 +196,18 @@ class Controller {
             break;
             
             case 'mostra-studente':
-                $_SESSION["studente"] = serialize($this->modello->getStudenteDaId($_GET["id"]));
+                $studente = $this->modello->getStudenteDaId($_GET["id"]);
+                $_SESSION['classi_studente'] = serialize($this->modello->getClassiDaStudente($studente));
+                $_SESSION['studente'] = serialize($studente);
                 header('Location: View/mostra/mostraStudente.php');
                 exit();
             break;  
             
             case 'mostra-docente':
-                $_SESSION["docente"] = serialize($this->modello->getDocenteDaId($_GET["id"]));
+                $docente = $this->modello->getDocenteDaId($_GET["id"]);
+                $_SESSION['classi_docente'] = serialize($this->modello->getClassiDaDocente($docente));
+                $_SESSION['docente'] = serialize($docente);
+
                 header('Location: View/mostra/mostraDocente.php');
                 exit();
             break;

@@ -43,7 +43,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
                 <div class="dati">
                     <div class="riga">
                         <label>Codice meccanografico</label>
-                        <input type="text" name="codiceMeccanografico" placeholder="{$scuola->getId()}" readonly>
+                        <input type="text" name="codiceMeccanografico" value="{$scuola->getId()}" readonly>
                     </div>
                     <div class="riga">
                         <label>Nome</label>

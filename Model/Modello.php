@@ -436,7 +436,75 @@ class Modello {
             INNER JOIN classi_docenti CD
             ON CD.id_classe = C.id
         WHERE CD.id_docente = {$docente->getId()}
-        ORDER By C.anno_scolastico DESC
+        ORDER BY C.anno_scolastico DESC
+        testo;
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $this->getScuolaDaCodice($classe['codice_scuola']),
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiDaClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
+
+    /**
+     * getClassiDaDocenteEScuola restitusice tutte le classi di un docente
+     * di una determinata scuola.
+     *
+     * @param  Docente $docente docente per il quale estrarre le classi
+     * @param  Scuola $scuola scuola per la quale restringere le classi da estrarre
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaDocenteEScuola($docente, $scuola) {
+        $query =<<<testo
+        SELECT C.* FROM classi C
+            INNER JOIN classi_docenti CD
+            ON CD.id_classe = C.id
+        WHERE CD.id_docente = {$docente->getId()} 
+            AND C.codice_scuola = {$scuola->getId()}
+        ORDER BY C.anno_scolastico DESC
+        testo;
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $this->getScuolaDaCodice($classe['codice_scuola']),
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiDaClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
+    
+    /**
+     * getClassiDaStudente estrae dal database tutte le classi
+     * associate ad uno studente.
+     *
+     * @param  Studente $studente studente per il quale estrarre la classi
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaStudente($studente) {
+        $query =<<<testo
+        SELECT C.* FROM classi C
+            INNER JOIN classi_studenti CS
+            ON C.id = CS.id_classe
+        WHERE CS.id_studente = {$studente->getId()}
+        ORDER BY C.anno_scolastico DESC
         testo;
         $ris = $this->connessione->query($query);
         $classi = array();
@@ -772,7 +840,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $docenti = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQL_ASSOC);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach($ris as $elemento){
                 $docenti[]=new Docente(
                     $elemento["id"],
