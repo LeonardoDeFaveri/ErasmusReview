@@ -10,8 +10,8 @@ if(session_id() == ''){
 }
 
 include_once "{$_SESSION['root']}/View/include/struttura.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
+//include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+//include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
@@ -37,10 +37,10 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza">
                     <fieldset>
                         <legend>Creazione Esperienza</legend>
-                            <div class="dati">\n
-                            <div class="riga">
-                                <label for="id_studente">Seleziona Studente:</label>
-                                <select name="id_studente" autofocus required>\n
+                        <div class="dati">
+                        <div class="riga">
+                            <label for="id_studente">Seleziona Studente:</label>
+                            <select name="id_studente" autofocus required>\n
     testo;
     foreach($studenti as $studente){
         $html.=<<<testo
@@ -52,9 +52,9 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                             </div>\n
         testo;
     $html .=<<<testo
-                            <div class="riga">
-                                <label for="id_azienda">Seleziona Azienda:</label>
-                                <select name ='id_azienda' required>\n
+                        <div class="riga">
+                            <label for="id_azienda">Seleziona Azienda:</label>
+                            <select name ='id_azienda' required>\n
     testo;
     foreach($aziende as $azienda){
         $html.=<<<testo
@@ -66,13 +66,14 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                             </div>\n
         testo;
     $html .=<<<testo
-                            <div class="riga">
-                                <label for="id_agenzia">Seleziona Agenzia:</label>
-                                <select name ='id_agenzia'>\n
+                        <div class="riga">
+                            <label for="id_agenzia">Seleziona Agenzia:</label>
+                            <select name ='id_agenzia'>
+                            \t<option value ='null' selected></option>\n
     testo;
     foreach($agenzie as $agenzia){
         $html.=<<<testo
-                                \t\t<option value ='{$azienda->getId()}'>{$azienda->getNome()}</option>\n
+                                \t<option value ='{$azienda->getId()}'>{$azienda->getNome()}</option>\n
         testo;
     }
     $html.=<<<testo
@@ -80,18 +81,32 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
                             </div>\n
         testo;
     $html .=<<<testo
-    <div class="riga">
-        <label for="id_famiglia">Seleziona Famiglia:</label>
-        <select name ='id_famiglia'>\n
+                        <div class="riga">
+                            <label for="id_famiglia">Seleziona Famiglia:</label>
+                            <select name ='id_famiglia'>
+                                <option value ='null' selected></option>\n 
     testo;
     foreach($famiglie as $famiglia){
     $html.=<<<testo
-                \t\t<option value ='{$famiglia->getId()}'>{$famiglia->getNome()}{$famiglia->getCognome()}{$famiglia->getStato()}</option>\n
+                                <option value ='{$famiglia->getId()}'>{$famiglia->getNome()} {$famiglia->getCognome()}, {$famiglia->getStato()}</option>\n
     testo;
     }
     $html.=<<<testo
-                </select>
-            </div>\n
+                            </select>
+                        </div>
+                        <div class="riga">
+                            <label for="dataDal">Dal:</label>
+                            <input type="date" id="dataDal" name="dataDal">
+                        </div>
+                        <div class="riga">
+                            <label for="dataAl">Al:</label>
+                            <input type="date" id="dataAl" name="dataAl">
+                        </div>
+                    </div>
+                    <input type="submit" name="submit">
+                    </fieldset>
+                </form>
+        </div>\n
     testo;
 }
 
