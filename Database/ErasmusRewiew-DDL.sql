@@ -6,24 +6,30 @@ DROP DATABASE IF EXISTS erasmus_review;
 CREATE DATABASE erasmus_review;
 USE erasmus_review;
 
+CREATE TABLE tipi_utenti(
+	tipo_utente VARCHAR(50) NOT NULL,
+	PRIMARY KEY(tipo_utente)
+);
+
 CREATE TABLE modelli (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	tipo_recensore VARCHAR (20) NOT NULL,
     tipo_recensito VARCHAR (20) NOT NULL, 
 	
 	PRIMARY KEY (id),
-	UNIQUE(tipo_recensore, tipo_recensito)
+	UNIQUE(tipo_recensore, tipo_recensito),
+	FOREIGN KEY(tipo_recensore) REFERENCES tipi_utenti(tipo_utente)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY(tipo_recensito) REFERENCES tipi_utenti(tipo_utente)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE aspetti(
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	nome VARCHAR (100),
 	PRIMARY KEY (id)
-);
-
-CREATE TABLE tipi_utenti(
-	tipo_utente VARCHAR(50) NOT NULL,
-	PRIMARY KEY(tipo_utente)
 );
 
 CREATE TABLE utenti (
