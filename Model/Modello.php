@@ -1093,7 +1093,8 @@ class Modello {
      */
     public function insertDocente($docente) {
         $digest=hash('sha256',$docente->getNome());
-        
+        $scuola=unserialize($_SESSION['scuola']);
+        echo "xiao";
         $query =<<<testo
         START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
@@ -1106,8 +1107,15 @@ class Modello {
             "{$docente->getNome()}",
             "{$docente->getCognome()}"
         );
+        INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES (
+            "{$scuola->getId()}",
+            SELECT id FROM docenti WHERE email_utente={$docente->getEmail()},
+            "{$_POST['dal_docente']}",
+            "{$_POST['al_docente']}"    
+        );
         COMMIT;
         testo;
+        echo $query;
         
         $ris = $this->connessione->multi_query($query);
 
