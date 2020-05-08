@@ -10,7 +10,6 @@ INSERT INTO tipi_utenti (tipo_utente) VALUES
 ('scuola'),
 ('admin');
 
-
 DELETE FROM utenti;
 INSERT INTO utenti (email, password, tipo_utente) VALUES
 	('admin@gmail.com',SHA2('admin',256),'admin'),
