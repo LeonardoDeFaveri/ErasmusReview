@@ -16,16 +16,16 @@ $html = creaHeader("{$classe->getNumero()}.{$classe->getSezione()}.{$classe->get
 $html .= creaBarraMenu($_SESSION['email_utente']);
 
 $html.=<<<testo
-    <p><strong>Classe:</strong> {$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoscolastico()}</p>
+    <h2>Classe {$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoscolastico()}</h2>
+    <h3>Studenti</h3>
     <div class="contenitore-centrato">
-        <p><strong>Studenti:</strong></p> 
         <table>
             <thead>
                 <tr>
-                    <td>Nome</td>
-                    <td>Cognome</td>
-                    <td>Email</td>
-                    <td>Data di nascita</td>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Email</th>
+                    <th>Data di nascita</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,21 +44,23 @@ foreach($studenti as $elemento){
     testo;
 }
 $html .=<<<testo
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 testo;
 
 $html .=<<<testo
-    <p><strong>Docenti:</strong></p>
-    <table>
-        <thead>
-            <tr>
-                <td>Nome</td>
-                <td>Cognome</td>
-                <td>Email</td>
-            </tr>
-        </thead>
-        <tbody>
+    <h3>Docenti</h3>
+    <div class="contenitore-centrato">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
 testo;
 
 foreach($docenti as $elemento){
@@ -72,8 +74,9 @@ foreach($docenti as $elemento){
 }
 
 $html.=<<<testo
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 testo;
 
 $html.=creaFooter();

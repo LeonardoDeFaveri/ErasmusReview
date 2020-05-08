@@ -73,12 +73,16 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $azienda = $esperienza->getAzienda();
     $agenzia = $esperienza->getAgenzia();
     $famiglia = $esperienza->getFamiglia();
+    $studente = $esperienza->getStudente();
     $riquadro =<<<testo
         \t\t\t<div class="riquadro">
-            \t\t\t<a href="#">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
-            \t\t\t<a href="#">{$scuola->getNome()}</a>
+            \t\t\t<b>Dati dello studente</b><br>
+            \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a><br>
+            \t\t\t{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+            \t\t\t{$scuola->getNome()}
             \t\t\t<hr>
-            \t\t\t<a href="#">{$esperienza->getDal()} {$esperienza->getAl()}</a><br>
+            \t\t\t<b>Dati dell'esperienza</b><br>
+            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
             \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
     testo;
     if($famiglia != null){

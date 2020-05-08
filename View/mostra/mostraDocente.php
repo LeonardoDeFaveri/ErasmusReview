@@ -5,10 +5,9 @@ if(session_id() == ''){
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
     $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
 }
-include_once "{$_SESSION['root']}/Model/Soggetti/docente.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+include_once "{$_SESSION['root']}/Model/Classe.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
-
-$docente = unserialize($_SESSION['docente']);
 
 if(!isset($_SESSION['email_utente'])) {
     $html .= creaBarraMenu("");
@@ -18,15 +17,30 @@ if(!isset($_SESSION['email_utente'])) {
     testo;
 }
 else{
+    $docente = unserialize($_SESSION['docente']);
+    $classi = unserialize($_SESSION['classi_docente']);
     $html = creaHeader($docente->getNome()." ".$docente->getCognome());
     $html .= creaBarraMenu($_SESSION['email_utente']);
-    $html .= <<<testo
-        <div>
-            <ul>
-                <li>Nome: {$docente->getNome()}</li>
-                <li>Cognome: {$docente->getCognome()}</li>
-                <li>Email: {$docente->getEmail()}</li>
-            </ul>
+    $html .=<<<testo
+        <div class="contenitore-centrato">
+            <div class="riquadro">
+                <b>Dati del docente</b><br>
+                {$docente->getNome()} {$docente->getCognome()}<br>
+                {$docente->getEmail()}
+                <hr>
+                <b>Classi del docente</b>
+                <ul>\n
+    testo;
+
+    foreach ($classi as $classe) {
+        $html .=<<<testo
+                <li>{$classe->getNumero()}{$classe->getSezione()} - {$classe->getAnnoScolastico()}</li>\n
+        testo;
+    }
+
+    $html .=<<<testo
+                </ul>
+            </div>
         </div>
     testo;
 }

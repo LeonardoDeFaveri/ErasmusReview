@@ -78,6 +78,34 @@ class Modello {
         }
         return $agenzia;
     }
+
+    /**
+     * getAgenzieTutte estrae dal database tutte le agenzie.
+     *
+     * 
+     * @return $agenzie, un'array di tutte le agenzie del db
+     */
+    public function getAgenzieTutte() {
+        $query = "SELECT * FROM agenzie";
+        $ris = $this->connessione->query($query);
+        $agenzie = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $agenzia){
+                $agenzie[] = new Agenzia(
+                    $agenzia['id'],
+                    $agenzia['nome'],
+                    $agenzia['email_utente'],
+                    $agenzia['stato'],
+                    $agenzia['citta'],
+                    $agenzia['telefono'],
+                    $agenzia['indirizzo']
+                );
+            }
+        }
+        return $agenzie;
+    }
+
     /**
      * getAziendaDaid estrae dal database l'azienda associata all'id specificato.
      *
@@ -126,6 +154,33 @@ class Modello {
             );
         }
         return $azienda;
+    }
+
+    /**
+     * getAziendeTutte estrae dal database tutte le aziende.
+     *
+     * 
+     * @return $aziende un array di tutte le aziende disponibili nel db
+     */
+    public function getAziendeTutte() {
+        $query = "SELECT * FROM aziende";
+        $ris = $this->connessione->query($query);
+        $aziende = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $azienda){
+                $aziende[] = new Azienda(
+                    $azienda['id'],
+                    $azienda['nome'],
+                    $azienda['email_utente'],
+                    $azienda['stato'],
+                    $azienda['citta'],
+                    $azienda['indirizzo'],
+                    $azienda['telefono']
+                );
+            }
+        }
+        return $aziende;
     }
 
     /**
@@ -224,6 +279,32 @@ class Modello {
             );
         }
         return $famiglia;
+    }
+
+    /**
+     * getFamiglieTutte estrae tutte le famiglie dal database.
+     *
+     * 
+     * @return Famiglia[], un'array di tutte le famiglie del db
+     */
+    public function getFamiglieTutte() {
+        $query = "SELECT * FROM famiglie";
+        $ris = $this->connessione->query($query);
+        $famiglie = array();
+        if($ris){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $famiglia){
+                $famiglie[] = new Famiglia(
+                    $famiglia['id'],
+                    $famiglia['nome'],
+                    $famiglia['cognome'],
+                    $famiglia['stato'],
+                    $famiglia['citta'],
+                    $famiglia['indirizzo']
+                );
+            }
+        }
+        return $famiglie;
     }
 
     /**
@@ -436,7 +517,75 @@ class Modello {
             INNER JOIN classi_docenti CD
             ON CD.id_classe = C.id
         WHERE CD.id_docente = {$docente->getId()}
-        ORDER By C.anno_scolastico DESC
+        ORDER BY C.anno_scolastico DESC
+        testo;
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $this->getScuolaDaCodice($classe['codice_scuola']),
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiDaClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
+
+    /**
+     * getClassiDaDocenteEScuola restitusice tutte le classi di un docente
+     * di una determinata scuola.
+     *
+     * @param  Docente $docente docente per il quale estrarre le classi
+     * @param  Scuola $scuola scuola per la quale restringere le classi da estrarre
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaDocenteEScuola($docente, $scuola) {
+        $query =<<<testo
+        SELECT C.* FROM classi C
+            INNER JOIN classi_docenti CD
+            ON CD.id_classe = C.id
+        WHERE CD.id_docente = {$docente->getId()} 
+            AND C.codice_scuola = {$scuola->getId()}
+        ORDER BY C.anno_scolastico DESC
+        testo;
+        $ris = $this->connessione->query($query);
+        $classi = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $classe){
+                $classi[] = new Classe(
+                    $classe['id'],
+                    $this->getScuolaDaCodice($classe['codice_scuola']),
+                    $classe['numero'],
+                    $classe['sezione'],
+                    $classe['anno_scolastico'],
+                    $this->getStudentiDaClasse($classe['id'])
+                );
+            }
+        }
+        return $classi;
+    }
+    
+    /**
+     * getClassiDaStudente estrae dal database tutte le classi
+     * associate ad uno studente.
+     *
+     * @param  Studente $studente studente per il quale estrarre la classi
+     * @return Classe[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getClassiDaStudente($studente) {
+        $query =<<<testo
+        SELECT C.* FROM classi C
+            INNER JOIN classi_studenti CS
+            ON C.id = CS.id_classe
+        WHERE CS.id_studente = {$studente->getId()}
+        ORDER BY C.anno_scolastico DESC
         testo;
         $ris = $this->connessione->query($query);
         $classi = array();
@@ -772,7 +921,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $docenti = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQL_ASSOC);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach($ris as $elemento){
                 $docenti[]=new Docente(
                     $elemento["id"],
