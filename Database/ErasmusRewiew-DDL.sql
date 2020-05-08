@@ -11,7 +11,8 @@ CREATE TABLE modelli (
 	tipo_recensore VARCHAR (20) NOT NULL,
     tipo_recensito VARCHAR (20) NOT NULL, 
 	
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	UNIQUE(tipo_recensore, tipo_recensito)
 );
 
 CREATE TABLE aspetti(
@@ -50,6 +51,7 @@ CREATE TABLE modelli_aspetti(
 	id_modello INTEGER NOT NULL,
 	id_aspetto INTEGER NOT NULL,
 	PRIMARY KEY (id),
+	UNIQUE(id_modello, id_aspetto),
 	FOREIGN KEY (id_modello) REFERENCES modelli (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
