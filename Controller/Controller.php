@@ -288,18 +288,22 @@ class Controller {
                 if($_SESSION['tipo_utente'] == 'docente'){
                     $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
                     $classiDocente = serialize($this->modello->getClassiDaDocente($docente));
-
-
                     $_SESSION['docente'] = serialize($docente);
+
+                    $_SESSION['aziende'] = serialize($this->modello->getAziendeTutte());
+                    $_SESSION['agenzie'] = serialize($this->modello->getAgenzieTutte());
+                    $_SESSION['famiglie'] = serialize($this->modello->getFamiglieTutte());
+
+
+                    
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                    $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
-                    $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    //$_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
+                    //$_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
                     $_SESSION['studenti'] = serialize($this->modello->getStudentiAttiviDaScuola($scuola->getId()));
                     $_SESSION['aziende'] = serialize($this->modello->getAziendeTutte());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzieTutte());
                     $_SESSION['famiglie'] = serialize($this->modello->getFamiglieTutte());
-                    $_SESSION['scuola'] = serialize($scuola);
                 }
                 header('Location: View/creazione/creaEsperienza.php');
                 exit();

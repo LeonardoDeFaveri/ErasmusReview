@@ -26,7 +26,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
             case 2:
                 $html .=<<<testo
                     <script>
-                        alert("Non sono riuscito ad inserire la classe; probabilmente esiste già");
+                        alert("Non sono riuscito ad inserire il docente; probabilmente esiste già");
                     </script>
                 testo;
             break;
@@ -52,11 +52,11 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                         </div>
                         <div class="riga">
                             <label>Dal</label>
-                            <input type="text" name="dal_docente" required>
+                            <input type="date" name="dal_docente" required>
                         </div>
                         <div class="riga">
                             <label>Al</label>
-                            <input type="text" name="al_docente" required>
+                            <input type="date" name="al_docente">
                         </div>
                     </div>
                         <input type="submit" name="submit" value="Crea docente">
