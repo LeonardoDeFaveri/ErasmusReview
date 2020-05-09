@@ -384,6 +384,38 @@ class Modello {
         }
         return $studenti;
     }
+
+    /**
+     * getStudentiDaDocente estrae dal database tutti gli studenti di un docente.
+     *
+     * @param  int $idDocente id del docente dalla quale estrarre gli studenti
+     * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getStudentiDaDocente($idDocente) {
+        $dataOggi = date('Y-m-d');
+        $query =<<<testo
+        SELECT S.* 
+        FROM studenti S INNER JOIN classi_studenti CL 
+        ON CL.id_studente=S.id 
+        INNER JOIN classi_docenti CD 
+        ON CD.id_docente = {$idDocente} WHERE CD.al > {$dataOggi}
+        testo;
+        $ris = $this->connessione->query($query);
+        $studenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $studente) {
+                $studenti[] = new Studente(
+                    $studente['id'],
+                    $studente['nome'],
+                    $studente['cognome'],
+                    $studente['email_utente'],
+                    $studente['data_nascita']
+                );
+            }
+        }
+        return $studenti;
+    }
     
     /**
      * getStudentiDaScuola estrae dal database tutti gli studenti di una scuola.

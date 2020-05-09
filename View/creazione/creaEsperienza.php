@@ -10,13 +10,10 @@ if(session_id() == ''){
 }
 
 include_once "{$_SESSION['root']}/View/include/struttura.php";
-//include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
-//include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
-include_once "{$_SESSION['root']}/Model/Classe.php";
 
 $html = creaHeader("Creazione Esperienza");
 if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){

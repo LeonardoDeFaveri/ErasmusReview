@@ -275,8 +275,18 @@ class Controller {
                     exit();
                 }
                 if(isset($_POST['submit'])){
+                    $percorso = null; //selezionare il percorso di cui fa parte lo studente
                     $esperienza = null;
-                    //creazone oggetto Esperienza
+                    $esperienza = new Esperienza(
+                        null,
+                        $_POST['id_studente'],
+                        $percorso,
+                        $_POST['id_azienda'],
+                        $_POST['id_agenzia'],
+                        $_POST['id_famiglia'],
+                        $_POST['dataDal'],
+                        $_POST['dataAl'],
+                    );
                     if($this->modello->insertEsperienza($esperienza)){
                         header('Location: index.php');
                         exit();
@@ -287,15 +297,12 @@ class Controller {
                 }
                 if($_SESSION['tipo_utente'] == 'docente'){
                     $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                    $classiDocente = serialize($this->modello->getClassiDaDocente($docente));
-                    $_SESSION['docente'] = serialize($docente);
-
+                    //$classiDocente = serialize($this->modello->getClassiDaDocente($docente));
+                    //$_SESSION['docente'] = serialize($docente);
+                    $_SESSION['studenti'] = serialize($this->modello->getStudentiDaDocente($docente->getId()));
                     $_SESSION['aziende'] = serialize($this->modello->getAziendeTutte());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzieTutte());
                     $_SESSION['famiglie'] = serialize($this->modello->getFamiglieTutte());
-
-
-                    
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                     //$_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
