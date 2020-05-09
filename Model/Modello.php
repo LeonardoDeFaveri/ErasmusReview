@@ -386,7 +386,8 @@ class Modello {
     }
 
     /**
-     * getStudentiDaDocente estrae dal database tutti gli studenti di un docente.
+     * getStudentiDaDocente estrae dal database tutti gli studenti che AL MOMENTO DELLA QUERY
+     * fanno parte delle classi di un docente.
      *
      * @param  int $idDocente id del docente dalla quale estrarre gli studenti
      * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
