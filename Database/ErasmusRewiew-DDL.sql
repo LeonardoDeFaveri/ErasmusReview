@@ -268,10 +268,12 @@ CREATE TABLE schede_di_valutazione(
 );
 
 CREATE TABLE valutazioni(
+	id INTEGER NOT NULL AUTO_INCREMENT,
 	id_scheda_di_valutazione INTEGER NOT NULL,
 	voto INTEGER NOT NULL,
 	id_aspetto INTEGER NOT NULL,
-	PRIMARY KEY (id_scheda_di_valutazione,id_aspetto),
+	PRIMARY KEY (id),
+	UNIQUE (id_scheda_di_valutazione, id_aspetto),
 	FOREIGN KEY (id_scheda_di_valutazione) REFERENCES schede_di_valutazione (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,

@@ -14,7 +14,8 @@ include_once "{$_SESSION['root']}/Model/Classe.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Valutazione.php";
-include_once "{$_SESSION['root']}/Model/SchedaValutazione.php";
+include_once "{$_SESSION['root']}/Model/SchedaDiValutazione.php";
+include_once "{$_SESSION['root']}/Model/ModelloSchedaDiValutazione.php";
 
 class Modello {
     private $connessione;
@@ -80,12 +81,12 @@ class Modello {
     }
 
     /**
-     * getAgenzieTutte estrae dal database tutte le agenzie.
+     * getAgenzie estrae dal database tutte le agenzie.
      *
      * 
      * @return $agenzie, un'array di tutte le agenzie del db
      */
-    public function getAgenzieTutte() {
+    public function getAgenzie() {
         $query = "SELECT * FROM agenzie";
         $ris = $this->connessione->query($query);
         $agenzie = array();
@@ -157,12 +158,12 @@ class Modello {
     }
 
     /**
-     * getAziendeTutte estrae dal database tutte le aziende.
+     * getAziende estrae dal database tutte le aziende.
      *
      * 
      * @return $aziende un array di tutte le aziende disponibili nel db
      */
-    public function getAziendeTutte() {
+    public function getAziende() {
         $query = "SELECT * FROM aziende";
         $ris = $this->connessione->query($query);
         $aziende = array();
@@ -282,12 +283,12 @@ class Modello {
     }
 
     /**
-     * getFamiglieTutte estrae tutte le famiglie dal database.
+     * getFamiglie estrae tutte le famiglie dal database.
      *
      * 
      * @return Famiglia[], un'array di tutte le famiglie del db
      */
-    public function getFamiglieTutte() {
+    public function getFamiglie() {
         $query = "SELECT * FROM famiglie";
         $ris = $this->connessione->query($query);
         $famiglie = array();
@@ -966,32 +967,28 @@ class Modello {
         }
         return $docenti;
     }
-    
+        
     /**
-     * getModelloDaId estrae dal database un modello dal quale
-     * è possibile creare una scheda di valutazione.
+     * getAspettoDaId estrae dal database l'aspetto associato
+     * all'id specificato.
      *
-     * @param  int $id id del modello da estrarre
-     * @return ModelloSchedaValutazione se è stato trovato, altrimenti null
+     * @param  int $id id dell'aspetto da estrarre
+     * @return Aspetto se è stato trovato, altrimenti null
      */
-    public function getModelloDaId($id) {
-        $query .=<<<testo
-        SELECT M.* FROM modelli M WHERE M.id = {$id}
-        testo;
+    public function getAspettoDaId($id) {
+        $query = "SELECT * FROM aspetti WHERE id = {$id}";
         $ris = $this->connessione->query($query);
-        $modello = null;
+        $aspetto = null;
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
-            $modello = new ModelloSchedaValutazione(
+            $aspetto = new Aspetto(
                 $ris['id'],
-                $ris['tipo_recensore'],
-                $ris['tipo_recensito'],
-                $this->getAspettiDaModello($id)
+                $ris['nome']
             );
         }
-        return $modello;
+        return $aspetto;
     }
-    
+
     /**
      * getAspettiDaModello estrae dal database tutti gli aspetti
      * associati ad un modello.
@@ -1021,6 +1018,119 @@ class Modello {
             }
         }
         return $aspetti;
+    }
+
+    /**
+     * getModelloDaId estrae dal database un modello dal quale
+     * è possibile creare una scheda di valutazione.
+     *
+     * @param  int $id id del modello da estrarre
+     * @return ModelloSchedaDiValutazione se è stato trovato, altrimenti null
+     */
+    public function getModelloDaId($id) {
+        $query .= "SELECT * FROM modelli WHERE id = {$id}";
+        $ris = $this->connessione->query($query);
+        $modello = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $modello = new ModelloSchedaDiValutazione(
+                $ris['id'],
+                $ris['tipo_recensore'],
+                $ris['tipo_recensito'],
+                $this->getAspettiDaModello($id)
+            );
+        }
+        return $modello;
+    }
+    
+    /**
+     * getModelloDaTipi estrae dal database un modello in base al
+     * tipo del soggetto recensore e del soggetto recensito.
+     *  
+     * @see    tabella tipi_utenti per informazioni circa i valori possibili 
+     *          per i parametri 
+     * 
+     * @param  string $tipoRecensore tipo del soggetto recensore
+     * @param  string $tipoRecensito tipo del soggetto recensito
+     * 
+     * @return ModelloSchedaDiValutazione se è stato trovato, altrimenti null
+     */
+    public function getModelloDaTipi($tipoRecensore, $tipoRecensito) {
+        $query =<<<testo
+        SELECT * FROM mdelli
+        WHERE tipo_recensore = "{$tipoRecensore}"
+            AND tipo_recensito = "{$tipoRecensito}"
+        testo;
+        $ris = $this->connessione->query($query);
+        $modello = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $modello = new ModelloSchedaDiValutazione(
+                $ris['id'],
+                $tipoRecensore,
+                $tipoRecensito,
+                $this->getAspettiDaModello($ris['id'])
+            );
+        }
+        return $modello;
+    }
+    
+    /**
+     * getSchedaDiValutazioneDaId estrae dal database la scheda di
+     * valutazione assciata all'id specificato.
+     *
+     * @param  int $id id della scheda di valutazione da estrarre
+     * @return SchedaDiValutazione se è stata trovata, altrimenti null
+     */
+    public function getSchedaDiValutazioneDaId($id) {
+        $query =<<<testo
+        SELECT S.*, M.tipo_recensore, M.tipo_recensito
+        FROM schede_di_valutazione S
+            INNER JOIN modelli M
+            ON S.id_modello = M.id
+        WHERE S.id = {$id}
+        testo;
+        $ris = $this->connessione->query($query);
+        $schedaDiValutazione = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $schedaDiValutazione = new SchedaDiValutazione(
+                $id,
+                $ris['tipo_recensore'],
+                $ris['id_recensore'],
+                $ris['tipo_recensito'],
+                $ris['id_recensito'],
+                $this->getEsperienzaDaId($ris['id_esperienza']),
+                $ris['data_ora'],
+                $this->getValutazioniDaSchedaDiValutazione($id)
+            );
+        }
+        return $schedaDiValutazione;
+    }
+    
+    /**
+     * getValutazioniDaSchedaDiValutazione estrae dal database tutte le
+     * valutazioni associate alla scheda di valutazione specificata.
+     *
+     * @param  int $id id della scheda di valutazione per la quale estrarre 
+     *              le valutazioni
+     * @return Valutazione[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getValutazioniDaSchedaDiValutazione($id) {
+        $query ="SELECT * FROM valutazioni WHERE id_scheda_di_valutazione = {$id}";
+        $ris = $this->connessione->query($query);
+        $valutazioni = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $valutazione) {
+                $valutazioni[] = new Valutazione(
+                    $valutazione['id'],
+                    $valutazione['voto'],
+                    $this->getAspettoDaId($valutazione['id_aspetto'])
+                );
+            }
+        }
+        return $valutazioni;
     }
 
     /**
