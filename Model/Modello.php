@@ -1178,8 +1178,7 @@ class Modello {
     
     public function modificaScuola($scuola) {
         $query =<<<testo
-            UPDATE 
-                scuola 
+            UPDATE scuola 
             SET 
                 nome = "{$scuola->getNome()}",
                 citta = "{$scuola->getCitta()}",     
