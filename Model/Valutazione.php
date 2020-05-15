@@ -3,7 +3,7 @@ if(session_id() == ''){
     session_start();
     $_SESSION['root'] = __DIR__ . "/..";
 }
-include_once "{$_SESSION['root']}/Model/SchedaValutazione.php";
+include_once "{$_SESSION['root']}/Model/SchedaDiValutazione.php";
 include_once "{$_SESSION['root']}/Model/Aspetto.php";
 
 class Valutazione implements Serializable {

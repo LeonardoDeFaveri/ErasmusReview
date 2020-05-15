@@ -4,7 +4,7 @@ if(session_id() == ''){
     $_SESSION['root'] = __DIR__ . "/..";
 }
 
-class ModelloSchedaValutazione implements Serializable {
+class ModelloSchedaDiValutazione implements Serializable {
     private $id;
     private $tipoRecensore;
     private $tipoRecensito;
