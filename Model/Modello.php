@@ -1009,7 +1009,7 @@ class Modello {
         $ris = $this->connessione->query($query);
         $aspetti = array();
         if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQL_ASSOC);
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $aspetto) {
                 $aspetti[] = new Aspetto(
                     $ris['id'],
@@ -1057,7 +1057,7 @@ class Modello {
      */
     public function getModelloDaTipi($tipoRecensore, $tipoRecensito) {
         $query =<<<testo
-        SELECT * FROM mdelli
+        SELECT * FROM modelli
         WHERE tipo_recensore = "{$tipoRecensore}"
             AND tipo_recensito = "{$tipoRecensito}"
         testo;
@@ -1281,12 +1281,6 @@ class Modello {
             "{$scuola->getId()}",
             (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
             "{$dal}",
-<<<<<<< HEAD
-=======
-            {$al}    
-        );
-        COMMIT;
->>>>>>> d7f7d1a6604c98607b429fbccabda123058cf5ee
         testo;
         if(isset($al)){
             $query.=<<<testo

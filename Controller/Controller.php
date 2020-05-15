@@ -213,7 +213,7 @@ class Controller {
             break;
 
             case 'mostra-valutazione-esperienza':
-                $esprienza = $this->modello->getEsperienzaDaId($_POST['id']);
+                $esprienza = $this->modello->getEsperienzaDaId($_GET['id']);
                 $schedeDiValutazione = array();
                 switch($_SESSION['tipo_utente']){
                     case 'studente':
@@ -313,21 +313,10 @@ class Controller {
             break;
 
             case 'compila-scheda':
-                $modelloSchedaDiValutaziuone=getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
-                $_SESSION['modello_scheda']=serialize($modelloSchedaDiValutaziuone);
+                $modelloSchedaDiValutaziuone = getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
+                $_SESSION['modello_scheda'] = serialize($modelloSchedaDiValutaziuone);
                 header('Location: View/valutazioni/compilaScheda.php');
             break;
-
-
-
-            /*case 'valutazione-esperienza':
-                $id = $_GET['id'] ?? -1;
-                $esperienza = $this->modello->getEsperienzaDaId($id);
-                if ($esperienza == null) {
-                    header('Location: View/mostra/mostraEsperienza.php?errore=1');
-                    exit();
-                }
-            break;*/
 
             // Case per la creazione di nuove istanze di soggetti o entità
             case 'crea-percorso':
