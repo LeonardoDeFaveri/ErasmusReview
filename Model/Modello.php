@@ -1281,10 +1281,24 @@ class Modello {
             "{$scuola->getId()}",
             (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
             "{$dal}",
+<<<<<<< HEAD
+=======
             {$al}    
         );
         COMMIT;
+>>>>>>> d7f7d1a6604c98607b429fbccabda123058cf5ee
         testo;
+        if(isset($al)){
+            $query.=<<<testo
+                {$al});
+                COMMIT;
+            testo;
+        }else{
+            $query.=<<<testo
+                NULL);
+                COMMIT;
+            testo;
+        }
         echo $query;
         
         $ris = $this->connessione->multi_query($query);

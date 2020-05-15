@@ -461,14 +461,12 @@ class Controller {
                         $_POST["cognome_docente"],
                         $_POST["email_docente"]
                     );
-                    $al=$_POST["al_docente"];
-                    echo $al;
-                    if(substr($al,0,4)>1000){
+                    
+                    $al=null;
+                    if($_POST["al_docente"]!=""){
                         $al=$_POST["al_docente"];
                     }
-                    else{
-                        $al=null;
-                    }
+
                     if(!$this->modello->insertDocente($docente,$_POST["dal_docente"],$al)){
                         header('Location: View/creazione/creaDocente.php?errore=2');
                         exit();
