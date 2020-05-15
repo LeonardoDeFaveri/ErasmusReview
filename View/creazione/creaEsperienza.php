@@ -14,20 +14,30 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
+include_once "{$_SESSION['root']}/Model/Percorso.php";
 
 $html = creaHeader("Creazione Esperienza");
-if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
+if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
     $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente o scuola per poter visualizzare questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
+    if(isset($_GET['errore']) && $_GET['errore'] == 2){
+        $html .=<<<testo
+                    <script>
+                        alert("Non sono riuscito ad inserire l'esperienza; probabilmente esiste già");
+                    </script>    
+        testo;
+        
+    }
     $html .= creaBarraMenu($_SESSION['email_utente']);
     $studenti = unserialize($_SESSION['studenti']);
     $aziende = unserialize($_SESSION['aziende']);
     $agenzie = unserialize($_SESSION['agenzie']);
     $famiglie = unserialize($_SESSION['famiglie']);
+    $percorsi = unserialize($_SESSION['percorsi']);
     $html .=<<<testo
         <div>
             <h2>Crea Esperienza</h2>
@@ -45,9 +55,23 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
         testo;
     }
     $html.=<<<testo
-                                </select>
-                            </div>\n
+                            </select>
+                        </div>\n
         testo;
+    $html .=<<<testo
+                        <div class="riga">
+                            <label for="id_percorso">Seleziona Percorso:</label>
+                            <select name ='id_percorso' required>\n
+    testo;
+    foreach($percorsi as $percorso){
+        $html.=<<<testo
+                        \t\t<option value ='{$percorso->getId()}'>{$percorso->getClasse()->getNumero()} {$percorso->getClasse()->getSezione()} {$percorso->getClasse()->getAnnoScolastico()} {$percorso->getDal()} {$percorso->getAl()}</option>\n
+        testo;
+    }
+    $html.=<<<testo
+                            </select>
+                        </div>\n
+    testo;
     $html .=<<<testo
                         <div class="riga">
                             <label for="id_azienda">Seleziona Azienda:</label>
@@ -59,8 +83,8 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
         testo;
     }
     $html.=<<<testo
-                                </select>
-                            </div>\n
+                            </select>
+                        </div>\n
         testo;
     $html .=<<<testo
                         <div class="riga">
@@ -70,7 +94,7 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
     testo;
     foreach($agenzie as $agenzia){
         $html.=<<<testo
-                                \t<option value ='{$azienda->getId()}'>{$azienda->getNome()}</option>\n
+                                \t<option value ='{$agenzia->getId()}'>{$agenzia->getNome()}</option>\n
         testo;
     }
     $html.=<<<testo
@@ -106,7 +130,6 @@ if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['
         </div>\n
     testo;
 }
-
 $html .= creaFooter();
 echo $html;
 ?>
