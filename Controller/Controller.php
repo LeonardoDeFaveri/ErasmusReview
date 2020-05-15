@@ -212,8 +212,13 @@ class Controller {
                 exit();
             break;
 
-            case 'mostra-valutazione':
-                $valutato = $_SESSION['tipo_utente'];
+            case 'mostra-valutazione-esperienza':
+                $esprienza = $this->modello->getEsperienzaDaId($_POST['id']);
+                switch($_SESSION['tipo_utente']){
+                    case 'studente':
+                        
+                    break;
+                }
             break;
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;

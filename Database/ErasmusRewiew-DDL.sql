@@ -259,6 +259,7 @@ CREATE TABLE schede_di_valutazione(
 	id_esperienza INTEGER NOT NULL,
 	data_ora DATETIME NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (id),
+	UNIQUE (id_recensore, id_recensito, id_esperienza),
 	FOREIGN KEY (id_modello) REFERENCES modelli(id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
