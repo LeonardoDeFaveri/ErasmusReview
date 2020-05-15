@@ -311,6 +311,15 @@ class Controller {
                 header('Location: View/valutazioni/mostraValutazioni.php');
                 exit();
             break;
+
+            case 'compila-scheda':
+                $modelloSchedaDiValutaziuone=getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
+                $_SESSION['modello_scheda']=serialize($modelloSchedaDiValutaziuone);
+                header('Location: View/valutazioni/compilaScheda.php');
+            break;
+
+
+
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
@@ -464,6 +473,7 @@ class Controller {
                         $_POST["email_docente"]
                     );
                     $al=$_POST["al_docente"];
+                    echo $al;
                     if(substr($al,0,4)>1000){
                         $al=$_POST["al_docente"];
                     }
