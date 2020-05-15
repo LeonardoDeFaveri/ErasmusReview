@@ -212,6 +212,114 @@ class Controller {
                 exit();
             break;
 
+            case 'mostra-valutazione-esperienza':
+                $esprienza = $this->modello->getEsperienzaDaId($_POST['id']);
+                $schedeDiValutazione = array();
+                switch($_SESSION['tipo_utente']){
+                    case 'studente':
+                        $modello = $this->modello->getModelloDaTipi('studente', 'azienda');
+                        if($modello != null){
+                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $modello,
+                                $esperienza->getStudente->getId(),
+                                $esperienza->getAzienda->getId(),
+                                $esperienza
+                            );
+                        }
+                        if($esperienza->getAgenzia() != null){
+                            $modello = $this->modello->getModelloDaTipi('studente', 'agenzia');
+                            if($modello != null){
+                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                    $modello,
+                                    $esperienza->getStudente->getId(),
+                                    $esperienza->getAgenzia->getId(),
+                                    $esperienza
+                                );
+                            }    
+                        }
+                        if($esperienza->getFamiglia() != null){
+                            $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
+                            if($modello != null){
+                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                    $modello,
+                                    $esperienza->getStudente->getId(),
+                                    $esperienza->getFamiglia->getId(),
+                                    $esperienza
+                                );
+                            }    
+                        }
+                        $modello = $this->modello->getModelloDaTipi('azienda', 'studente');
+                        if($modello != null){
+                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $modello,
+                                $esperienza->getAzienda->getId(),
+                                $esperienza->getStudente->getId(),
+                                $esperienza
+                            );
+                        }
+                    break;
+                    case 'azienda':
+                        $modello = $this->modello->getModelloDaTipi('azienda', 'studente');
+                        if($modello != null){
+                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $modello,
+                                $esperienza->getAzienda->getId(),
+                                $esperienza->getStudente->getId(),
+                                $esperienza
+                            );
+                        }
+                        $modello = $this->modello->getModelloDaTipi('studente', 'azienda');
+                        if($modello != null){
+                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $modello,
+                                $esperienza->getStudente->getId(),
+                                $esperienza->getAzienda->getId(),
+                                $esperienza
+                            );
+                        }
+                    break;
+                    case 'agenzia':
+                        if($esperienza->getAgenzia() != null){
+                            $modello = $this->modello->getModelloDaTipi('studente', 'agenzia');
+                            if($modello != null){
+                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                    $modello,
+                                    $esperienza->getStudente->getId(),
+                                    $esperienza->getAgenzia->getId(),
+                                    $esperienza
+                                );
+                            }    
+                        }
+                        if($esperienza->getFamiglia() != null){
+                            $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
+                            if($modello != null){
+                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                    $modello,
+                                    $esperienza->getStudente->getId(),
+                                    $esperienza->getFamiglia->getId(),
+                                    $esperienza
+                                );
+                            }    
+                        }
+                    break;
+                    default:
+                        header('Location: View/valutazioni/mostraValutazioni.php?errore=1');
+                        exit();
+                    break;
+                }
+                $_SESSION['schede_di_valutazione'] = serialize($schedeDiValutazione);
+                header('Location: View/valutazioni/mostraValutazioni.php');
+                exit();
+            break;
+
+            case 'compila-scheda':
+                $modelloSchedaDiValutaziuone=getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
+                $_SESSION['modello_scheda']=serialize($modelloSchedaDiValutaziuone);
+                header('Location: View/valutazioni/compilaScheda.php');
+            break;
+
+
+
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
@@ -361,11 +469,17 @@ class Controller {
                     $nome=$_POST["nome_docente"];
                     $docente=new Docente(
                         null,
-                        $nome,
+                        $_POST["nome_docente"],
                         $_POST["cognome_docente"],
                         $_POST["email_docente"]
                     );
-                    if(!$this->modello->insertDocente($docente)){
+                    
+                    $al=null;
+                    if($_POST["al_docente"]!=""){
+                        $al=$_POST["al_docente"];
+                    }
+
+                    if(!$this->modello->insertDocente($docente,$_POST["dal_docente"],$al)){
                         header('Location: View/creazione/creaDocente.php?errore=2');
                         exit();
                     }

@@ -1107,6 +1107,35 @@ class Modello {
         }
         return $schedaDiValutazione;
     }
+
+    public function getSchedaDiValutazioneDaSoggetti($modello, $idRecensore, $idRecensito, $esperienza) {
+        $query =<<<testo
+        SELECT S.*
+        FROM schede_di_valutazione S
+            INNER JOIN modelli M
+            ON S.id_modello = M.id
+        WHERE S.id_esperienza = {$esperienza->getId()}
+            AND S.id_recensito = {$idRecensito}
+            AND S.id_recensore = {$idRecensore}
+            AND S.id_modello = {$modello->getId()}
+        testo;
+        $ris = $this->connessione->query($query);
+        $schedaDiValutazione = null;
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_assoc();
+            $schedaDiValutazione = new SchedaDiValutazione(
+                $id,
+                $modello->getTipoRecensore(),
+                $idRecensore,
+                $modello->getTipoRecensito(),
+                $idRecensito,
+                $esperienza,
+                $ris['data_ora'],
+                $this->getValutazioniDaSchedaDiValutazione($id)
+            );
+        }
+        return $schedaDiValutazione;
+    }
     
     /**
      * getValutazioniDaSchedaDiValutazione estrae dal database tutte le
@@ -1233,10 +1262,9 @@ class Modello {
      * @param  Docente $docente istanza della classe docente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertDocente($docente) {
+    public function insertDocente($docente,$dal,$al) {
         $digest=hash('sha256',$docente->getNome());
         $scuola=unserialize($_SESSION['scuola']);
-        echo "xiao";
         $query =<<<testo
         START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
@@ -1251,12 +1279,26 @@ class Modello {
         );
         INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES (
             "{$scuola->getId()}",
-            SELECT id FROM docenti WHERE email_utente={$docente->getEmail()},
-            "{$_POST['dal_docente']}",
-            "{$_POST['al_docente']}"    
+            (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
+            "{$dal}",
+<<<<<<< HEAD
+=======
+            {$al}    
         );
         COMMIT;
+>>>>>>> d7f7d1a6604c98607b429fbccabda123058cf5ee
         testo;
+        if(isset($al)){
+            $query.=<<<testo
+                {$al});
+                COMMIT;
+            testo;
+        }else{
+            $query.=<<<testo
+                NULL);
+                COMMIT;
+            testo;
+        }
         echo $query;
         
         $ris = $this->connessione->multi_query($query);
