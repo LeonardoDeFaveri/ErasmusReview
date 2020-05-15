@@ -213,7 +213,7 @@ class Controller {
             break;
 
             case 'mostra-valutazione-esperienza':
-                $esprienza = $this->modello->getEsperienzaDaId($_GET['id']);
+                $esperienza = $this->modello->getEsperienzaDaId($_GET['id']);
                 $schedeDiValutazione = array();
                 switch($_SESSION['tipo_utente']){
                     case 'studente':
@@ -221,8 +221,8 @@ class Controller {
                         if($modello != null){
                             $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
-                                $esperienza->getStudente->getId(),
-                                $esperienza->getAzienda->getId(),
+                                $esperienza->getStudente()->getId(),
+                                $esperienza->getAzienda()->getId(),
                                 $esperienza
                             );
                         }
@@ -231,8 +231,8 @@ class Controller {
                             if($modello != null){
                                 $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
-                                    $esperienza->getStudente->getId(),
-                                    $esperienza->getAgenzia->getId(),
+                                    $esperienza->getStudente()->getId(),
+                                    $esperienza->getAgenzia()->getId(),
                                     $esperienza
                                 );
                             }    
@@ -242,8 +242,8 @@ class Controller {
                             if($modello != null){
                                 $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
-                                    $esperienza->getStudente->getId(),
-                                    $esperienza->getFamiglia->getId(),
+                                    $esperienza->getStudente()->getId(),
+                                    $esperienza->getFamiglia()->getId(),
                                     $esperienza
                                 );
                             }    
@@ -252,8 +252,8 @@ class Controller {
                         if($modello != null){
                             $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
-                                $esperienza->getAzienda->getId(),
-                                $esperienza->getStudente->getId(),
+                                $esperienza->getAzienda()->getId(),
+                                $esperienza->getStudente()->getId(),
                                 $esperienza
                             );
                         }
@@ -263,8 +263,8 @@ class Controller {
                         if($modello != null){
                             $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
-                                $esperienza->getAzienda->getId(),
-                                $esperienza->getStudente->getId(),
+                                $esperienza->getAzienda()->getId(),
+                                $esperienza->getStudente()->getId(),
                                 $esperienza
                             );
                         }
@@ -272,8 +272,8 @@ class Controller {
                         if($modello != null){
                             $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
-                                $esperienza->getStudente->getId(),
-                                $esperienza->getAzienda->getId(),
+                                $esperienza->getStudente()->getId(),
+                                $esperienza->getAzienda()->getId(),
                                 $esperienza
                             );
                         }

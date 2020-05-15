@@ -1004,7 +1004,7 @@ class Modello {
             ON A.id = MA.id_aspetto
             INNER JOIN modelli M
             ON MA.id_modello = M.id
-        WHERE M.id = 1
+        WHERE M.id = {$idModello}
         testo;
         $ris = $this->connessione->query($query);
         $aspetti = array();
@@ -1012,8 +1012,8 @@ class Modello {
             $ris = $ris->fetch_all(MYSQLI_ASSOC);
             foreach ($ris as $aspetto) {
                 $aspetti[] = new Aspetto(
-                    $ris['id'],
-                    $ris['nome']
+                    $aspetto['id'],
+                    $aspetto['nome']
                 );
             }
         }
