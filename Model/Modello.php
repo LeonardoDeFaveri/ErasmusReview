@@ -1252,7 +1252,7 @@ class Modello {
             "{$scuola->getId()}",
             (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
             "{$dal}",
-            "{$al}"    
+            {$al}    
         );
         COMMIT;
         testo;
