@@ -372,12 +372,11 @@ class Controller {
                     exit();
                 }
                 if(isset($_POST['submit'])){
-                    $percorso = null; //selezionare il percorso di cui fa parte lo studente
                     $esperienza = null;
                     $esperienza = new Esperienza(
                         null,
                         $_POST['id_studente'],
-                        $percorso,
+                        $_POST['id_percorso'],
                         $_POST['id_azienda'],
                         $_POST['id_agenzia'],
                         $_POST['id_famiglia'],
@@ -400,6 +399,7 @@ class Controller {
                     $_SESSION['aziende'] = serialize($this->modello->getAziende());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzie());
                     $_SESSION['famiglie'] = serialize($this->modello->getFamiglie());
+                    $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                     //$_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
@@ -408,6 +408,7 @@ class Controller {
                     $_SESSION['aziende'] = serialize($this->modello->getAziende());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzie());
                     $_SESSION['famiglie'] = serialize($this->modello->getFamiglie());
+                    $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaScuola($scuola));
                 }
                 header('Location: View/creazione/creaEsperienza.php');
                 exit();

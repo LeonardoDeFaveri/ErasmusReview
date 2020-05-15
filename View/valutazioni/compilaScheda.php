@@ -28,17 +28,18 @@ if(!isset($_SESSION['email_utente'])) {
     foreach($aspetti as $aspetto){     
         $html.=<<<testo
             <label>{$aspetto->getNome()}</label><br>
-            <input type="number" name="{$aspetto->getId()}" min="1" max="5">
+            <input type="number" name="{$aspetto->getId()}" min="1" max="5" required>
         testo;   
     }
     $html.=<<<testo
+                <input type="submit">
             </fieldset>
         </form>
     testo;
     
 }
+$html.=creaFooter();
 
-
-
+echo $html;
 
 ?>

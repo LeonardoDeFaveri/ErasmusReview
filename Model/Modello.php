@@ -1467,14 +1467,14 @@ class Modello {
     public function insertEsperienza($esperienza) {
         $query =<<<testo
         INSERT INTO esperienze (id_studente, id_azienda, id_percorso, id_agenzia, id_famiglia, dal, al) VALUES (
-            "{$esperienza->getStudente()->getId()}",
-            "{$esperienza->getAzienda()->getId()}",
-            "{$esperienza->getPercorso()->getId()}",
+            "{$esperienza->getStudente()}",
+            "{$esperienza->getAzienda()}",
+            "{$esperienza->getPercorso()}",
         testo;
-        if($esperienza->getAgenzia() != null && $esperienza->getFAmiglia() != null){
+        if($esperienza->getAgenzia() != "null" && $esperienza->getFamiglia() != "null"){
             $query.=<<<testo
-            "{$esperienza->getAgenzia()->getId()}",
-            "{$esperienza->getFamiglia()->getId()}",
+            "{$esperienza->getAgenzia()}",
+            "{$esperienza->getFamiglia()}",
             testo;
         }else{
             $query.=<<<testo
