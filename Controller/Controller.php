@@ -368,6 +368,7 @@ class Controller {
                         $_POST["email_docente"]
                     );
                     $al=$_POST["al_docente"];
+                    echo $al;
                     if(substr($al,0,4)>1000){
                         $al=$_POST["al_docente"];
                     }
