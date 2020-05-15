@@ -1233,10 +1233,10 @@ class Modello {
      * @param  Docente $docente istanza della classe docente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertDocente($docente) {
+    public function insertDocente($docente,$dal,$al) {
         $digest=hash('sha256',$docente->getNome());
         $scuola=unserialize($_SESSION['scuola']);
-        echo "xiao";
+        //echo "xiao";
         $query =<<<testo
         START TRANSACTION;
         INSERT INTO utenti (email,password,tipo_utente) VALUES (
@@ -1249,14 +1249,21 @@ class Modello {
             "{$docente->getNome()}",
             "{$docente->getCognome()}"
         );
-        INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES (
+        testo;
+        $query.="INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES ("
+                . "'{$scuola->getId()}',"
+                . "(SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),"
+                . "'{$dal}',"
+                . "'{$al}');"
+                . "COMMIT";
+        /*INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES (
             "{$scuola->getId()}",
-            SELECT id FROM docenti WHERE email_utente={$docente->getEmail()},
-            "{$_POST['dal_docente']}",
-            "{$_POST['al_docente']}"    
+            (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
+            "{$dal}",
+            "{$al}"    
         );
         COMMIT;
-        testo;
+        testo;*/
         echo $query;
         
         $ris = $this->connessione->multi_query($query);
