@@ -213,7 +213,7 @@ class Controller {
             break;
 
             case 'mostra-valutazione':
-                
+                $valutato = $_SESSION['tipo_utente'];
             break;
             /*case 'valutazione-esperienza':
                 $id = $_GET['id'] ?? -1;
