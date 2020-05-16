@@ -3,7 +3,7 @@ if (session_id() == '') {
     session_start();
     $_SESSION['root'] = __DIR__ . "/..";
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
-    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusAdvisor";
+    $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusReview";
 }
 include_once "{$_SESSION['root']}/Model/Modello.php";
 
@@ -587,6 +587,6 @@ class Controller {
  * In alcuni casi di errore si viene reindirizzati alla pagina di "origine" con un parametro del
  * tipo (?errore=1) il numero rappresenta un tipo di errore, la lista che associa il numero con
  * l'errore è sulla wiki di github al seguente link:
- *(https://github.com/LeonardoDeFaveri/ErasmusAdvisor/wiki/Struttura-del-sito)
+ *(https://github.com/LeonardoDeFaveri/ErasmusReview/wiki/Struttura-del-sito)
  */
 ?>
