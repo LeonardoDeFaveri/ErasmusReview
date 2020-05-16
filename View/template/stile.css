@@ -8,7 +8,7 @@
     --default-border-radius: 3px;
     --default-margin: 5px;
     --default-padding: 5px;
-    --default-font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    --default-font-family: "Arial", "Lucida Sans Unicode", sans-serif;
 }
 
 /*Regole di base e definizione delle aree per il grid layout*/
@@ -20,33 +20,34 @@ body{
     min-height: 100vh;
     display: grid;
     grid-template-areas:
-        'header'
-        'menu'
+        'barra-superiore'
         'main'
         'footer';
-    grid-template-rows: fit-content(10%) fit-content(10%) auto fit-content(10%);
+    grid-template-rows: fit-content(10%) auto fit-content(10%);
+}
+
+#barra-superiore{
+    grid-area: barra-superiore;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: var(--default-elements-background-color);
 }
 
 /*Regole dell'intestazione principale*/
 #header-principale{
-    grid-area: header;
-    background: var(--default-elements-background-color);
     padding: var(--default-padding);
     margin: 0px;
+    flex-grow: 100;
 }
 
 /*Regole per la barra dei menu (menu, ricerca, utente)*/
 #barra-menu{
-    grid-area: menu;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    background-color: var(--default-elements-background-color-2);
-}
-
-nav{
-    padding: var(--default-padding);
-    flex-grow: 100;
+    height: 90px;
 }
 
 #ricerca{
@@ -67,7 +68,7 @@ nav{
     background-color: var(--default-elements-background-color);
     cursor: pointer;
     font-size: large;
-    padding: auto;
+    padding: var(--default-padding);
 }
 
 #ricerca input[type="text"], #ricerca form button[type="submit"]{
@@ -101,20 +102,47 @@ nav{
     cursor: pointer;
 }
 
+#menu-utente{
+    background: var(--default-elements-background-color-2);
+    padding: var(--default-padding);
+    border: var(--default-border);
+    position: absolute;
+    z-index: 10;
+    top: 90px;
+    right: 0px;
+    visibility: hidden;
+}
+
+/*Regole per i link*/
+a{
+    text-decoration: none;
+    font-style: italic;
+    color: var(--default-color);
+    cursor: pointer;
+}
+
+h1 a{
+    text-decoration: none;
+    color: var(--default-color);
+}
+
 /*Regole per il contenuto della pagina*/
 main{
     grid-area: main;
     text-align: center;
+    position: relative;
 }
 
+/*Regole per i form*/
 fieldset{
     margin: var(--default-margin);
     font-size: larger;
-    height: 300px;
-    width: 300px;
+    min-height: 250px;
+    min-width: 250px;
     border: var(--default-border);
     border-radius: var(--default-border-radius);
     display: inline-block;
+    text-align: center;
 }
 
 fieldset legend {
@@ -133,7 +161,7 @@ form input{
     font-size: large;
     background: #FFF;
     padding: var(--default-padding);
-    margin-bottom: 5px;
+    margin-bottom: var(--default-margin);
     border-radius: var(--default-border-radius);
 }
 
@@ -145,9 +173,13 @@ form input[type="submit"]{
     cursor: pointer;
 }
 
-h1 a{
-    text-decoration: none;
-    color: var(--default-color);
+select{
+    background-color: #FFF;
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+    padding: var(--default-padding);
+    font-size: medium;
+    margin-bottom: var(--default-margin);
 }
 
 /*Regole per il footer*/
@@ -164,6 +196,7 @@ footer address{
     margin-right: 10px;
 }
 
+/*Regole per i tag details*/
 details{
     border: none;
     border-width: 3px;
@@ -174,17 +207,17 @@ details summary{
     text-align: left;
     padding: var(--default-padding);
     border: var(--default-border);
-    background-color: var(--default-elements-background-color);
+    background-color: var(--default-elements-background-color-2);
 }
 
+/*stile del riquadro che visualizza le esperienze e i percorsi*/
 .contenitore-riquadri{
     display: flex;
     flex-flow: row wrap;
     padding: var(--default-padding);
 }
 
-/*stile del riquadro che visualizza l'esperienza*/
-.riquadroEsperienza{
+.riquadro{
     position: relative;
     background-color: var(--default-elements-background-color-2);
     border: var(--default-border);
@@ -195,19 +228,131 @@ details summary{
     height: 200px;
 }
 
-.riquadroEsperienza a{
+.riquadro a{
     color: var(--default-color);
     text-decoration: none;
     font-style: italic;
 }
 
-.riquadroEsperienza button{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+button{
     margin: var(--default-margin);
     padding: var(--default-padding);
     background-color: var(--default-elements-background-color);
     border: var(--default-border);
     border-radius: var(--default-border-radius);
+}
+
+.contenitore-bottoni-riquadro{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.pagina-con-barra-laterale{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.contenuto{
+    position: relative;
+    flex-grow: 100;
+    text-align: left;
+    padding: var(--default-padding);
+}
+
+.contenuto form{
+    width: auto;
+}
+
+#crea-percorso{
+    float: right;
+}
+
+.barra-laterale{
+    float: right;
+    min-width: 250px;
+    max-width:fit-content;
+    text-align: left;
+}
+
+.barra-laterale div{
+    padding: var(--default-padding);
+}
+
+.contenitore-centrato{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contenitore-centrato-lista{
+    width: fit-content;
+}
+
+table, tr, th, td{
+    border: var(--default-border);
+    border-collapse: collapse;
+    padding: var(--default-padding);
+    text-align: left;
+}
+
+th{
+    background-color: var(--default-elements-background-color);
+    text-align: center;
+}
+
+#gestione-account{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--default-padding);
+}
+
+#gestione-account div{
+    width: auto;
+    margin: var(--default-margin);
+    text-align: left;
+}
+
+.form-con-colonne{
+    width: fit-content;
+}
+
+.form-con-colonne form{
+    text-align: left;
+}
+
+.dati{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: left;
+}
+
+.riga{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.riga label{
+    flex-grow: 100;
+    margin-right: var(--default-margin);
+}
+
+.riga input{
+    width: 250px;
+}
+
+.lista-checkbox{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }

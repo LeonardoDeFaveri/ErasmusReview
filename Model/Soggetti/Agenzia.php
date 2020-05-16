@@ -1,7 +1,7 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../../";
+    $_SESSION['root'] = __DIR__ . "/../..";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
@@ -10,13 +10,15 @@ class Agenzia extends Soggetto {
     private $stato;
     private $citta;
     private $telefono;
+    private $indirizzo;
     
-    public function __construct($id, $nome, $email, $stato, $citta, $telefono) {
+    public function __construct($id, $nome, $email, $stato, $citta, $telefono, $indirizzo) {
         parent::__construct($id, $nome);
         $this->email = $email;
         $this->stato = $stato;
         $this->citta = $citta;
         $this->telefono = $telefono;
+        $this->indirizzo = $indirizzo;
     }
 
     public function getEmail(){
@@ -34,10 +36,14 @@ class Agenzia extends Soggetto {
     public function getTelefono() {
         return $this->telefono;
     }
+    
+    public function getIndirizzo() {
+        return $this->indirizzo;
+    }
 
     public function serialize() {
         return serialize([$this->id, $this->nome, $this->email, $this->stato,
-         $this->citta, $this->telefono]);
+         $this->citta, $this->telefono, $this->indirizzo]);
     }
 
     public function unserialize($stringa) {
@@ -48,6 +54,7 @@ class Agenzia extends Soggetto {
         $this->stato = $valori[3];
         $this->citta = $valori[4];
         $this->telefono = $valori[5];
+        $this->indirizzo = $valori[6];
     }
 }
 ?>

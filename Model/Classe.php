@@ -1,7 +1,7 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../../";
+    $_SESSION['root'] = __DIR__ . "/..";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
@@ -13,7 +13,17 @@ class Classe implements Serializable {
     private $sezione;
     private $annoScolastico;
     private $studenti;
-
+      
+    /**
+     * __construct crea una nuova classe.
+     *
+     * @param  int $id identificativo della classe
+     * @param  Scuola $scuola riferimento alla scuola associata alla classe
+     * @param  int $numero numero della classe
+     * @param  string $sezione sezione della classe
+     * @param  string $annoScolastico anno scolastico della classe (anno/anno)
+     * @param  Studente[] $studenti array contenente tutit gli studenti della classe
+     */
     public function __construct($id, $scuola, $numero, $sezione, $annoScolastico, $studenti = array()) {
         $this->id = $id;
         $this->scuola = $scuola;
@@ -59,7 +69,7 @@ class Classe implements Serializable {
         $this->numero = $valori[2];
         $this->sezione = $valori[3];
         $this->annoScolastico = $valori[4];
-        $this->getStudenti = $valori[5];
+        $this->studenti = $valori[5];
     }
 }
 ?>

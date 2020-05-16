@@ -1,7 +1,7 @@
 <?php
 if(session_id() == ''){
     session_start();
-    $_SESSION['root'] = __DIR__ . "/../../";
+    $_SESSION['root'] = __DIR__ . "/../..";
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Soggetto.php";
 
@@ -12,6 +12,7 @@ class Docente extends Soggetto {
     public function __construct($id, $nome, $cognome, $email) {
         parent::__construct($id, $nome);
         $this->cognome = $cognome;
+        $this->email = $email;
     }
 
     public function getCognome() {
