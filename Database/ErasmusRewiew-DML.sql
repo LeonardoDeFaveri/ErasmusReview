@@ -8,7 +8,8 @@ INSERT INTO tipi_utenti (tipo_utente) VALUES
 ('azienda'),
 ('agenzia'),
 ('scuola'),
-('admin');
+('admin'),
+('famiglia');
 
 DELETE FROM utenti;
 INSERT INTO utenti (email, password, tipo_utente) VALUES
@@ -138,23 +139,25 @@ INSERT INTO esperienze (id_studente, id_azienda, id_percorso, id_agenzia, id_fam
 	(7, 1, 1, 1, 1, '2019-11-01', '2019-12-30');
 
 DELETE FROM modelli;
-INSERT INTO modelli (id,tipo_recensore,tipo_recensito) 
+INSERT INTO modelli (id, tipo_recensore, tipo_recensito) 
 VALUES
-	(1,"Studente","Azienda"),
-	(2,"Azienda","Studente");
+	(1, 'studente', 'azienda'),
+	(2, 'azienda', 'studente'),
+	(3, 'studente', 'agenzia'),
+	(4, 'studente', 'famiglia');
 	
 DELETE FROM aspetti;
-INSERT INTO aspetti (id,nome) 
+INSERT INTO aspetti (id, nome) 
 VALUES 
-	(1,"Disponibilita del personale"),
-	(2,"Spiegazione del lavoro che deve essere svolto "),
-	(3,"Tempo di inattivita "),
-	(4,"Chiarezza nell'assegnazione delle mansioni"),
-	(5,"Educazione"),
-	(6,"Preparazione"),
-	(7,"Puntualità a lavoro "),
-	(8,"Esegue bene il lavoro che gli è stato assegnato "),
-	(9,"Rispetto verso il personale");
+	(1, 'Disponibilita del personale'),
+	(2, 'Spiegazione del lavoro che deve essere svolto'),
+	(3, 'Tempo di inattivita'),
+	(4, "Chiarezza nell'assegnazione delle mansioni"),
+	(5, 'Educazione'),
+	(6, 'Preparazione'),
+	(7, 'Puntualità a lavoro'),
+	(8, 'Esegue bene il lavoro che gli è stato assegnato'),
+	(9, 'Rispetto verso il personale');
 
 DELETE FROM modelli_aspetti;
 INSERT INTO modelli_aspetti (id, id_modello, id_aspetto) 
@@ -168,5 +171,5 @@ VALUES
 	(7, 2, 7),
 	(8, 2, 8),
 	(9, 2, 9);
-	
+
 COMMIT;
