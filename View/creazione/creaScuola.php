@@ -26,42 +26,40 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
         testo;
     }
 }else{
-    if(!$creataBarraMenu){
-        $html .= creaBarraMenu($_SESSION["email_utente"]);
-    }
-    $html.=<<<testo
-        <div>
-            <form action="{$_SESSION['web_root']}/index.php?comando=crea-scuola" method="POST">
-                <fieldset class="form-con-colonne">
-                    <legend>Crea Scuola</legend>
-                        <div class="dati">
-                            <div class="riga">
-                                <label>Codice meccanografico</label>
-                                <input type="text" name="codice_meccanografico" autofocus required>
-                            </div>
-                            <div class="riga">
-                                <label>Email</label>
-                                <input type="email" name="email" required><br>
-                            </div>
-                            <div class="riga">
-                                <label>Nome</label>
-                                <input type="text" name="nome" required><br>
-                            </div>
-                            <div class="riga">
-                                <label>Citt&agrave;</label>
-                                <input type="text" name="citta" required><br>
-                            </div>
-                            <div class="riga">
-                                <label>Indirizzo</label>
-                                <input type="text" name="indirizzo" required><br>
-                            </div>
-                        </div>
-                    <input name="submit" type="submit">
-                </fieldset>
-            </form>
-        </div>
-    testo;
+    $html .= creaBarraMenu($_SESSION["email_utente"]);
 }
+$html.=<<<testo
+    <div>
+        <form action="{$_SESSION['web_root']}/index.php?comando=crea-scuola" method="POST">
+            <fieldset class="form-con-colonne">
+                <legend>Crea Scuola</legend>
+                    <div class="dati">
+                        <div class="riga">
+                            <label>Codice meccanografico</label>
+                            <input type="text" name="codice_meccanografico" autofocus required>
+                        </div>
+                        <div class="riga">
+                            <label>Email</label>
+                            <input type="email" name="email" required><br>
+                        </div>
+                        <div class="riga">
+                            <label>Nome</label>
+                            <input type="text" name="nome" required><br>
+                        </div>
+                        <div class="riga">
+                            <label>Citt&agrave;</label>
+                            <input type="text" name="citta" required><br>
+                        </div>
+                        <div class="riga">
+                            <label>Indirizzo</label>
+                            <input type="text" name="indirizzo" required><br>
+                        </div>
+                    </div>
+                <input name="submit" type="submit">
+            </fieldset>
+        </form>
+    </div>
+testo;
 
 $html .= creaFooter();
 echo $html;

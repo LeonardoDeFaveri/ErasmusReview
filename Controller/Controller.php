@@ -455,20 +455,21 @@ class Controller {
             case 'crea-docente':
                 $scuola = unserialize($_SESSION['scuola']);
                 if(isset($_POST['submit'])){
-                    $nome=$_POST["nome_docente"];
-                    $docente=new Docente(
+                    $nome = $_POST["nome_docente"];
+                    $docente = new Docente(
                         null,
                         $_POST["nome_docente"],
                         $_POST["cognome_docente"],
                         $_POST["email_docente"]
                     );
                     
-                    $al=null;
-                    if($_POST["al_docente"]!=""){
-                        $al=$_POST["al_docente"];
+                    $al = null;
+                    if($_POST["al_docente"] != ""){
+                        $al = $_POST["al_docente"];
                     }
 
-                    if(!$this->modello->insertDocente($docente,$_POST["dal_docente"],$al)){
+                    $scuola = unserialize($_SESSION['scuola']);
+                    if(!$this->modello->insertDocente($docente, $scuola, $_POST["dal_docente"], $al)){
                         header('Location: View/creazione/creaDocente.php?errore=2');
                         exit();
                     }

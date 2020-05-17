@@ -1262,49 +1262,37 @@ class Modello {
      * @param  Docente $docente istanza della classe docente da inserire
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
-    public function insertDocente($docente,$dal,$al) {
-        $digest=hash('sha256',$docente->getNome());
-        $scuola=unserialize($_SESSION['scuola']);
+    public function insertDocente($docente, $scuola, $dal, $al) {
+        $digest = hash('sha256', $docente->getNome());
         $query =<<<testo
-        START TRANSACTION;
-        INSERT INTO utenti (email,password,tipo_utente) VALUES (
-            "{$docente->getEmail()}",
-            "$digest",
-            "docente"
-        );
-        INSERT INTO docenti (email_utente,nome,cognome) VALUES (
-            "{$docente->getEmail()}",
-            "{$docente->getNome()}",
-            "{$docente->getCognome()}"
-        );
-        INSERT INTO docenti_scuole (codice_scuola,id_docente,dal,al) VALUES (
+        SELECT inserisci_docente (
             "{$scuola->getId()}",
-            (SELECT id FROM docenti WHERE email_utente='{$docente->getEmail()}'),
-            "{$dal}",
+            "{$docente->getEmail()}",
+            "{$digest}",
+            "{$docente->getNome()}",
+            "{$docente->getCognome()}",
+            "{$dal}",\n
         testo;
-        if(isset($al)){
-            $query.=<<<testo
-                {$al});
-                COMMIT;
+        if($al == null){
+            $query .=<<<testo
+                NULL
+            );
             testo;
         }else{
-            $query.=<<<testo
-                NULL);
-                COMMIT;
+            $query .=<<<testo
+                "{$al}"
+            );    
             testo;
         }
-        echo $query;
-        
-        $ris = $this->connessione->multi_query($query);
 
-        do{
-            // Prende un risultato
-            if (!$result = $this->connessione->store_result()) {
-                return false;
+        $ris = $this->connessione->query($query);
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_row();
+            if($ris[0] == 0){
+                return true;
             }
-            // Prende il prossimo risultato
-        } while ($this->connessione->next_result());
-        return true;
+        }
+        return false;
     }
 
     /**
@@ -1351,36 +1339,26 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertScuola($scuola) {
-        $digest = hash('sha256',$scuola->getNome());
-        
-        //password di default: nome della scuola, bisogna fare in modo che al primo accesso venga cambiata 
+        $digest = hash('sha256', $scuola->getNome());
         $query =<<<testo
-        START TRANSACTION;
-        INSERT INTO utenti (email,password,tipo_utente) VALUES (
-            "{$scuola->getEmail()}",
-            "$digest",
-            "scuola"
-        );
-        INSERT INTO scuole (codice_meccanografico, email_utente, nome, citta, indirizzo ) VALUES (
+        SELECT inserisci_scuola (
             "{$scuola->getId()}",
             "{$scuola->getEmail()}",
             "{$scuola->getNome()}",
             "{$scuola->getCitta()}",
-            "{$scuola->getIndirizzo()}"
+            "{$scuola->getIndirizzo()}",
+            "{$digest}"
         );
-        COMMIT;
         testo;
-        
-        $ris = $this->connessione->multi_query($query);
 
-        do{
-            // Prende un risultato
-            if (!$result = $this->connessione->store_result()) {
-                return false;
+        $ris = $this->connessione->query($query);
+        if($ris && $ris->num_rows == 1){
+            $ris = $ris->fetch_row();
+            if($ris[0] == 0){
+                return true;
             }
-            // Prende il prossimo risultato
-        } while ($this->connessione->next_result());
-        return true;
+        }
+        return false;
     }
 
     /**
