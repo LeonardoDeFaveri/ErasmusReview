@@ -32,8 +32,59 @@ if(isset($_GET['errore'])){
     }
 }
 
+$esperienza = unserialize($_SESSION['esperienza']);
+$schedeDiValutazione = unserialize($_SESSION['schede_di_valutazione']);
 
+$html .=<<<testo
+        <h2>Schede di valutazione per l'esperienza</h2>
+        <div class="contenitore-centrato">\n
+testo;
+$html .= creaRiquadro($esperienza);
+switch($_SESSION['tipo_utente']){
+    case 'studente':
+
+    break;
+    case 'azienda':
+
+    break;
+    case 'agenzia':
+    
+    break;
+}
+
+$html .= "</div>";
 $html .= creaFooter();
 echo $html;
 return;
+
+function creaRiquadro($esperienza) {
+    $classe = $esperienza->getPercorso()->getClasse();
+    $scuola = $classe->getScuola();
+    $tutor = $esperienza->getPercorso()->getDocente();
+    $azienda = $esperienza->getAzienda();
+    $agenzia = $esperienza->getAgenzia();
+    $famiglia = $esperienza->getFamiglia();
+    $riquadro =<<<testo
+        \t\t\t<div class="riquadro">
+            \t\t\t{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+            \t\t\t{$scuola->getNome()}
+            \t\t\t{$tutor->getNome()}
+            \t\t\t<hr>
+            \t\t\t<b>Dati dell'esperienza</b><br>
+            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
+            \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
+    testo;
+    if($agenzia != null){
+        $riquadro .= "\t\t\t\t\t<a href='#'>Agenzia {$agenzia->getNome()}</a><br>\n";
+    }
+    if($famiglia != null){
+        $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
+    }
+
+    $riquadro .=<<<testo
+        \t\t\t</div>\n
+    testo;
+    return $riquadro;
+}
+?>
 ?>

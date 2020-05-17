@@ -69,8 +69,8 @@ echo $html;
 
 function creaRiquadro($esperienza, $daValutare = false) {
     $studente=$esperienza->getStudente();
-    $periodo=$esperienza->getPercorso();
-    $tutor=$esperienza->getPercorso()->getDocente();
+    $periodo = $esperienza->getPercorso();
+    $tutor = $esperienza->getPercorso()->getDocente();
     $scuola = $esperienza->getPercorso()->getClasse()->getScuola();
     $azienda = $esperienza->getAzienda();
     $riquadro =<<<testo
