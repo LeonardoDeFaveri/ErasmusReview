@@ -86,7 +86,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
 
     if($daValutare){
         $riquadro .=<<<testo
-            \t\t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=valutazione-esperienza&id={$esperienza->getId()}" method="POST">
+            \t\t\t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=mostra-valutazione-esperienza&id={$esperienza->getId()}" method="POST">
                 \t\t\t\t\t<button type="submit">Valutazione</button>
             \t\t\t\t\t</form>\n
         testo;
