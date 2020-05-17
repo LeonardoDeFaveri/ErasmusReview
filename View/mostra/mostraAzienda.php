@@ -9,7 +9,7 @@ include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
 
 $html = creaHeader("Azienda");
-$html = creaBarraMenu($_SESSION['email_utente'] ?? "");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "");
 if(isset($_GET['errore'])){
     $html .= "<h2>Devi selezionare un'azienda per poter accedere a questa pagina</h2>";
 }else{

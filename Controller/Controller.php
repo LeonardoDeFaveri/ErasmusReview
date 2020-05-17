@@ -219,7 +219,7 @@ class Controller {
                     case 'studente':
                         $modello = $this->modello->getModelloDaTipi('studente', 'azienda');
                         if($modello != null){
-                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                            $schedeDiValutazione['studente_azienda'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
                                 $esperienza->getStudente()->getId(),
                                 $esperienza->getAzienda()->getId(),
@@ -229,7 +229,7 @@ class Controller {
                         if($esperienza->getAgenzia() != null){
                             $modello = $this->modello->getModelloDaTipi('studente', 'agenzia');
                             if($modello != null){
-                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $schedeDiValutazione['studente_agenzia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
                                     $esperienza->getStudente()->getId(),
                                     $esperienza->getAgenzia()->getId(),
@@ -240,7 +240,7 @@ class Controller {
                         if($esperienza->getFamiglia() != null){
                             $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
                             if($modello != null){
-                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $schedeDiValutazione['studente_famiglia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
                                     $esperienza->getStudente()->getId(),
                                     $esperienza->getFamiglia()->getId(),
@@ -250,7 +250,7 @@ class Controller {
                         }
                         $modello = $this->modello->getModelloDaTipi('azienda', 'studente');
                         if($modello != null){
-                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                            $schedeDiValutazione['azienda_studente'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
                                 $esperienza->getAzienda()->getId(),
                                 $esperienza->getStudente()->getId(),
@@ -261,7 +261,7 @@ class Controller {
                     case 'azienda':
                         $modello = $this->modello->getModelloDaTipi('azienda', 'studente');
                         if($modello != null){
-                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                            $schedeDiValutazione['azienda_studente'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
                                 $esperienza->getAzienda()->getId(),
                                 $esperienza->getStudente()->getId(),
@@ -270,7 +270,7 @@ class Controller {
                         }
                         $modello = $this->modello->getModelloDaTipi('studente', 'azienda');
                         if($modello != null){
-                            $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                            $schedeDiValutazione['studente_azienda'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                 $modello,
                                 $esperienza->getStudente()->getId(),
                                 $esperienza->getAzienda()->getId(),
@@ -282,7 +282,7 @@ class Controller {
                         if($esperienza->getAgenzia() != null){
                             $modello = $this->modello->getModelloDaTipi('studente', 'agenzia');
                             if($modello != null){
-                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $schedeDiValutazione['studente_agenzia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
                                     $esperienza->getStudente->getId(),
                                     $esperienza->getAgenzia->getId(),
@@ -293,7 +293,7 @@ class Controller {
                         if($esperienza->getFamiglia() != null){
                             $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
                             if($modello != null){
-                                $schedeDiValutazione[] = $this->modello->getSchedaDiValutazioneDaSoggetti(
+                                $schedeDiValutazione['studente_famiglia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
                                     $esperienza->getStudente->getId(),
                                     $esperienza->getFamiglia->getId(),
@@ -308,6 +308,7 @@ class Controller {
                     break;
                 }
                 $_SESSION['schede_di_valutazione'] = serialize($schedeDiValutazione);
+                $_SESSION['esperienza'] = serialize($esperienza);
                 header('Location: View/valutazioni/mostraValutazioni.php');
                 exit();
             break;
