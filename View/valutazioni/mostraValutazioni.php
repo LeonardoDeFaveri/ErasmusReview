@@ -36,10 +36,10 @@ $esperienza = unserialize($_SESSION['esperienza']);
 $schedeDiValutazione = unserialize($_SESSION['schede_di_valutazione']);
 
 $html .=<<<testo
-        <h2>Schede di valutazione per l'esperienza</h2>
-        <div class="contenitore-centrato">\n
+    <main class="pagina-con-barra-laterale">
+        <div class="contenuto">
+            <h2>Tutti le valutazioni</h2>\n
 testo;
-$html .= creaRiquadro($esperienza);
 switch($_SESSION['tipo_utente']){
     case 'studente':
 
@@ -51,40 +51,40 @@ switch($_SESSION['tipo_utente']){
     
     break;
 }
-
-$html .= "</div>";
+$html .= "\t\t</div>\n" . creaBarraLaterale($esperienza);
+$html .=<<<testo
+    </main>\n
+testo;
 $html .= creaFooter();
 echo $html;
 return;
 
-function creaRiquadro($esperienza) {
+function creaBarraLaterale($esperienza) {
+    $studente = $esperienza->getStudente();
     $classe = $esperienza->getPercorso()->getClasse();
-    $scuola = $classe->getScuola();
     $tutor = $esperienza->getPercorso()->getDocente();
-    $azienda = $esperienza->getAzienda();
-    $agenzia = $esperienza->getAgenzia();
-    $famiglia = $esperienza->getFamiglia();
-    $riquadro =<<<testo
-        \t\t\t<div class="riquadro">
-            \t\t\t{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
-            \t\t\t{$scuola->getNome()}
-            \t\t\t{$tutor->getNome()}
-            \t\t\t<hr>
-            \t\t\t<b>Dati dell'esperienza</b><br>
-            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
-            \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
+    $html =<<<testo
+            <div class="barra-laterale">
+                <h3>Esperienza</h3>
+                <p><b>Dati dello studente</b></p>
+                <b>Studente:</b> {$studente->getCognome()} {$studente->getNome()}<br>
+                <b>Scuola:</b> {$classe->getScuola()->getNome()}<br>
+                <b>Classe:</b> {$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+                <p><b>Dati dell'esperienza</b></p>
+                <b>Periodo:</b> {$esperienza->getDal()} -> {$esperienza->getAl()}<br>
+                <b>Azienda:</b> {$esperienza->getAzienda()->getNome()}<br>
+                <b>Tutor:</b> {$tutor->getCognome()} {$tutor->getNome()}<br>\n
     testo;
-    if($agenzia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Agenzia {$agenzia->getNome()}</a><br>\n";
+    if($esperienza->getAgenzia() != null){
+        $html .= "\t\t\t<b>Agenzia:</b> {$esperienza->getAgenzia()->getNome()}<br>\n";
     }
-    if($famiglia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
+    if($esperienza->getFamiglia() != null){
+        $html .= "\t\t\t<b>Famiglia:</b> {$esperienza->getFamiglia()->getNome()}<br>\n";
     }
-
-    $riquadro .=<<<testo
-        \t\t\t</div>\n
+    $html .=<<<testo
+            </div>\n
     testo;
-    return $riquadro;
+    return $html;
 }
 ?>
 ?>

@@ -278,6 +278,7 @@ button{
     min-width: 250px;
     max-width:fit-content;
     text-align: left;
+    margin: var(--default-margin);
 }
 
 .barra-laterale div{
