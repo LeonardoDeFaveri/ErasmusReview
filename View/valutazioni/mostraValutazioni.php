@@ -70,11 +70,13 @@ function creaScheda($scheda, $recensore, $recensito, $valutabile = false) {
     if($scheda == null){
         $html =<<<testo
             <div class="scheda-di-valutazione">
-                <h3>Scheda di valutazione {$recensore}-{$recensito}</h3>
+                <h3>Scheda di valutazione {$recensore}-{$recensito}</h3>\n
         testo;
         if($valutabile){
             $html .=<<<testo
-                    <h4>Questa scheda non è ancora stata compilata, <a href="{$_SESSION['web_root']}?comando=compila-scheda&tipo_recensito={$recensito}">compilala adesso</a></h4>
+                    <h4>Questa scheda non è ancora stata compilata, 
+                        <a href="{$_SESSION['web_root']}?comando=compila-scheda&tipo_recensito={$recensito}">compilala adesso</a>
+                    </h4>
                 </div>\n
             testo;
         }else{
@@ -87,6 +89,24 @@ function creaScheda($scheda, $recensore, $recensito, $valutabile = false) {
         $html =<<<testo
         <div class="scheda-di-valutazione">
             <h3>Scheda di valutazione {$recensore}-{$recensito}</h3>
+            <table>
+                <thead>
+                    <th>Aspetto</th>
+                    <th>Voto</th>
+                </thead>
+                <tbody>
+        testo;
+        foreach($scheda->getValutazioni() as $valutazione){
+            $html .=<<<testo
+                <tr>
+                    <td>{$valutazione->getAspetto()}</td>
+                    <td>{$valutazione->getVoto()}</td>
+                </tr>
+            testo;
+        }
+        $html .=<<<testo
+                </tbody>
+            </table>
         </div>\n
         testo;
     }
