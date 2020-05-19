@@ -284,8 +284,8 @@ class Controller {
                             if($modello != null){
                                 $schedeDiValutazione['studente_agenzia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
-                                    $esperienza->getStudente->getId(),
-                                    $esperienza->getAgenzia->getId(),
+                                    $esperienza->getStudente()->getId(),
+                                    $esperienza->getAgenzia()->getId(),
                                     $esperienza
                                 );
                             }    
@@ -295,8 +295,8 @@ class Controller {
                             if($modello != null){
                                 $schedeDiValutazione['studente_famiglia'] = $this->modello->getSchedaDiValutazioneDaSoggetti(
                                     $modello,
-                                    $esperienza->getStudente->getId(),
-                                    $esperienza->getFamiglia->getId(),
+                                    $esperienza->getStudente()->getId(),
+                                    $esperienza->getFamiglia()->getId(),
                                     $esperienza
                                 );
                             }    
