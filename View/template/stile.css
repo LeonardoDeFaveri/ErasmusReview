@@ -357,3 +357,10 @@ th{
     flex-direction: column;
     text-align: left;
 }
+
+.scheda-di-valutazione{
+    border: var(--default-border);
+    background-color: var(--default-elements-background-color-2);
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+}

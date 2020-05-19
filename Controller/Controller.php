@@ -314,7 +314,7 @@ class Controller {
             break;
 
             case 'compila-scheda':
-                $modelloSchedaDiValutaziuone = getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
+                $modelloSchedaDiValutaziuone = $this->modello->getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
                 $_SESSION['modello_scheda'] = serialize($modelloSchedaDiValutaziuone);
                 header('Location: View/valutazioni/compilaScheda.php');
             break;

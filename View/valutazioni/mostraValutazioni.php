@@ -42,13 +42,20 @@ $html .=<<<testo
 testo;
 switch($_SESSION['tipo_utente']){
     case 'studente':
-
+        $html .= creaScheda($schedeDiValutazione['studente_azienda'], 'studente', 'azienda', true);
+        $html .= creaScheda($schedeDiValutazione['azienda_studente'], 'azienda', 'studente');
+        if($esperienza->getAgenzia() != null){
+            $html .= creaScheda($schedeDiValutazione['studente_agenzia'], 'studente', 'azienda', true);
+            $html .= creaScheda($schedeDiValutazione['studente_famiglia'], 'studente', 'famiglia', true);   
+        }
     break;
     case 'azienda':
-
+        $html .= creaScheda($schedeDiValutazione['azienda_studente'], 'azienda', 'studente', true);
+        $html .= creaScheda($schedeDiValutazione['studente_azienda'], 'studente', 'azienda');
     break;
     case 'agenzia':
-    
+        $html .= creaScheda($schedeDiValutazione['studente_agenzia'], 'studente', 'agenzia');
+        $html .= creaScheda($schedeDiValutazione['studente_famiglia'], 'studente', 'famiglia');
     break;
 }
 $html .= "\t\t</div>\n" . creaBarraLaterale($esperienza);
@@ -58,6 +65,34 @@ testo;
 $html .= creaFooter();
 echo $html;
 return;
+
+function creaScheda($scheda, $recensore, $recensito, $valutabile = false) {
+    if($scheda == null){
+        $html =<<<testo
+            <div class="scheda-di-valutazione">
+                <h3>Scheda di valutazione {$recensore}-{$recensito}</h3>
+        testo;
+        if($valutabile){
+            $html .=<<<testo
+                    <h4>Questa scheda non è ancora stata compilata, <a href="{$_SESSION['web_root']}?comando=compila-scheda&tipo_recensito={$recensito}">compilala adesso</a></h4>
+                </div>\n
+            testo;
+        }else{
+            $html .=<<<testo
+                    <h4>Questa scheda non è ancora stata compilata</h4>
+                </div>\n
+            testo;
+        }
+    }else{
+        $html =<<<testo
+        <div class="scheda-di-valutazione">
+            <h3>Scheda di valutazione {$recensore}-{$recensito}</h3>
+        </div>\n
+        testo;
+    }
+
+    return $html;
+}
 
 function creaBarraLaterale($esperienza) {
     $studente = $esperienza->getStudente();
