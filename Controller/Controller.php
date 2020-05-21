@@ -347,6 +347,67 @@ class Controller {
             break;
 
             case 'inserisci-scheda-compilata':
+                $aspetti = $_POST['aspetti'];
+                $valutazioni = array();
+                foreach ($aspetti as $aspetto => $voto) {
+                    $valutazioni[] = new Valutazione(
+                        null,
+                        $voto,
+                        $aspetto
+                    );
+                }
+                $esperienza = unserialize($_SESSION['esperienza']);
+                $modello = unserialize($_SESSION['modello']);
+                $tipoRecensore = $_SESSION['tipo_utente'];
+                $idRecensore = null;
+                $tipoRecensito = null;
+                $idRecensito = null;
+                
+                // Popola le informazioni sul recensore
+                switch ($tipoRecensore) {
+                    case 'studente':
+                        $idRecensore = $esperienza->getStudente()->getId();
+                    break;
+                    case 'azienda':
+                        $idRecensore = $esperienza->getAzienda()->getId();
+                    break;
+                    default:
+                        header('Location: View/valutazioni/compilaScheda.php?errore=4');
+                        exit();
+                    break;
+                }
+                // Popola le informazioni sul recensito
+                switch ($modello->getTipoRecensito()) {
+                    case 'studente':
+                        $tipoRecensito = 'studente';
+                        $idRecensito = $esperienza->getStudente()->getId();
+                    break;
+                    case 'azienda':
+                        $tipoRecensito = 'azienda';
+                        $idRecensito = $esperienza->getAzienda()->getId();
+                    break;
+                    case 'famiglia':
+                        $tipoRecensito = 'famiglia';
+                        $idRecensito = $esperienza->getFamiglia()->getId();
+                    break;
+                    case 'agenzia':
+                        $tipoRecensito = 'agenzia';
+                        $idRecensito = $esperienza->getAgenzia()->getId();
+                    break;
+                }
+
+                // Crea la scheda di valutazione
+                $scheda = new SchedaDiValutazione(
+                    null,
+                    $tipoRecensore,
+                    $idRecensore,
+                    $tipoRecensito,
+                    $idRecensito,
+                    $esperienza,
+                    date('Y-m-d h:m:s', time()),
+                    $valutazioni
+                );
+                
             break;
 
             // Case per la creazione di nuove istanze di soggetti o entità

@@ -26,6 +26,9 @@ if(isset($_GET['errore'])){
         case 3:
             $html .= "<h2>Il modello specificato non esiste</h2>";
         break;
+        case 4:
+            $html .= "<h2>Il tuo utente non può compilare schede di valutazione</h2>";
+        break;
     }
     $html .= creaFooter();
     echo $html;
@@ -45,7 +48,13 @@ foreach($aspetti as $aspetto){
     $html.=<<<testo
         <div class="riga">
             <label>{$aspetto->getNome()}</label><br>
-            <input type="number" name="{$aspetto->getId()}" min="1" max="5" required>
+            <select name="aspetti[{$aspetto->getId()}]" required>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
         </div>
     testo;   
 }

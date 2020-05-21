@@ -18,10 +18,10 @@ class SchedaDiValutazione implements Serializable {
     
     public function __construct($id, $tipoRecensore, $idRecensore, $tipoRecensito, $idRecensito, $esperienza, $dataOra, $valutazioni = array()) {
         $this->id = $id;
-        $this-$idRecensore = $idRecensore;
+        $this->idRecensore = $idRecensore;
         $this->idRecensito = $idRecensito;
         $this->esperienza = $esperienza;
-        $this->data = $data;
+        $this->dataOra = $dataOra;
         $this->valutazioni = $valutazioni;
     }
     

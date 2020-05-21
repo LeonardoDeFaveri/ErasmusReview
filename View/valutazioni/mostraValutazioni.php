@@ -43,7 +43,7 @@ $schedeDiValutazione = unserialize($_SESSION['schede_di_valutazione']);
 $html .=<<<testo
     <main class="pagina-con-barra-laterale">
         <div class="contenuto">
-            <h2>Tutti le valutazioni</h2>\n
+            <h2>Tutte le valutazioni</h2>\n
 testo;
 switch($_SESSION['tipo_utente']){
     case 'studente':
