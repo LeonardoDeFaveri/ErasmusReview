@@ -49,8 +49,8 @@ class Controller {
                 exit();
             break;
             case 'logout':
-                session_destroy();
                 session_unset();
+                session_destroy();
                 header('Location: View/login.php');
                 exit();
             break;
@@ -133,7 +133,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $agenzia = $this->modello->getAgenziaDaId($id);
                 if ($agenzia == null) {
-                    header('Location: View/mostra/mostraAgenzia.php?errore=1');
+                    header('Location: View/mostra/mostraAgenzia.php?errore=3');
                     exit();
                 }
                 $_SESSION['agenzia'] = serialize($agenzia);
@@ -144,7 +144,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $azienda = $this->modello->getAziendaDaId($id);
                 if ($azienda == null) {
-                    header('Location: View/mostra/mostraAzienda.php?errore=1');
+                    header('Location: View/mostra/mostraAzienda.php?errore=3');
                     exit();
                 }
                 $_SESSION['azienda'] = serialize($azienda);
@@ -155,7 +155,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $esperienza = $this->modello->getEsperienzaDaId($id);
                 if ($esperienza == null) {
-                    header('Location: View/mostra/mostraEsperienza.php?errore=1');
+                    header('Location: View/mostra/mostraEsperienza.php?errore=3');
                     exit();
                 }
                 $_SESSION['esperienza'] = serialize($esperienza);
@@ -166,7 +166,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $famiglia = $this->modello->getFamigliaDaId($id);
                 if ($famiglia == null) {
-                    header('Location: View/mostra/mostraFamiglia.php?errore=1');
+                    header('Location: View/mostra/mostraFamiglia.php?errore=3');
                     exit();
                 }
                 $_SESSION['famiglia'] = serialize($famiglia);
@@ -177,7 +177,7 @@ class Controller {
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
                 if ($percorso == null){
-                    header('Location: View/mostra/mostraPercorso.php?errore=1');
+                    header('Location: View/mostra/mostraPercorso.php?errore=3');
                     exit();
                 }
             break;
@@ -189,14 +189,25 @@ class Controller {
             break;
             
             case 'mostra-classe':
-                $_SESSION["classe"] = serialize($this->modello->getClasseDaId($_GET["id"]));
-                $_SESSION["docenti"] = serialize($this->modello->getDocentiDaClasse($_GET["id"]));
+                $id = $_GET['id'] ?? -1;
+                $classe = $this->modello->getClasseDaId($_GET["id"]);
+                if($classe == null){
+                    header('Location: View/mostra/mostraClasse.php?errore=3');
+                    exit();    
+                }
+                $_SESSION["classe"] = serialize($classe);
+                $_SESSION["docenti"] = serialize($this->modello->getDocentiDaClasse($classe->getId()));
                 header('Location: View/mostra/mostraClasse.php');
                 exit();
             break;
             
             case 'mostra-studente':
-                $studente = $this->modello->getStudenteDaId($_GET["id"]);
+                $id = $_GET['id'] ?? -1;
+                $studente = $this->modello->getStudenteDaId($id);
+                if($studente == null){
+                    header('Location: View/mostra/mostraStudente.php?errore=3');
+                    exit();
+                }
                 $_SESSION['classi_studente'] = serialize($this->modello->getClassiDaStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
                 header('Location: View/mostra/mostraStudente.php');
@@ -204,7 +215,12 @@ class Controller {
             break;  
             
             case 'mostra-docente':
-                $docente = $this->modello->getDocenteDaId($_GET["id"]);
+                $id = $_GET['id'] ?? -1;
+                $docente = $this->modello->getDocenteDaId($id);
+                if($docente == null){
+                    header('Location: View/mostra/mostraDocente.php?errore=3');
+                    exit();
+                }
                 $_SESSION['classi_docente'] = serialize($this->modello->getClassiDaDocente($docente));
                 $_SESSION['docente'] = serialize($docente);
 
@@ -213,7 +229,12 @@ class Controller {
             break;
 
             case 'mostra-valutazione-esperienza':
-                $esperienza = $this->modello->getEsperienzaDaId($_GET['id']);
+                $id = $_GET['id'] ?? -1;
+                $esperienza = $this->modello->getEsperienzaDaId($id);
+                if($esperienza == null){
+                    header('Location: View/valutazioni/mostraValutazioni.php?errore=3');
+                    exit();
+                }
                 $schedeDiValutazione = array();
                 switch($_SESSION['tipo_utente']){
                     case 'studente':
