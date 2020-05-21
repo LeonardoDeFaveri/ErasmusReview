@@ -335,9 +335,18 @@ class Controller {
             break;
 
             case 'compila-scheda':
-                $modelloSchedaDiValutaziuone = $this->modello->getModelloDaTipi($_SESSION['tipo_utente'], $_GET['tipo_recensito']);
-                $_SESSION['modello_scheda'] = serialize($modelloSchedaDiValutaziuone);
+                $tipoRecensito = $_GET['tipo_recensito'] ?? "";
+                $modello = $this->modello->getModelloDaTipi($_SESSION['tipo_utente'], $tipoRecensito);
+                if($modello == null){
+                    header('Location: View/valutazioni/compilaScheda.php?errore=3');
+                    exit();
+                }
+                $_SESSION['modello'] = serialize($modello);
                 header('Location: View/valutazioni/compilaScheda.php');
+                exit();
+            break;
+
+            case 'inserisci-scheda-compilata':
             break;
 
             // Case per la creazione di nuove istanze di soggetti o entità

@@ -10,7 +10,7 @@ class ModelloSchedaDiValutazione implements Serializable {
     private $tipoRecensito;
     private $aspetti;
 
-    public function _construct($id, $tipoRecensore, $tipoRecensito, $aspetti = array()) {
+    public function __construct($id, $tipoRecensore, $tipoRecensito, $aspetti = array()) {
         $this->id = $id;
         $this->tipoRecensore = $tipoRecensore;
         $this->tipoRecensito = $tipoRecensito;

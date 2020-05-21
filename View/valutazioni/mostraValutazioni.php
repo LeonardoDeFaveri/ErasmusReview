@@ -21,15 +21,20 @@ if(!isset($_SESSION['email_utente'])){
     return;
 }
 if(isset($_GET['errore'])){
-    if($_GET['errore'] == 1){
-        $html .=<<<testo
-            <h2>Il tuo tipo di account non è autorizzato ad accedere a questa pagina</h2>
-            <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
-        testo;
-        $html .= creaFooter();
-        echo $html;
-        return;
+    switch($_GET['errore']){
+        case 1:
+            $html .=<<<testo
+                <h2>Il tuo tipo di account non è autorizzato ad accedere a questa pagina</h2>
+                <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+            testo;
+        break;
+        case 3:
+            $html .= "<h2>La scheda di valutazione specificata non esiste</h2>";
+        break;
     }
+    $html .= creaFooter();
+    echo $html;
+    return;
 }
 
 $esperienza = unserialize($_SESSION['esperienza']);
@@ -62,9 +67,9 @@ $html .= "\t\t</div>\n" . creaBarraLaterale($esperienza);
 $html .=<<<testo
     </main>\n
 testo;
+
 $html .= creaFooter();
 echo $html;
-return;
 
 function creaScheda($scheda, $recensore, $recensito, $valutabile = false) {
     if($scheda == null){
@@ -141,5 +146,4 @@ function creaBarraLaterale($esperienza) {
     testo;
     return $html;
 }
-?>
 ?>
