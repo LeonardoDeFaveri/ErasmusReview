@@ -23,16 +23,26 @@ if(!isset($_SESSION['email_utente'])) {
 
 if(isset($_GET['errore'])){
     switch($_GET['errore']){
+        case 2:
+            $html .=<<<testo
+            <script>
+                alert("L'inserimento della scheda non è andato a buon fine");
+            </script>
+            testo;
+        break;
         case 3:
             $html .= "<h2>Il modello specificato non esiste</h2>";
+            $html .= creaFooter();
+            echo $html;
+            return;
         break;
         case 4:
             $html .= "<h2>Il tuo utente non può compilare schede di valutazione</h2>";
+            $html .= creaFooter();
+            echo $html;
+            return;
         break;
     }
-    $html .= creaFooter();
-    echo $html;
-    return;
 }
 
 $esperienza = unserialize($_SESSION['esperienza']);

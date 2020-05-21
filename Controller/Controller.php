@@ -407,7 +407,12 @@ class Controller {
                     date('Y-m-d h:m:s', time()),
                     $valutazioni
                 );
-                
+                if(!$this->modello->insertSchedaDiValutazione($scheda, $modello)){
+                   header('Location: View/valutazioni/compilaScheda.php?errore=2');
+                   exit(); 
+                }
+                header("Location: index.php?comando=mostra-valutazione-esperienza&id={$esperienza->getId()}");
+                exit();
             break;
 
             // Case per la creazione di nuove istanze di soggetti o entità

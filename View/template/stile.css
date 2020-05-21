@@ -307,6 +307,10 @@ th{
     text-align: center;
 }
 
+td{
+    background-color: var(--default-background-color);
+}
+
 #gestione-account{
     display: flex;
     flex-direction: row;

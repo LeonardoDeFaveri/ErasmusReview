@@ -1124,14 +1124,14 @@ class Modello {
         if($ris && $ris->num_rows == 1){
             $ris = $ris->fetch_assoc();
             $schedaDiValutazione = new SchedaDiValutazione(
-                $id,
+                $ris['id'],
                 $modello->getTipoRecensore(),
                 $idRecensore,
                 $modello->getTipoRecensito(),
                 $idRecensito,
                 $esperienza,
                 $ris['data_ora'],
-                $this->getValutazioniDaSchedaDiValutazione($id)
+                $this->getValutazioniDaSchedaDiValutazione($ris['id'])
             );
         }
         return $schedaDiValutazione;
@@ -1360,6 +1360,68 @@ class Modello {
         }
         return false;
     }
+    
+    /**
+     * insertSchedaDiValutazione inserisce una scheda di valutazione 
+     * compilata nel database.
+     *
+     * @param  SchedaDiValutazione $scheda scheda di valutazione da inserire
+     * @param  ModelloSchedaDiValutazione $modello modello di riferimento per la schedaa
+     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     */
+    public function insertSchedaDiValutazione($scheda, $modello) {
+        $query =<<<testo
+        INSERT INTO schede_di_valutazione (
+            id_modello, 
+            id_recensore, 
+            id_recensito, 
+            id_esperienza, 
+            data_ora
+        ) VALUES (
+            {$modello->getId()},
+            {$scheda->getIdRecensore()},
+            {$scheda->getIdRecensito()},
+            {$scheda->getEsperienza()->getId()},
+            '{$scheda->getDataOra()}'
+        );
+        testo;
+        $ris = $this->connessione->query($query);
+        if(!$ris){
+            return false;
+        }
+
+        $query =<<<testo
+        SELECT id FROM schede_di_valutazione 
+        WHERE id_modello = {$modello->getId()}
+            AND id_recensore = {$scheda->getIdRecensore()}
+            ANd id_recensito = {$scheda->getIdRecensito()}
+            AND id_esperienza = {$scheda->getEsperienza()->getId()}
+        testo;
+        $ris = $this->connessione->query($query);
+        if(!$ris || $ris->num_rows != 1){
+            return false;
+        }
+
+        $id = intval($ris->fetch_row()[0]);
+        $query =<<<testo
+        INSERT INTO valutazioni (
+            id_scheda_di_valutazione,
+            voto,
+            id_aspetto
+        ) VALUES
+        testo;
+        foreach ($scheda->getValutazioni() as $valutazione) {
+            $query .=<<<testo
+            (
+                {$id},
+                {$valutazione->getVoto()},
+                {$valutazione->getAspetto()}
+            ),
+            testo;
+        }
+        $query = substr($query, 0, strlen($query) - 1);
+        return $this->connessione->query($query);
+    }
 
     /**
      * insertUtenteScuola inserisce l'utente scuola nella tabella utenti del db
@@ -1368,7 +1430,17 @@ class Modello {
      * @return bool true se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertUtente($email,$password,$tipoUtente) {
-        $query ="INSERT INTO utenti (email,password,tipo_utente) VALUES (\"$email\",\"$password\",\"$tipoUtente\")";
+        $query =<<<testo
+        INSERT INTO utenti (
+            email,
+            password,
+            tipo_utente
+        ) VALUES (
+            "{$email}",
+            "{$password}",
+            "$tipoUtente"
+        )
+        testo;
         return $this->connessione->query($query);
     }    
     /**

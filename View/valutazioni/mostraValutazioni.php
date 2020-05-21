@@ -50,7 +50,7 @@ switch($_SESSION['tipo_utente']){
         $html .= creaScheda($schedeDiValutazione['studente_azienda'], 'studente', 'azienda', true);
         $html .= creaScheda($schedeDiValutazione['azienda_studente'], 'azienda', 'studente');
         if($esperienza->getAgenzia() != null){
-            $html .= creaScheda($schedeDiValutazione['studente_agenzia'], 'studente', 'azienda', true);
+            $html .= creaScheda($schedeDiValutazione['studente_agenzia'], 'studente', 'agenzia', true);
             $html .= creaScheda($schedeDiValutazione['studente_famiglia'], 'studente', 'famiglia', true);   
         }
     break;
@@ -104,7 +104,7 @@ function creaScheda($scheda, $recensore, $recensito, $valutabile = false) {
         foreach($scheda->getValutazioni() as $valutazione){
             $html .=<<<testo
                 <tr>
-                    <td>{$valutazione->getAspetto()}</td>
+                    <td>{$valutazione->getAspetto()->getNome()}</td>
                     <td>{$valutazione->getVoto()}</td>
                 </tr>
             testo;
