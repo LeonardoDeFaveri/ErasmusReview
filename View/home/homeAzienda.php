@@ -75,12 +75,12 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $azienda = $esperienza->getAzienda();
     $riquadro =<<<testo
         \t\t\t<div class="riquadro">
-            \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a><br>
+            \t\t\t<strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a></strong><br>
             \t\t\t{$studente->getEmail()}<br>
             \t\t\t<hr>
-            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
-            \t\t\t{$scuola->getNome()}<br>
-            \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$tutor->getId()}">{$tutor->getCognome()} {$tutor->getNome()}</a><br>\n
+            \t\t\t<strong>Dal: </strong>{$esperienza->getDal()} <strong>Al: </strong>{$esperienza->getAl()}<br>
+            \t\t\t<strong>Scuola: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-scuola&codice_meccanografico={$scuola->getId()}">{$scuola->getNome()}</a><br>
+            \t\t\t<strong>Docente: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$tutor->getId()}">{$tutor->getCognome()} {$tutor->getNome()}</a><br>\n
             \t\t\t<div class="contenitore-bottoni-riquadro">\n
     testo;
 

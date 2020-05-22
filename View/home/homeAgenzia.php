@@ -76,17 +76,17 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $studente = $esperienza->getStudente();
     $riquadro =<<<testo
         \t\t\t<div class="riquadro">
-            \t\t\t<b>Dati dello studente</b><br>
+            \t\t\t<strong>Dati dello studente</strong><br>
             \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a><br>
-            \t\t\t{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
-            \t\t\t{$scuola->getNome()}
+            \t\t\t<strong>Classe: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-classe&id={$classe->getId()}">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>
+            \t\t\t<strong>Scuola: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-scuola&codice_meccanografico={$scuola->getId()}">{$scuola->getNome()}</a>
             \t\t\t<hr>
-            \t\t\t<b>Dati dell'esperienza</b><br>
-            \t\t\t{$esperienza->getDal()} {$esperienza->getAl()}<br>
-            \t\t\t<a href="#">{$azienda->getNome()}</a><br>\n
+            \t\t\t<strong>Dati dell'esperienza</strong><br>
+            \t\t\t<strong>Dal: </strong>{$esperienza->getDal()} <strong>Al: </strong>{$esperienza->getAl()}<br>
+            \t\t\t<strong>Azienda: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-azienda&id={$azienda->getId()}">{$azienda->getNome()}</a><br>\n
     testo;
     if($famiglia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
+        $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
 

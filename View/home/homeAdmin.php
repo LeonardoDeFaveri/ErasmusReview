@@ -41,7 +41,7 @@ else{
     foreach($scuole as $elemento){  
         $html .=<<<testo
         <tr>
-            <td>{$elemento->getId()}</td>
+            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-scuola&codice_meccanografico={$elemento->getId()}">{$elemento->getId()}</a></td>
             <td>{$elemento->getNome()}</td>
             <td>{$elemento->getEmail()}</td>
             <td>{$elemento->getCitta()}</td>
