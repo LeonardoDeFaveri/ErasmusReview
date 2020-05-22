@@ -679,12 +679,45 @@ class Controller {
                 exit();
             break;
             case 'modifica-percorso':
-                $id = $_GET['id'] ?? -1;
-                $percorso = $this->modello->getPercorsoDaId($id);
-                if ($percorso == null){
-                    header('Location: View/modifica/modificaPercorso.php?errore=1');
+                if(isset($_POST['submit'])){
+                    $percorso = new Percorso(
+                        null,
+                        $_POST['id_docente'],
+                        $_POST['id_classe'],
+                        $_POST['dal'],
+                        $_POST['al']
+                    );
+                    if($this->modello->modificaPercorso($percorso)){
+                        header('Location: View/modifica/modificaPercorso.php?successo=true');
+                        exit();
+                    }
+                    header('Location: View/modifica/modificaPercorso.php?errore=2');
                     exit();
+                }else{
+                    $id = $_GET['id'] ?? -1;
+                    $percorso = $this->modello->getPercorsoDaId($id);
+                    
+                    if ($percorso == null){
+                        header('Location: View/modifica/modificaPercorso.php?errore=1');
+                        exit();
+                    }
+                    $_SESSION['percorso'] = serialize($percorso);
+                    if($_SESSION['tipo_utente'] == 'scuola'){
+                        $docenti = $this->modello->getDocentiDaScuola($scuola);
+                        $classi = $this->modello->getClassiDaScuola($scuola);
+                        $_SESSION['docenti'] = serialize($docenti);
+                        $_SESSION['classi'] = serialize($classi);
+                        header('Location: View/modifica/modificaPercorso.php');
+                        exit();
+                    }else{
+                        $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
+                        $classi = $this->modello->getClassiDaDocente($docente);
+                        $_SESSION['classi'] = serialize($classi);
+                        header('Location: View/modifica/modificaPercorso.php');
+                        exit();
+                    }
                 }
+                
             break;
             
             // Questo case viene invocato quando viene invocato l'index con un comando non gestito.

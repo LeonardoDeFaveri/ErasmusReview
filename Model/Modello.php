@@ -1247,6 +1247,19 @@ class Modello {
         return $this->connessione->query($query);
     }
 
+    public function modificaPercorso($percorso) {
+        $query =<<<testo
+            UPDATE percorsi 
+            SET 
+                id_docente = "{$percorso->getDocente()->getId()}",
+                id_classe = "{$percorso->getClasse()->getId()}",     
+                dal = "{$percorso->getDal()}",
+                al = "{$percorso->getAl()}",     
+            WHERE codice_meccanografico = "{$percorso->getId()}";
+        testo;
+        return $this->connessione->query($query);
+    }
+
     /**
      * insertAgenzia inserisce un'agenzia nel database.
      *
