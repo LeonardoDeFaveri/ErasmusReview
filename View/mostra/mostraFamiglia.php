@@ -31,7 +31,7 @@ if(isset($_GET['errore'])){
     echo $html;
     return;
 }
-$aspetti = userialize($_SESSION['valutazioni_medie']);
+$aspetti = unserialize($_SESSION['valutazioni_medie']);
 $famiglia = unserialize($_SESSION['famiglia']);
 $html .=<<<testo
     <div class="contenitore-centrato">
