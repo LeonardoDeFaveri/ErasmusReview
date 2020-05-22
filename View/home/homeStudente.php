@@ -89,7 +89,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
         $riquadro .= "\t\t\t\t\t<a href='#'>Agenzia {$agenzia->getNome()}</a><br>\n";
     }
     if($famiglia != null){
-        $riquadro .= "\t\t\t\t\t<a href='#'>Famiglia {$famiglia->getCognome()}</a>\n";
+        $riquadro .= "\t\t\t\t\t<a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>Famiglia {$famiglia->getCognome()}</a>\n";
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
 
