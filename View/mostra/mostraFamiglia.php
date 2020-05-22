@@ -38,10 +38,10 @@ $html .=<<<testo
         <div class="riquadro">
             <b>Dati della famiglia</b><br>
             <hr>
-            <strong>Cognome</strong> : {$famiglia->getCognome()}<br>
-            <strong>Nome</strong> : {$famiglia->getNome()}<br> 
-            <strong>Citta</strong> : {$famiglia->getCitta()}<br>
-            <strong>Indirizzo</strong> : {$famiglia->getIndirizzo()}<br>        
+            <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
+            <strong>Nome: </strong>{$famiglia->getNome()}<br> 
+            <strong>Citta: </strong>{$famiglia->getCitta()}<br>
+            <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
     testo;
     foreach($aspetti as $aspetto){
         $html.=<<<testo
