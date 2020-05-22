@@ -1447,7 +1447,7 @@ class Modello {
      * insertClasse inserisce una nuova classe nel database
      * 
      * @param  Classe $classe classe da inserire
-     * @return bool true se l'inserimento è andato a buon fine, altrimenti false
+     * @return mixed l'id della classe se l'inserimento è andato a buon fine, altrimenti false
      */
     public function insertClasse($classe){
         $query =<<<testo
