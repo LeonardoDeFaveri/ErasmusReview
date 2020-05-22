@@ -141,23 +141,27 @@ INSERT INTO esperienze (id_studente, id_azienda, id_percorso, id_agenzia, id_fam
 DELETE FROM modelli;
 INSERT INTO modelli (id, tipo_recensore, tipo_recensito) 
 VALUES
-	(1, 'studente', 'azienda'),
-	(2, 'azienda', 'studente'),
-	(3, 'studente', 'agenzia'),
-	(4, 'studente', 'famiglia');
+	(1, 'Studente', 'Azienda'),
+	(2, 'Azienda', 'Studente'),
+	(3, 'Studente', 'Agenzia'),
+	(4, 'Studente', 'Famiglia');
 	
 DELETE FROM aspetti;
 INSERT INTO aspetti (id, nome) 
 VALUES 
-	(1, 'Disponibilita del personale'),
+	(1, 'Disponibilit&agrave; del personale'),
 	(2, 'Spiegazione del lavoro che deve essere svolto'),
-	(3, 'Tempo di inattivita'),
+	(3, 'Tempo di inattivit&agrave;'),
 	(4, "Chiarezza nell'assegnazione delle mansioni"),
 	(5, 'Educazione'),
 	(6, 'Preparazione'),
-	(7, 'Puntualità a lavoro'),
-	(8, 'Esegue bene il lavoro che gli è stato assegnato'),
-	(9, 'Rispetto verso il personale');
+	(7, 'Puntualit&agrave; a lavoro'),
+	(8, 'Esegue bene il lavoro che gli &egrave; stato assegnato'),
+	(9, 'Rispetto verso il personale'),
+	(10, 'Disponibilit&agrave; dello studente'),
+	(11,'Tempismo delle pratiche'),
+	(12,'Accoglienza della famiglia'),
+	(13,'Vicinanza al luogo di lavoro');
 
 DELETE FROM modelli_aspetti;
 INSERT INTO modelli_aspetti (id, id_modello, id_aspetto) 
@@ -170,6 +174,26 @@ VALUES
 	(6, 2, 6),
 	(7, 2, 7),
 	(8, 2, 8),
-	(9, 2, 9);
+	(9, 2, 9),
+	(10, 3, 10),
+	(11, 3, 11),
+	(12, 4, 12),
+	(13, 4, 13);
+
+-- DELETE FROM schede_di_valutazione;
+-- INSERT INTO schede_di_valutazione (id,id_modello,id_recensore,id_recensito,id_esperienza,data_ora)
+-- VALUES
+--	(1, 1, 4, 3, 5, '2020-05-22 11:13:00'),
+--	(2, 2, 3, 4, 2, '2020-05-22 11:13:00'),
+--	(3, 3, 1, 1, 3, '2020-05-22 11:13:00'),
+--	(4, 4, 2, 1, 4, '2020-05-22 11:13:00');
+
+-- DELETE FROM valutazioni;
+-- INSERT INTO valutazioni (id, id_scheda_di_valutazione, voto, id_aspetto, 
+-- VALUES
+-- 	(1, 1, 5, 1),
+--	(2, 1, 4, 2),
+--	(3, 1, 3, 3),
+--	(4, 1, 3, 4);
 
 COMMIT;

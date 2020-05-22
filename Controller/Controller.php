@@ -195,8 +195,8 @@ class Controller {
                     header('Location: View/mostra/mostraClasse.php?errore=3');
                     exit();    
                 }
-                $_SESSION["classe"] = serialize($classe);
-                $_SESSION["docenti"] = serialize($this->modello->getDocentiDaClasse($classe->getId()));
+                $_SESSION['classe'] = serialize($classe);
+                $_SESSION['docenti_classe'] = serialize($this->modello->getDocentiDaClasse($classe->getId()));
                 header('Location: View/mostra/mostraClasse.php');
                 exit();
             break;
