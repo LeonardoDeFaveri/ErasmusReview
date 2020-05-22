@@ -140,6 +140,18 @@ class Controller {
                 header('Location: View/mostra/mostraAgenzia.php');
                 exit();
             break;
+            case 'mostra-scuola':
+                $codiceMeccanografico = $_GET['codice_meccanografico'] ?? -1;
+                $scuola = $this->modello->getScuolaDaCodice($codiceMeccanografico);
+                if ($scuola == null){
+                    header('Location: View/mostra/mostraPercorso.php?errore=3');
+                    exit();
+                }
+                $_SESSION['scuola'] = serialize($scuola);
+                header('Location: View/mostra/mostraScuola.php');
+                exit();
+                
+            break;
             case 'mostra-azienda':
                 $id = $_GET['id'] ?? -1;
                 $azienda = $this->modello->getAziendaDaId($id);
