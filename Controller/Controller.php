@@ -181,7 +181,10 @@ class Controller {
                     header('Location: View/mostra/mostraFamiglia.php?errore=3');
                     exit();
                 }
+                $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
                 $_SESSION['famiglia'] = serialize($famiglia);
+                $valutazioni = $this->modello->getValutazioniMedieDiFamiglia($modello, $famiglia);
+                $_SESSION['valutazioni_medie'] = serialize($valutazioni);
                 header('Location: View/mostra/mostraFamiglia.php');
                 exit();
             break;
