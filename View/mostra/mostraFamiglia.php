@@ -1,4 +1,5 @@
 <?php
+/*
     if(session_id() == ''){
     session_start();
     $_SESSION['root'] = __DIR__ . "/../..";
@@ -69,4 +70,5 @@ $html .=<<<testo
     testo;
 $html .= creaFooter();
 echo $html;
+ */
 ?>
