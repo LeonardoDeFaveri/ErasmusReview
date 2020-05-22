@@ -33,7 +33,7 @@ if(isset($_GET['errore'])){
 }
 
 $classe = unserialize($_SESSION['classe']);
-$docenti = unserialize($_SESSION['docenti']);
+$docenti = unserialize($_SESSION['docenti_classe']);
 
 $html.=<<<testo
     <h2>Classe {$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoscolastico()}</h2>

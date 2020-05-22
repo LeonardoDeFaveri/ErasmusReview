@@ -1162,6 +1162,36 @@ class Modello {
         return $valutazioni;
     }
 
+    public function getValutazioniMedieDiFamiglia($modello, $famiglia) {
+        $query =<<<testo
+        SELECT id, id_aspetto, AVG(voto) FROM (
+            SELECT V.id, A.id AS id_aspetto, V.voto FROM valutazioni V
+                INNER JOIN schede_di_valutazioni S
+                ON V.id_scheda_di_valutazione = S.id
+                INNER JOIN modelli M
+                ON S.id_modello = M.id
+                INNER JOIN aspetti A
+                ON V.id_aspetto = A.id
+            WHERE M.id = {$modello->getId()}
+                AND S.id_recensito = {$famiglia->getId()}
+        )
+        GROUP BY id_aspetto
+        testo;
+        $ris = $this->connessione->query($query);
+        $valutazioniMedie = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $valutazione) {
+                $valutazioniMedie[] = new Valutazione(
+                    $valutazione['id'],
+                    $valutazione['voto'],
+                    $this->getAspettoDaId($valutazione['id_aspetto'])
+                );
+            }
+        }
+        return $valutazioniMedie;
+    }
+
     /**
      * verificaCredenziali verifica che la coppia email e password sia valida.
      *
