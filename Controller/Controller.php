@@ -490,8 +490,6 @@ class Controller {
                 }
                 if($_SESSION['tipo_utente'] == 'docente'){
                     $docente = $this->modello->getDocenteDaEmail($_SESSION['email_utente']);
-                    //$classiDocente = serialize($this->modello->getClassiDaDocente($docente));
-                    //$_SESSION['docente'] = serialize($docente);
                     $_SESSION['studenti'] = serialize($this->modello->getStudentiDaDocente($docente->getId()));
                     $_SESSION['aziende'] = serialize($this->modello->getAziende());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzie());
