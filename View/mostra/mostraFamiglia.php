@@ -1,6 +1,5 @@
 <?php
-/*
-    if(session_id() == ''){
+if(session_id() == ''){
     session_start();
     $_SESSION['root'] = __DIR__ . "/../..";
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
@@ -70,5 +69,4 @@ $html .=<<<testo
     testo;
 $html .= creaFooter();
 echo $html;
- */
 ?>
