@@ -7,6 +7,7 @@
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
 include_once "{$_SESSION['root']}/Model/Classe.php";
+include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Famiglia");
@@ -42,14 +43,30 @@ $html .=<<<testo
             <strong>Nome: </strong>{$famiglia->getNome()}<br> 
             <strong>Citta: </strong>{$famiglia->getCitta()}<br>
             <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspetto</th>
+                        <th>Voto medio</th>
+                    </tr>
+                </thead>
+                <tbody>
     testo;
     foreach($aspetti as $aspetto){
         $html.=<<<testo
-            {$aspetto->getAspetto()} : {$aspetto->getVoto()}
+            <tr>
+                <td>{$aspetto->getAspetto()->getNome()}</td>
+                <td>{$aspetto->getVoto()}</td>
+            </tr>
+        testo;
+    }
+    $html .=<<<testo
+                </tbody>
+            </table>
         </div>
     </div>
     testo;
-    }
 $html .= creaFooter();
 echo $html;
 ?>
