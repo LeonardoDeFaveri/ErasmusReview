@@ -50,38 +50,11 @@ body{
     height: 90px;
 }
 
-#ricerca{
+#tipo-utente{
     display: flex;
     align-items: center;
     padding: var(--default-padding);
     width: fit-content;
-}
-
-#ricerca input[type="text"]{
-    font-size: medium;
-    padding: 0px;
-    padding-left: var(--default-padding);
-    padding-right: var(--default-padding);
-}
-
-#ricerca form button[type="submit"]{
-    background-color: var(--default-elements-background-color);
-    cursor: pointer;
-    font-size: large;
-    padding: var(--default-padding);
-}
-
-#ricerca input[type="text"], #ricerca form button[type="submit"]{
-    vertical-align: middle;
-    margin: 0px;
-    border: var(--default-border);
-    border-radius: var(--default-border-radius);
-    height: 40px;
-}
-
-#icona-ricerca{
-    vertical-align: middle;
-    font-size: 30px;
 }
 
 #utente{
@@ -92,9 +65,8 @@ body{
     width: fit-content;
 }
 
-#utente p{
+#utente h3{
     font-style: italic;
-    font-weight: bold;
 }
 
 #icona-utente{

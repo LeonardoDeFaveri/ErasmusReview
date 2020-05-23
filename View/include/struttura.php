@@ -49,8 +49,8 @@ function creaSezioneTipoUtente($tipoUtente) {
     $html = "";
     if($tipoUtente != ""){
         $html =<<<testo
-            <div id="ricerca">
-                <h4><b>{$tipoUtente}:</b></h4>
+            <div id="tipo-utente">
+                <h3><b>Utente di tipo {$tipoUtente}</b></h3>
             </div>
         testo;
     }
@@ -62,7 +62,7 @@ function creaSezioneUtente($email) {
     if(isset($email)){
         //Aggiunge l'evento onClick per visulizzare le opzioni per l'utente (esci e gestione)
         $html .=<<<testo
-            \t\t<p>{$email}</p>
+            \t\t<h3>{$email}</h3>
             \t\t<i id="icona-utente" class="material-icons" onClick="mostraMenuUtente()">account_circle</i>\n
         testo;
     }else{
