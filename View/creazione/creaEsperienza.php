@@ -41,7 +41,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
         <div>
             <h2>Crea Esperienza</h2>
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza">
-                    <fieldset>
+                    <fieldset class="form-con-colonne">
                         <legend>Creazione Esperienza</legend>
                         <div class="dati">
                         <div class="riga">

@@ -26,6 +26,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     }
 }
 $html.=<<<testo
+    <h2>Creazione di una scuola</h2>
     <div>
         <form action="{$_SESSION['web_root']}/index.php?comando=crea-scuola" method="POST">
             <fieldset class="form-con-colonne">

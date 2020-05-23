@@ -197,7 +197,6 @@ details summary{
     margin: var(--default-margin);
     text-align: left;
     width: 300px;
-    
 }
 
 .riquadro a{
@@ -217,11 +216,8 @@ button{
 .contenitore-bottoni-riquadro{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    justify-content: right;
+    width: fit-content;
 }
 
 .pagina-con-barra-laterale{
@@ -298,10 +294,6 @@ td{
 
 .form-con-colonne{
     width: fit-content;
-}
-
-.form-con-colonne form{
-    text-align: left;
 }
 
 .dati{
