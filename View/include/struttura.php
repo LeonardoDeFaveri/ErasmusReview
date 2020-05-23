@@ -21,18 +21,18 @@ function creaHeader($nomePagina) {
     <body>
         <div id="barra-superiore">
             <header id="header-principale">
-                <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a></h1>
+                <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a> - <small>{$nomePagina}</small></h1>
             </header>\n
     testo;
     return $html;
 }
 
-function creaBarraMenu($emailUtente) {
-    $ricerca = creaSezioneRicerca();
+function creaBarraMenu($emailUtente, $tipoUtente) {
+    $tipoUtente = creaSezioneTipoUtente($tipoUtente);
     $utente = creaSezioneUtente($emailUtente);
     $html =<<<testo
             <div id="barra-menu">
-        {$ricerca}
+        {$tipoUtente}
         {$utente}    
             </div>
         </div>
@@ -45,15 +45,15 @@ function creaBarraMenu($emailUtente) {
     return $html;
 }
 
-function creaSezioneRicerca() {
-    $html = <<<testo
+function creaSezioneTipoUtente($tipoUtente) {
+    $html = "";
+    if($tipoUtente != ""){
+        $html =<<<testo
             <div id="ricerca">
-                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cerca">
-                    <input type="text" placeholder="Cerca.." name="cerca">
-                    <button type="submit"><i id="icona-ricerca" class="material-icons">search</i></button>
-                </form>
+                <h4><b>{$tipoUtente}:</b></h4>
             </div>
-    testo;
+        testo;
+    }
     return $html;
 }
 

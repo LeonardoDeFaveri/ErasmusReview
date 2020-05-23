@@ -14,15 +14,14 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Home Studente");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['studente'])){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come studente per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $studente = unserialize($_SESSION['studente']);
-    $html .= creaBarraMenu($studente->getEmail());
 
     if(isset($_SESSION['esperienze'])){
         $esperienze = unserialize($_SESSION['esperienze']);
@@ -91,7 +90,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
-    $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+    $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>  \n";
 
     if($daValutare){
         $riquadro .=<<<testo

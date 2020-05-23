@@ -36,13 +36,15 @@ $aspetti = unserialize($_SESSION['valutazioni_medie']);
 $famiglia = unserialize($_SESSION['famiglia']);
 $html .=<<<testo
     <div class="contenitore-centrato">
-        <div class="riquadro">
-            <b>Dati della famiglia</b><br>
-            <hr>
-            <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
-            <strong>Nome: </strong>{$famiglia->getNome()}<br> 
-            <strong>Citta: </strong>{$famiglia->getCitta()}<br>
-            <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
+        <div>
+            <div class="riquadro">
+                <b>Dati della famiglia</b><br>
+                <hr>
+                <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
+                <strong>Nome: </strong>{$famiglia->getNome()}<br> 
+                <strong>Citta: </strong>{$famiglia->getCitta()}<br>
+                <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
+            </div>
             <hr>
             <table>
                 <thead>
