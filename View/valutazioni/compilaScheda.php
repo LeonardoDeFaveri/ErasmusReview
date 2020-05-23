@@ -10,7 +10,7 @@ include_once "{$_SESSION['root']}/Model/ModelloSchedaDiValutazione.php";
 include_once "{$_SESSION['root']}/Model/SchedaDiValutazione.php";
 
 $html = creaHeader("Compila scheda");
-$html .= creaBarraMenu($_SESSION['email_utente'] ?? "");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])) {
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso con un account per poter vedere questa pagina</h2>

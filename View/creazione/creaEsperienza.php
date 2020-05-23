@@ -17,8 +17,8 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 
 $html = creaHeader("Creazione Esperienza");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente o scuola per poter visualizzare questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
@@ -32,7 +32,6 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
         testo;
         
     }
-    $html .= creaBarraMenu($_SESSION['email_utente']);
     $studenti = unserialize($_SESSION['studenti']);
     $aziende = unserialize($_SESSION['aziende']);
     $agenzie = unserialize($_SESSION['agenzie']);

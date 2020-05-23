@@ -9,16 +9,14 @@ include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 
 $html = creaHeader("Home Admin");
-
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['tipo_utente']) || $_SESSION['tipo_utente'] != 'admin'){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come admin per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }
-else{ 
-    $html .= creaBarraMenu($_SESSION["email_utente"]);  
+else{
     $scuole=unserialize($_SESSION["scuole"]);
 
     $html.=<<<testo

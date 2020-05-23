@@ -9,7 +9,7 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Tutti gli studenti");
-$html .= creaBarraMenu($_SESSION['email_utente']);
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 $studenti = unserialize($_SESSION['studenti']);
 
 $html .=<<<testo

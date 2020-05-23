@@ -11,7 +11,7 @@ include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Famiglia");
-$html .= creaBarraMenu($_SESSION['email_utente'] ?? "");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])) {
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso per poter vedere questa pagina</h2>

@@ -10,23 +10,20 @@ include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 
 $html = creaHeader("Aggiungi scuola");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     if($_GET['errore'] == 1 || !isset($_SESSION['email_utente'])){
-        $html .= creaBarraMenu("");
         $html .=<<<testo
             <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
             <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
         testo;
     }else{
-        $html .= creaBarraMenu($_SESSION["email_utente"]);
         $html .=<<<testo
         <script>
             alert("Errore nell'inserimento della scuola; controlla i dati e riprova");
         </script>
         testo;
     }
-}else{
-    $html .= creaBarraMenu($_SESSION["email_utente"]);
 }
 $html.=<<<testo
     <div>
