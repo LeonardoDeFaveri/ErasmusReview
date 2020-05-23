@@ -35,24 +35,26 @@ $aspetti = unserialize($_SESSION['valutazioni_medie']);
 $azienda = unserialize($_SESSION['azienda']);
 $html .=<<<testo
     <div class="contenitore-centrato">
-        <div class="riquadro">
-            <b>Dati dell' azienda</b><br>
-            <hr>
-            <strong>Nome: </strong>{$azienda->getNome()}<br>
-            <strong>Email: </strong>{$azienda->getEmail()}<br> 
-            <strong>Stato: </strong>{$azienda->getStato()}<br>
-            <strong>Citta: </strong>{$azienda->getCitta()}<br>
-            <strong>Indirizzo: </strong>{$azienda->getIndirizzo()}<br>
-            <strong>Telefono: </strong>{$azienda->getTelefono()}<br>
-            <hr>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Aspetto</th>
-                        <th>Voto medio</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div>
+            <div class="riquadro">
+                <b>Dati dell' azienda</b><br>
+                <hr>
+                <strong>Nome: </strong>{$azienda->getNome()}<br>
+                <strong>Email: </strong>{$azienda->getEmail()}<br> 
+                <strong>Stato: </strong>{$azienda->getStato()}<br>
+                <strong>Citta: </strong>{$azienda->getCitta()}<br>
+                <strong>Indirizzo: </strong>{$azienda->getIndirizzo()}<br>
+                <strong>Telefono: </strong>{$azienda->getTelefono()}<br>
+                </div>
+                <hr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspetto</th>
+                            <th>Voto medio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
     testo;
     foreach($aspetti as $aspetto){
         $html.=<<<testo
