@@ -55,6 +55,11 @@ function controllaEsperienza() {
 		return false;
 	}
 
+	if(dal == "" && al != "" || dal != "" && al == ""){
+		alert("Devi specificare sia la data di inizio che di fine, oppure nessuna");
+		return false;
+	}
+
 	if(dal != "" && al != "" && dal >= al) {
 		alert("L'intervallo temporale specificato è sbagliato");
 		return false;

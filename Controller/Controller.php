@@ -484,7 +484,14 @@ class Controller {
                     exit();
                 }
                 if(isset($_POST['submit'])){
-                    $esperienza = null;
+                    $dal = $_POST['dataDal'];
+                    $al = $_POST['dataAl'];
+                    // Se dal e al non sono stati settati utilizza le stesse date del percorso
+                    if($dal == "" && al == ""){
+                        $percorso =  $this->modello->getPercorsoDaId($_POST['id_percorso']);
+                        $dal = $percorso->getDal();
+                        $al = $percorso->getAl();
+                    }
                     $esperienza = new Esperienza(
                         null,
                         $_POST['id_studente'],
@@ -492,8 +499,8 @@ class Controller {
                         $_POST['id_azienda'],
                         $_POST['id_agenzia'],
                         $_POST['id_famiglia'],
-                        $_POST['dataDal'],
-                        $_POST['dataAl'],
+                        $dal,
+                        $al
                     );
                     if($this->modello->insertEsperienza($esperienza)){
                         header('Location: index.php');
