@@ -28,12 +28,12 @@ function creaHeader($nomePagina) {
 }
 
 function creaBarraMenu($emailUtente, $tipoUtente) {
-    $tipoUtente = creaSezioneTipoUtente($tipoUtente);
+    $tipoUtente = creaSezioneTipoUtente(strtolower($tipoUtente));
     $utente = creaSezioneUtente($emailUtente);
     $html =<<<testo
             <div id="barra-menu">
-        {$tipoUtente}
-        {$utente}    
+                {$tipoUtente}
+                {$utente}    
             </div>
         </div>
         <div id="menu-utente">
@@ -78,7 +78,6 @@ function creaFooter() {
         </main>
         <footer>
             <address>Progetto: Erasmus Review</address>
-            <address>Scuola: IIS Vittorio Veneto</address>
         </footer>
     </body>
     </html>

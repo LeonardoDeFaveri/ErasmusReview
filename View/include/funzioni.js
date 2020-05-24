@@ -37,4 +37,28 @@ function controlloEmail() {
 	}
 	alert ("Le email non corrispondono");
 	return false;
-} 
+}
+
+function controllaEsperienza() {
+	agenzia = document.getElementById("id_agenzia").value;
+	famiglia = document.getElementById("id_famiglia").value;
+	dal = document.getElementById("dataDal").value;
+	al = document.getElementById("dataAl").value;
+
+	if(agenzia == "null" && famiglia != "null"){
+		alert("Se specifichi l'agenzia, la famiglia non può essere vuota");
+		return false;
+	}
+
+	if (famiglia == "null" && agenzia != "null") {
+		alert("Se specifichi la famiglia, l'agenzia non può essere vuota");
+		return false;
+	}
+
+	if(dal != "" && al != "" && dal >= al) {
+		alert("L'intervallo temporale specificato è sbagliato");
+		return false;
+	}
+
+	return true;
+}

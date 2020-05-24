@@ -190,7 +190,6 @@ details summary{
 }
 
 .riquadro{
-    position: relative;
     background-color: var(--default-elements-background-color-2);
     border: var(--default-border);
     padding: var(--default-padding);
@@ -216,8 +215,13 @@ button{
 .contenitore-bottoni-riquadro{
     display: flex;
     flex-direction: row;
-    justify-content: right;
+    justify-items: right;
     width: fit-content;
+    position: relative;
+}
+
+.contenitore-bottoni-riquadro form{
+    float: right;
 }
 
 .pagina-con-barra-laterale{
@@ -331,4 +335,15 @@ td{
     background-color: var(--default-elements-background-color-2);
     margin: var(--default-margin);
     padding: var(--default-padding);
+}
+
+.suggerimento{
+    display: inline-block;
+    font-size: smaller;
+    text-align: center;
+    overflow-wrap: break-word;
+    padding: var(--default-padding);
+    border: var(--default-border);
+    margin: auto;
+    max-width: 500px;
 }
