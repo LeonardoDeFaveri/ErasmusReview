@@ -543,11 +543,12 @@ class Controller {
                         null
                     );
                     if($idClasse = $this->modello->insertClasse($classe)){
-                        if(isset($_POST['studenti'])){
+                        if(isset($_POST['id_studenti'])){
+                            $studenti = explode(',', $_POST['id_studenti']);
                             $dal = $_POST['as_inizio'];
                             $al = $_POST['as_fine'];
                             $erroreInserimento = false;
-                            foreach($_POST['studenti'] as $idStudente){
+                            foreach($studenti as $idStudente){
                                 if(!$this->modello->insertStudenteInClasse($idClasse, intval($idStudente), $dal, $al)){
                                     $erroreInserimento = true;
                                 }

@@ -15,8 +15,14 @@ function creaHeader($nomePagina) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{$_SESSION['web_root']}/View/template/stile.css" rel="stylesheet" type="text/css">
-        <script src="{$_SESSION['web_root']}/View/include/funzioni.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+        <script src="{$_SESSION['web_root']}/View/include/funzioni.js"></script>
     </head>
     <body>
         <div id="barra-superiore">

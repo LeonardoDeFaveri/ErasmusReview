@@ -93,9 +93,8 @@ a{
     cursor: pointer;
 }
 
-h1 a{
-    text-decoration: underline;
-    color: var(--default-color);
+a:hover{
+    text-decoration: none;
 }
 
 /*Regole per il contenuto della pagina*/
@@ -196,12 +195,6 @@ details summary{
     margin: var(--default-margin);
     text-align: left;
     width: 300px;
-}
-
-.riquadro a{
-    color: var(--default-color);
-    text-decoration: underline;
-    font-style: italic;
 }
 
 button{
@@ -323,12 +316,12 @@ td{
     width: 200px;
 }
 
-.lista-checkbox{
+/*.lista-checkbox{
     width: fit-content;
     display: flex;
     flex-direction: column;
     text-align: left;
-}
+}*/
 
 .scheda-di-valutazione{
     border: var(--default-border);
@@ -346,4 +339,13 @@ td{
     border: var(--default-border);
     margin: auto;
     max-width: 500px;
+}
+
+.contenitore-tabella{
+    width: 800px;
+    font-size: medium;
+}
+
+#tabella-studenti{
+    padding: 0px
 }

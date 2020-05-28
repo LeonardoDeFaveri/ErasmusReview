@@ -1501,6 +1501,7 @@ class Modello {
             "{$classe->getAnnoScolastico()}"
         )
         testo;
+
         $ris = $this->connessione->query($query);
         if($ris){
             $query=<<<testo

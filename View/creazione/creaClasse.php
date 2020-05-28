@@ -43,7 +43,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe" id="form-crea-classe" onSubmit="getDati(this)">
                     <fieldset class="form-con-colonne">
                         <legend>Creazione classe</legend>
                         <div class="dati">
@@ -63,13 +63,16 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                                 <label>Fine anno scolastico</label>
                                 <input type="date" name="as_fine" required>
                             </div>
+                            <div class="riga">
+                                <label></label>
+                                <input type="text" name="id_studenti" id="id_studenti" style="display:none;">
+                            </div>
                         </div>
                         <hr>
-                        <p>Assegna gli studenti alla classe</p>
-                        <div class="lista-checkbox">  
+                        <p>Assegna gli studenti alla classe</p>\n
     testo;
     $studenti = unserialize($_SESSION['studenti']);
-    foreach($studenti as $studente){
+    /*foreach($studenti as $studente){
         $id = $studente->getId();
         $html .=<<<testo
             <label>
@@ -77,8 +80,36 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                 {$studente->getCognome()} {$studente->getNome()}
             </label>
         testo;
-    }
+    }*/
     $html .=<<<testo
+                        <div class="contenitore-tabella">
+                            <table id="tabella-studenti">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Id</th>
+                                        <th>Cognome</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>\n
+    testo;
+
+    foreach ($studenti as $studente) {
+        $html .=<<<testo
+        <tr>
+            <td></td>
+            <td>{$studente->getId()}</td>
+            <td>{$studente->getCognome()}</td>
+            <td>{$studente->getNome()}</td>
+        </tr>\n
+        testo;
+    }
+
+    $html .=<<<testo
+                            
+                                </tbody>
+                            </table>
                         </div>
                         <input type="submit" name="submit" value="Crea classe">
                     </fieldset>
