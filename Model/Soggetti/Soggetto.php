@@ -1,5 +1,4 @@
 <?php
-
 abstract class Soggetto implements Serializable {
     protected $id;
     protected $nome;
