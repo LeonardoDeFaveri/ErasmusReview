@@ -19,7 +19,7 @@ $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente']
 if(isset($_GET['errore']) || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente o scuola per poter visualizzare questa pagina</h2>
-        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
 }else{
     $classi = unserialize($_SESSION['classi']);

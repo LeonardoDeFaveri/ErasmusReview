@@ -17,7 +17,7 @@ $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente']
 if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente per poter vedere questa pagina</h2>
-        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
 }else{
     
@@ -87,7 +87,11 @@ function creaRiquadro($esperienza, $erasmus = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
+<<<<<<< HEAD
     $riquadro .= "</div>";
+=======
+    $riquadro .= "</div>\n";
+>>>>>>> a0698592d98f8997a292e2f7c2ff76b578f07ced
     return $riquadro;
 }
 ?>

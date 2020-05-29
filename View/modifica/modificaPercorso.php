@@ -11,11 +11,11 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 
 $html = creaHeader("Modifica Percorso");
 if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
-    $html .= creaBarraMenu("");
+    $html .= creaBarraMenu("","");
     if($_GET["errore"] == 1 || !isset($_SESSION['email_utente'])){
         $html .=<<<testo
             <h2>Devi aver eseguito l'accesso come scuola o docente per poter vedere questa pagina</h2>
-            <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+            <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
         testo;
     }else if($_GET["errore"] == 2){
         $html .=<<<testo
@@ -36,7 +36,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     $classi = unserialize($_SESSION['classi']);
     $html .= creaBarraMenu($_SESSION["email_utente"], $_SESSION["tipo_utente"]);
     $html.=<<<testo
-        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso" method="POST">
+        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
             <fieldset class="form-con-colonne">
                 <legend>Modifica Percorso</legend>
                 <div class="dati">
