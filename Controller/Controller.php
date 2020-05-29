@@ -191,11 +191,17 @@ class Controller {
             case 'mostra-percorso':
                 $id = $_GET['id'] ?? -1;
                 $percorso = $this->modello->getPercorsoDaId($id);
+                $esperienze=$this->modello->getEsperienzeDaPercorso($id);
                 if ($percorso == null){
                     header('Location: View/mostra/mostraPercorso.php?errore=3');
                     exit();
                 }
+                if ($esperienze == null){
+                    header('Location: View/mostra/mostraPercorso.php?errore=3');
+                    exit();
+                }
                 $_SESSION['percorso'] = serialize($percorso);
+                $_SESSION['esperienze']=serialize($esperienze);
                 header('Location: View/mostra/mostraPercorso.php');
                 exit();
             break;
