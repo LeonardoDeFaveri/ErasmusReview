@@ -138,20 +138,12 @@ function creaRiquadroPercorso($percorso, $terminato = false) {
             \t\t\t<hr>
             \t\t\t<strong>Dal: </strong>{$percorso->getDal()} <strong>Al: </strong>{$percorso->getAl()}<br>
             <div class="contenitore-bottoni-riquadro">\n
+    testo;   
+    $html .=<<<testo
+        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
+            <button type="submit">Modifica</button>
+        </form>\n
     testo;
-    if($terminato){
-        $html .=<<<testo
-            <form action="{$_SESSION['web_root']}/index.php?comando=valutazione-percorso&id={$percorso->getId()}" method="POST">
-                <button type="submit">Valutazione</button>
-            </form>\n
-        testo;
-    }else{
-        $html .=<<<testo
-            <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
-                <button type="submit">Modifica</button>
-            </form>\n
-        testo;
-    }
     $html .=<<<testo
                 <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
                     <button type="submit">Mostra info</button>
