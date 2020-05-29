@@ -52,10 +52,10 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         foreach ($esperienze as $esperienza){
             if($esperienza->getFamiglia()!=null){
                 if($esperienza->getAgenzia()!=null){
-                    creaRiquadro($esperienza,true);
+                    $html.=creaRiquadro($esperienza,true);
                 }
             }
-            creaRiquadro($esperienza);
+            $html.=creaRiquadro($esperienza);
         }
     }
 }
@@ -85,5 +85,6 @@ function creaRiquadro($esperienza, $erasmus = false) {
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+    return $riquadro;
 }
 ?>
