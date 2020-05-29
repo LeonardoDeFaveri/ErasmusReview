@@ -136,7 +136,10 @@ class Controller {
                     header('Location: View/mostra/mostraAgenzia.php?errore=3');
                     exit();
                 }
+                $modello = $this->modello->getModelloDaTipi('studente', 'agenzia');
+                $valutazioni = $this->modello->getValutazioniMedieDiAzienda($modello, $agenzia);
                 $_SESSION['agenzia'] = serialize($agenzia);
+                $_SESSION['valutazioni_medie_agenzia'] = serialize($valutazioni);
                 header('Location: View/mostra/mostraAgenzia.php');
                 exit();
             break;
