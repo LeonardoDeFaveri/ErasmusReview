@@ -1314,12 +1314,7 @@ class Modello {
 
     public function getEsperienzeDaPercorso($id){
         $query=<<<testo
-            SELECT
-                id
-            FROM
-                esperienze
-            WHERE
-                id_percorso = {$id}
+            SELECT id FROM esperienze WHERE id_percorso = {$id}
         testo;
         $ris=$this->connessione->query($query);
         $esperienze=array();
