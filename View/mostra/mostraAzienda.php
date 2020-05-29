@@ -37,7 +37,7 @@ $html .=<<<testo
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
-                <b>Dati dell' azienda</b><br>
+                <strong>Dati dell' azienda</strong><br>
                 <hr>
                 <strong>Nome: </strong>{$azienda->getNome()}<br>
                 <strong>Email: </strong>{$azienda->getEmail()}<br> 

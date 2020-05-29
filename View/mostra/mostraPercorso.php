@@ -5,14 +5,12 @@ if(session_id() == ''){
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
     $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusReview";
 }
-include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
-include_once "{$_SESSION['root']}/Model/Classe.php";
-include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
+include_once "{$_SESSION['root']}/Model/Percorso.php";
 
-$html = creaHeader("Famiglia");
+$html = creaHeader("Percorso");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
-if(!isset($_SESSION['email_utente'])) {
+if(!isset($_SESSION['email_utente'])){
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
@@ -22,38 +20,38 @@ if(!isset($_SESSION['email_utente'])) {
     return;
 }
 
-if(isset($_GET['errore'])){
+if(isset($_GET['errore']) ){
     switch($_GET['errore']){
         case 3:
-            $html .= "<h2>La famiglia selezionata non esiste</h2>";
+            $html .= "<h2>Il percorso selezionato non esiste</h2>";
         break;
     }
     $html .= creaFooter();
     echo $html;
     return;
 }
-$aspetti = unserialize($_SESSION['valutazioni_medie']);
-$famiglia = unserialize($_SESSION['famiglia']);
+
+$percorso = unserialize($_SESSION['persorso']);
 $html .=<<<testo
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
-                <strong>Dati della famiglia</strong><br>
+                <strong>Dati del Percorso</strong><br>
                 <hr>
-                <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
-                <strong>Nome: </strong>{$famiglia->getNome()}<br> 
-                <strong>Citta: </strong>{$famiglia->getCitta()}<br>
-                <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
-            </div>
-            <hr>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Aspetto</th>
-                        <th>Voto medio</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <strong>Docente: </strong>{$percorso->getDocente()}<br>
+                <strong>Classe: </strong>{$percorso->getClasse()}<br> 
+                <strong>Dal: </strong>{$percorso->getDal()}<br>
+                <strong>Al: </strong>{$percorso->getAl()}<br>
+                </div>
+                <hr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspetto</th>
+                            <th>Voto medio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
     testo;
     foreach($aspetti as $aspetto){
         $html.=<<<testo
@@ -71,4 +69,6 @@ $html .=<<<testo
     testo;
 $html .= creaFooter();
 echo $html;
+
 ?>
+
