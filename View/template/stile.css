@@ -350,4 +350,5 @@ td{
 
 .logo{
     max-width: 60px;
+    margin: var(--default-margin)
 }
