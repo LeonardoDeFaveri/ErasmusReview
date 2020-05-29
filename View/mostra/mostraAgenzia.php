@@ -5,12 +5,12 @@ if(session_id() == ''){
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
     $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusReview";
 }
-include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
-include_once "{$_SESSION['root']}/Model/Classe.php";
+
+include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
 include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
-$html = creaHeader("Studente");
+$html = creaHeader("Agenzia");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])) {
     $html .=<<<testo
@@ -25,7 +25,7 @@ if(!isset($_SESSION['email_utente'])) {
 if(isset($_GET['errore']) ){
     switch($_GET['errore']){
         case 3:
-            $html .= "<h2>Lo studente selezionato non esiste</h2>";
+            $html .= "<h2>L'agenzia selezionata non esiste</h2>";
         break;
     }
     $html .= creaFooter();
@@ -33,35 +33,25 @@ if(isset($_GET['errore']) ){
     return;
 }
 
-$studente = unserialize($_SESSION['studente']);
-$classi = unserialize($_SESSION['classi_studente']);
-$valutazioni = unserialize($_SESSION['valutazioni_medie_studente']);
+$valutazioni = unserialize($_SESSION['valutazioni_medie_agenzia']);
+$agenzia = unserialize($_SESSION['agenzia']);
 $html .=<<<testo
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
-                <b>Dati dello Studente</b><br>
-                {$studente->getNome()} {$studente->getCognome()}<br>
-                {$studente->getEmail()}<br>
-                {$studente->getDataNascita()}
-                <hr>
-                <b>Classi dello studente</b>
-                <ul>\n
-testo;
-
-foreach ($classi as $classe) {
-    $html .=<<<testo
-            <li>{$classe->getNumero()}{$classe->getSezione()} - {$classe->getAnnoScolastico()}</li>\n
-    testo;
-}
-
-$html .=<<<testo
-            </ul>
-        </div>
+                <b>Dati dell'agenzia</b><br>
+                <strong>Nome: </strong>{$agenzia->getNome()}<br>
+                <strong>Email: </strong>{$agenzia->getEmail()}<br>
+                <strong>Stato: </strong>{$agenzia->getStato()}<br>
+                <strong>Citt&agrave;: </strong>{$agenzia->getCitta()}<br>
+                <strong>Indirizzo: </strong>{$agenzia->getIndirizzo()}<br>
+                <strong>Telefono: </strong>{$agenzia->getTelefono()}<br>
+            </div>
+            <hr>
 testo;
 
 if(count($valutazioni) == 0){
-    $html .= "<h3>Questo studente non è ancora stato valutato</h3>\n";
+    $html .= "<h3>Questa agenzia non è ancora stata valutata</h3>\n";
 }else{
     $html .=<<<testo
             <table>
@@ -88,6 +78,11 @@ if(count($valutazioni) == 0){
     </div>
     testo;
 }
+
+$html .=<<<testo
+        </div>
+    </div>
+testo;
 
 $html .= creaFooter();
 echo $html;

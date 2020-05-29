@@ -1192,6 +1192,96 @@ class Modello {
         return $valutazioni;
     }
 
+    /**
+     * getValutazioniMedieDiAgenzia estrae dal database le valutazioni
+     * medie di un'agenzia.
+     *
+     * @param  ModelloSchedaDiValutazione $modello modello associato alle
+     *                  schede di valutazione per le agenzia.
+     * @param  Agenzia $agenzia agenzia per la quale estrarre le valutazioni
+     *                  medie
+     * @return Valutazione[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getValutazioniMedieDiAgenzia($modello, $agenzia) {
+        $query =<<<testo
+        SELECT id, id_aspetto, AVG(voto) AS voto_medio FROM (
+            SELECT V.id, A.id AS id_aspetto, V.voto FROM valutazioni V
+                INNER JOIN schede_di_valutazione S
+                ON V.id_scheda_di_valutazione = S.id
+                INNER JOIN modelli M
+                ON S.id_modello = M.id
+                INNER JOIN aspetti A
+                ON V.id_aspetto = A.id
+            WHERE M.id = {$modello->getId()}
+                AND S.id_recensito = {$agenzia->getId()}
+        ) AS valutazioni_aspetti
+        GROUP BY id_aspetto
+        testo;
+        $ris = $this->connessione->query($query);
+        $valutazioniMedie = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $valutazione) {
+                $valutazioniMedie[] = new Valutazione(
+                    $valutazione['id'],
+                    $valutazione['voto_medio'],
+                    $this->getAspettoDaId($valutazione['id_aspetto'])
+                );
+            }
+        }
+        return $valutazioniMedie;
+    }
+    
+    /**
+     * getValutazioniMedieDiAzienda estrae dal database le valutazioni
+     * medie di un'azienda.
+     *
+     * @param  ModelloSchedaDiValutazione $modello modello associato alle
+     *                  schede di valutazione per le aziende.
+     * @param  Azienda $azienda azienda per la quale estrarre le valutazioni
+     *                  medie
+     * @return Valutazione[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getValutazioniMedieDiAzienda($modello, $azienda) {
+        $query =<<<testo
+        SELECT id, id_aspetto, AVG(voto) AS voto_medio FROM (
+            SELECT V.id, A.id AS id_aspetto, V.voto FROM valutazioni V
+                INNER JOIN schede_di_valutazione S
+                ON V.id_scheda_di_valutazione = S.id
+                INNER JOIN modelli M
+                ON S.id_modello = M.id
+                INNER JOIN aspetti A
+                ON V.id_aspetto = A.id
+            WHERE M.id = {$modello->getId()}
+                AND S.id_recensito = {$azienda->getId()}
+        ) AS valutazioni_aspetti
+        GROUP BY id_aspetto
+        testo;
+        $ris = $this->connessione->query($query);
+        $valutazioniMedie = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $valutazione) {
+                $valutazioniMedie[] = new Valutazione(
+                    $valutazione['id'],
+                    $valutazione['voto_medio'],
+                    $this->getAspettoDaId($valutazione['id_aspetto'])
+                );
+            }
+        }
+        return $valutazioniMedie;
+    }
+    
+    /**
+     * getValutazioniMedieDiFamiglia estrae dal database le valutazioni
+     * medie di una famigia.
+     *
+     * @param  ModelloSchedaDiValutazione $modello modello associato alle
+     *                  schede di valutazione per le famiglie.
+     * @param  Famiglia $famiglia famiglia per la quale estrarre le valutazioni
+     *                  medie
+     * @return Valutazione[] se ne sono state trovate, altrimenti un array vuoto
+     */
     public function getValutazioniMedieDiFamiglia($modello, $famiglia) {
         $query =<<<testo
         SELECT id, id_aspetto, AVG(voto) AS voto_medio FROM (
@@ -1204,6 +1294,63 @@ class Modello {
                 ON V.id_aspetto = A.id
             WHERE M.id = {$modello->getId()}
                 AND S.id_recensito = {$famiglia->getId()}
+        ) AS valutazioni_aspetti
+        GROUP BY id_aspetto
+        testo;
+        $ris = $this->connessione->query($query);
+        $valutazioniMedie = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $valutazione) {
+                $valutazioniMedie[] = new Valutazione(
+                    $valutazione['id'],
+                    $valutazione['voto_medio'],
+                    $this->getAspettoDaId($valutazione['id_aspetto'])
+                );
+            }
+        }
+        return $valutazioniMedie;
+    }
+
+    public function getEsperienzeDaPercorso($id){
+        $query=<<<testo
+            SELECT
+                id
+            FROM
+                esperienze
+            WHERE
+                id_percorso = {$id}
+        testo;
+        $ris->connessione->query($query);
+        $esperienze=array();
+        while(($riga=$ris->fetch_row())!=null){
+            $esperienze[]=$this->getEsperienzaDaId($riga[0]);
+        }
+        return $esperienza;
+    }    
+
+    /**
+     * getValutazioniMedieDiStudenti estrae dal database le valutazioni
+     * medie di uno studente.
+     *
+     * @param  ModelloSchedaDiValutazione $modello modello associato alle
+     *                  schede di valutazione per gli studenti.
+     * @param  Studente $studente studente per la quale estrarre le valutazioni
+     *                  medie
+     * @return Valutazione[] se ne sono state trovate, altrimenti un array vuoto
+     */
+    public function getValutazioniMedieDiStudente($modello, $studente) {
+        $query =<<<testo
+        SELECT id, id_aspetto, AVG(voto) AS voto_medio FROM (
+            SELECT V.id, A.id AS id_aspetto, V.voto FROM valutazioni V
+                INNER JOIN schede_di_valutazione S
+                ON V.id_scheda_di_valutazione = S.id
+                INNER JOIN modelli M
+                ON S.id_modello = M.id
+                INNER JOIN aspetti A
+                ON V.id_aspetto = A.id
+            WHERE M.id = {$modello->getId()}
+                AND S.id_recensito = {$studente->getId()}
         ) AS valutazioni_aspetti
         GROUP BY id_aspetto
         testo;

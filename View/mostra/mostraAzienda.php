@@ -7,6 +7,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
+include_once "{$_SESSION['root']}/Model/Valutazione.php";
 
 $html = creaHeader("Azienda");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
@@ -31,9 +32,10 @@ if(isset($_GET['errore']) ){
     return;
 }
 
-$aspetti = unserialize($_SESSION['valutazioni_medie']);
+$valutazioni = unserialize($_SESSION['valutazioni_medie_azienda']);
 $azienda = unserialize($_SESSION['azienda']);
 $html .=<<<testo
+    <h2>Dati dell'azienda</h2>
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
@@ -45,22 +47,28 @@ $html .=<<<testo
                 <strong>Citta: </strong>{$azienda->getCitta()}<br>
                 <strong>Indirizzo: </strong>{$azienda->getIndirizzo()}<br>
                 <strong>Telefono: </strong>{$azienda->getTelefono()}<br>
-                </div>
-                <hr>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Aspetto</th>
-                            <th>Voto medio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            </div>
+            <hr>
+testo;
+
+if(count($valutazioni) == 0){
+    $html .= "<h3>Questa azienda non è ancora stata valutata</h3>\n";
+}else{
+    $html .=<<<testo
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspetto</th>
+                        <th>Voto medio</th>
+                    </tr>
+                </thead>
+                <tbody>
     testo;
-    foreach($aspetti as $aspetto){
+    foreach($valutazioni as $valutazione){
         $html.=<<<testo
             <tr>
-                <td>{$aspetto->getAspetto()->getNome()}</td>
-                <td>{$aspetto->getVoto()}</td>
+                <td>{$valutazione->getAspetto()->getNome()}</td>
+                <td>{$valutazione->getVoto()}</td>
             </tr>
         testo;
     }
@@ -70,6 +78,7 @@ $html .=<<<testo
         </div>
     </div>
     testo;
+}
 $html .= creaFooter();
 echo $html;
 ?>
