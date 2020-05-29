@@ -16,6 +16,7 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/Model/SchedaDiValutazione.php";
 include_once "{$_SESSION['root']}/Model/ModelloSchedaDiValutazione.php";
+include_once "{$_SESSION['root']}/Model/Utili/ContenitoreSoggettoDate.php";
 
 class Modello {
     private $connessione;
@@ -227,6 +228,40 @@ class Modello {
         }
         return $docente;
     }
+
+    /**
+     * getDocentiDaClasse estrae dal database tutti i docenti associati
+     * as una classe.
+     *
+     * @param  int $idClasse id della classe per la quale estrarre i docenti
+     * @return ContenitoreSoggettoDate[] contnente i docenti se ne sono stati trovati,
+     * altrimenti un array vuoto
+     */
+    public function getDocentiDaClasse($idClasse) {
+        $query=<<<testo
+        SELECT D.*, CD.dal, CD.al FROM docenti D
+            INNER JOIN classi_docenti CD 
+            ON D.id = CD.id_docente
+            INNER JOIN classi C
+            ON C.id = CD.id_classe
+        WHERE id_classe = {$idClasse}
+        testo;
+        $ris = $this->connessione->query($query);
+        $docenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $elemento){
+                $docente = new Docente(
+                    $elemento["id"],
+                    $elemento["nome"],
+                    $elemento["cognome"],
+                    $elemento["email_utente"]
+                );
+                $docenti[] = new ContenitoreSoggettoDate($docente, $elemento['dal'], $elemento['al']);
+            }
+        }
+        return $docenti;
+    }
     
     /**
      * getDocentiDaScuola estrae dal database tutti i docenti di una scuola.
@@ -381,6 +416,33 @@ class Modello {
                     $studente['email_utente'],
                     $studente['data_nascita']
                 );
+            }
+        }
+        return $studenti;
+    }
+
+    public function getContenitoreStudentiDaClasse($idClasse) {
+        $query =<<<testo
+        SELECT S.*, CS.dal, CS.al
+        FROM classi_studenti CS
+            INNER JOIN studenti S
+            ON CS.id_studente = S.id
+        WHERE CS.id_classe = {$idClasse}
+        ORDER BY S.cognome, S.nome;
+        testo;
+        $ris = $this->connessione->query($query);
+        $studenti = array();
+        if($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach ($ris as $studente) {
+                $soggetto = new Studente(
+                    $studente['id'],
+                    $studente['nome'],
+                    $studente['cognome'],
+                    $studente['email_utente'],
+                    $studente['data_nascita']
+                );
+                $studenti[] = new ContenitoreSoggettoDate($soggetto, $studente['dal'], $studente['al']);
             }
         }
         return $studenti;
@@ -934,38 +996,6 @@ class Modello {
             }
         }
         return $percorsi;
-    }  
-        
-    /**
-     * getDocentiDaClasse estrae dal database tutti i docenti associati
-     * as una classe.
-     *
-     * @param  int $idClasse id della classe per la quale estrarre i docenti
-     * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
-     */
-    public function getDocentiDaClasse($idClasse) {
-        $query=<<<testo
-        SELECT D.* FROM docenti D
-            INNER JOIN classi_docenti CD 
-            ON D.id = CD.id_docente
-            INNER JOIN classi C
-            ON C.id = CD.id_classe
-        WHERE id_classe = {$idClasse}
-        testo;
-        $ris = $this->connessione->query($query);
-        $docenti = array();
-        if($ris && $ris->num_rows > 0){
-            $ris = $ris->fetch_all(MYSQLI_ASSOC);
-            foreach($ris as $elemento){
-                $docenti[]=new Docente(
-                    $elemento["id"],
-                    $elemento["nome"],
-                    $elemento["cognome"],
-                    $elemento["email_utente"]
-                );
-            }
-        }
-        return $docenti;
     }
         
     /**
@@ -1501,6 +1531,7 @@ class Modello {
             "{$classe->getAnnoScolastico()}"
         )
         testo;
+
         $ris = $this->connessione->query($query);
         if($ris){
             $query=<<<testo
@@ -1526,12 +1557,39 @@ class Modello {
      * @param  string $al data in formato YYYY-MM-DD
      * @return bool true se lo studente è stato inserito altrimenti false
      */
-    public function insertStudenteInClasse($idClasse, $idStudente, $dal, $al){
+    public function insertStudenteInClasse($idClasse, $idStudente, $dal, $al) {
         $query =<<<testo
         INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES (
-            {$idStudente}, {$idClasse}, "{$dal}", "{$al}")
+            {$idStudente}, {$idClasse}, "{$dal}", 
         testo;
-        return $this->connessione->query($query);        
+        if($al == null){
+            $query .= "NULL)";
+        }else{
+            $query .= "'{$al}'";
+        }
+        return $this->connessione->query($query);
+    }
+
+    /**
+     * insertDocenteInClasse assegna un docente a una classe
+     *
+     * @param  int $idClasse id della classe alla quale assegnare il docente
+     * @param  int $idDocente id del docente da assegnare
+     * @param  string $dal data in formato YYYY-MM-DD
+     * @param  string $al data in formato YYYY-MM-DD
+     * @return bool true se il docente è stato inserito altrimenti false
+     */
+    public function insertiDocenteInClasse($idClasse, $idDocente, $dal, $al) {
+        $query =<<<testo
+        INSERT INTO classi_docenti (id_docente, id_classe, dal, al) VALUES (
+            {$idDocente}, {$idClasse}, "{$dal}", 
+        testo;
+        if($al == null){
+            $query .= "NULL)";
+        }else{
+            $query .= "'{$al}')";
+        }
+        return $this->connessione->query($query);
     }
 
     /**

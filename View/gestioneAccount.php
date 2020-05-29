@@ -13,17 +13,14 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Scuola.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 
 $html = creaHeader("Gestione Account");
-
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 //controllo se ha effettuato l'accesso
 if(!isset($_SESSION['email_utente'])) {
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso con un account per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
-    $html.=creaBarraMenu($_SESSION['email_utente']); 
-
     if(isset($_GET["errore"])){
         if($_GET["errore"]==2){
             $html .= "<h2>Errore generico, non sono riuscito a cambiare la password</h2>\n";

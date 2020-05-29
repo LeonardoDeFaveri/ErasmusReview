@@ -50,38 +50,11 @@ body{
     height: 90px;
 }
 
-#ricerca{
+#tipo-utente{
     display: flex;
     align-items: center;
     padding: var(--default-padding);
     width: fit-content;
-}
-
-#ricerca input[type="text"]{
-    font-size: medium;
-    padding: 0px;
-    padding-left: var(--default-padding);
-    padding-right: var(--default-padding);
-}
-
-#ricerca form button[type="submit"]{
-    background-color: var(--default-elements-background-color);
-    cursor: pointer;
-    font-size: large;
-    padding: var(--default-padding);
-}
-
-#ricerca input[type="text"], #ricerca form button[type="submit"]{
-    vertical-align: middle;
-    margin: 0px;
-    border: var(--default-border);
-    border-radius: var(--default-border-radius);
-    height: 40px;
-}
-
-#icona-ricerca{
-    vertical-align: middle;
-    font-size: 30px;
 }
 
 #utente{
@@ -92,9 +65,8 @@ body{
     width: fit-content;
 }
 
-#utente p{
+#utente h3{
     font-style: italic;
-    font-weight: bold;
 }
 
 #icona-utente{
@@ -121,9 +93,8 @@ a{
     cursor: pointer;
 }
 
-h1 a{
+a:hover{
     text-decoration: none;
-    color: var(--default-color);
 }
 
 /*Regole per il contenuto della pagina*/
@@ -218,20 +189,12 @@ details summary{
 }
 
 .riquadro{
-    position: relative;
     background-color: var(--default-elements-background-color-2);
     border: var(--default-border);
     padding: var(--default-padding);
     margin: var(--default-margin);
     text-align: left;
     width: 300px;
-    height: 200px;
-}
-
-.riquadro a{
-    color: var(--default-color);
-    text-decoration: underline;
-    font-style: italic;
 }
 
 button{
@@ -245,11 +208,13 @@ button{
 .contenitore-bottoni-riquadro{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    justify-items: right;
+    width: fit-content;
+    position: relative;
+}
+
+.contenitore-bottoni-riquadro form{
+    float: right;
 }
 
 .pagina-con-barra-laterale{
@@ -328,10 +293,6 @@ td{
     width: fit-content;
 }
 
-.form-con-colonne form{
-    text-align: left;
-}
-
 .dati{
     display: flex;
     flex-direction: column;
@@ -355,13 +316,6 @@ td{
     width: 200px;
 }
 
-.lista-checkbox{
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
 .scheda-di-valutazione{
     border: var(--default-border);
     background-color: var(--default-elements-background-color-2);
@@ -369,6 +323,26 @@ td{
     padding: var(--default-padding);
 }
 
-.erasmus{
-    background-color:  snow;
+.suggerimento{
+    display: inline-block;
+    font-size: smaller;
+    text-align: center;
+    overflow-wrap: break-word;
+    padding: var(--default-padding);
+    border: var(--default-border);
+    margin: auto;
+    max-width: 500px;
+}
+
+.contenitore-tabella{
+    width: 800px;
+    font-size: medium;
+}
+
+#tabella-studenti{
+    padding: 0px
+}
+
+.erasmus {
+    background-color: snow;
 }

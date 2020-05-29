@@ -211,6 +211,7 @@ class Controller {
                     exit();    
                 }
                 $_SESSION['classe'] = serialize($classe);
+                $_SESSION['studenti'] = serialize($this->modello->getContenitoreStudentiDaClasse($id));
                 $_SESSION['docenti_classe'] = serialize($this->modello->getDocentiDaClasse($classe->getId()));
                 header('Location: View/mostra/mostraClasse.php');
                 exit();
@@ -484,7 +485,14 @@ class Controller {
                     exit();
                 }
                 if(isset($_POST['submit'])){
-                    $esperienza = null;
+                    $dal = $_POST['dataDal'];
+                    $al = $_POST['dataAl'];
+                    // Se dal e al non sono stati settati utilizza le stesse date del percorso
+                    if($dal == "" && al == ""){
+                        $percorso =  $this->modello->getPercorsoDaId($_POST['id_percorso']);
+                        $dal = $percorso->getDal();
+                        $al = $percorso->getAl();
+                    }
                     $esperienza = new Esperienza(
                         null,
                         $_POST['id_studente'],
@@ -492,8 +500,8 @@ class Controller {
                         $_POST['id_azienda'],
                         $_POST['id_agenzia'],
                         $_POST['id_famiglia'],
-                        $_POST['dataDal'],
-                        $_POST['dataAl'],
+                        $dal,
+                        $al
                     );
                     if($this->modello->insertEsperienza($esperienza)){
                         header('Location: index.php');
@@ -536,11 +544,12 @@ class Controller {
                         null
                     );
                     if($idClasse = $this->modello->insertClasse($classe)){
-                        if(isset($_POST['studenti'])){
+                        if(isset($_POST['id_studenti'])){
+                            $studenti = explode(',', $_POST['id_studenti']);
                             $dal = $_POST['as_inizio'];
                             $al = $_POST['as_fine'];
                             $erroreInserimento = false;
-                            foreach($_POST['studenti'] as $idStudente){
+                            foreach($studenti as $idStudente){
                                 if(!$this->modello->insertStudenteInClasse($idClasse, intval($idStudente), $dal, $al)){
                                     $erroreInserimento = true;
                                 }
@@ -680,6 +689,9 @@ class Controller {
             break;
             case 'modifica-percorso':
                 if(isset($_POST['submit'])){
+                    if($_SESSION['tipo_utente'] == 'docente'){
+                        //$idDocente = 
+                    }
                     $percorso = new Percorso(
                         null,
                         $_POST['id_docente'],
@@ -717,7 +729,35 @@ class Controller {
                         exit();
                     }
                 }
-                
+            break;
+
+            case 'associa-docente-classe':
+                $classe = $this->modello->getClasseDaId($_GET['id']);
+                if($classe == null){
+                    header('Location: View/modifica/associaDocenteClasse.php?errore=3a');
+                    exit();
+                }
+                if(isset($_POST['submit'])){
+                    $docente = $this->modello->getDocenteDaId($_POST['id_docente']);
+                    if($docente == null){
+                        header('Location: View/modifica/associaDocenteClasse.php?errore=3b');
+                        exit();
+                    }
+                    $dal = $_POST['dal'] == "" ? date('Y-m-d') : $_POST['dal'];
+                    $al = $_POST['al'] == "" ? null : $_POST['al'];
+                    if(!$this->modello->insertiDocenteInClasse($classe->getId(), $docente->getId(), $dal, $al)){
+                        header('Location: View/modifica/associaDocenteClasse.php?errore=2');
+                        exit();
+                    }
+                    header("Location: index.php?comando=mostra-classe&id={$classe->getId()}");
+                    exit();
+                }else{
+                    $docenti = $this->modello->getDocentiDaScuola($classe->getScuola());
+                    $_SESSION['classe'] = serialize($classe);
+                    $_SESSION['possibili_docenti_classe'] = serialize($docenti);
+                    header('Location: View/modifica/associaDocenteClasse.php');
+                    exit();
+                }
             break;
             
             // Questo case viene invocato quando viene invocato l'index con un comando non gestito.

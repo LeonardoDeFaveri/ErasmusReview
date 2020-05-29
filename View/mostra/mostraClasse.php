@@ -7,10 +7,12 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Classe.php";
 include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
+include_once "{$_SESSION['root']}/Model/Utili/ContenitoreSoggettoDate.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Classe");
-$html .= creaBarraMenu($_SESSION['email_utente'] ?? "");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])){
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso per poter vedere questa pagina</h2>
@@ -46,20 +48,25 @@ $html.=<<<testo
                     <th>Cognome</th>
                     <th>Email</th>
                     <th>Data di nascita</th>
+                    <th>Dal</th>
+                    <th>Al</th>
                 </tr>
             </thead>
             <tbody>
 testo;
 
-$studenti = $classe->getStudenti();
+$studenti = unserialize($_SESSION['studenti']);
 
 foreach($studenti as $elemento){
+    $studente = $elemento->getSoggetto();
     $html .=<<<testo
         <tr>
-            <td>{$elemento->getNome()}</td>
-            <td>{$elemento->getCognome()}</td>
-            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$elemento->getId()}">{$elemento->getEmail()}</a></td>
-            <td>{$elemento->getDataNascita()}</td>
+            <td>{$studente->getNome()}</td>
+            <td>{$studente->getCognome()}</td>
+            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getEmail()}</a></td>
+            <td>{$studente->getDataNascita()}</td>
+            <td>{$elemento->getDal()}</td>
+            <td>{$elemento->getAl()}</td>
         </tr>
     testo;
 }
@@ -69,35 +76,50 @@ $html .=<<<testo
     </div>
 testo;
 
-$html .=<<<testo
+if(count($docenti) == 0){
+    $html .=<<<testo
     <h3>Docenti</h3>
-    <div class="contenitore-centrato">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-testo;
+    <h4>Non è ancora stato associato nessun docente a questa classe</h4>\n
+    testo;
+}else{
+    $html .=<<<testo
+        <h3>Docenti</h3>
+        <div class="contenitore-centrato">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>Email</th>
+                        <th>Dal</th>
+                        <th>Al</th>
+                    </tr>
+                </thead>
+                <tbody>
+    testo;
 
-foreach($docenti as $elemento){
+    foreach($docenti as $elemento){
+        $docente = $elemento->getSoggetto();
+        $html.=<<<testo
+            <tr>
+                <td>{$docente->getNome()}</td>
+                <td>{$docente->getCognome()}</td>
+                <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$docente->getId()}">{$docente->getEmail()}</a></td>
+                <td>{$elemento->getDal()}</td>    
+                <td>{$elemento->getAl()}</td>
+            </tr>
+        testo;
+    }
+
     $html.=<<<testo
-        <tr>
-            <td>{$elemento->getNome()}</td>
-            <td>{$elemento->getCognome()}</td>
-            <td><a href="{$_SESSION['web_root']}/index.php?comando=mostra-docente&id={$elemento->getId()}">{$elemento->getEmail()}</a></td>
-        </tr>
+                </tbody>
+            </table>
+        </div>
     testo;
 }
-
-$html.=<<<testo
-            </tbody>
-        </table>
-    </div>
-testo;
+if($_SESSION['tipo_utente'] == 'scuola') {
+    $html .= "<h4><a href='{$_SESSION['web_root']}/index.php?comando=associa-docente-classe&id={$classe->getId()}'>Associa un docente</a></h4>\n";
+}
 
 $html .= creaFooter();
 echo $html;

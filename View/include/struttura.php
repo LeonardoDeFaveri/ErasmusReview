@@ -15,28 +15,31 @@ function creaHeader($nomePagina) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{$_SESSION['web_root']}/View/template/stile.css" rel="stylesheet" type="text/css">
-        <script src="{$_SESSION['web_root']}/View/include/funzioni.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+        <script src="{$_SESSION['web_root']}/View/include/funzioni.js"></script>
     </head>
     <body>
         <div id="barra-superiore">
             <header id="header-principale">
-                <hgroup>
-                    <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a></h1>
-                    <h4 id=nome-pagina>$nomePagina</h4>
-                </hgroup>
+                <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a> - <small>{$nomePagina}</small></h1>
             </header>\n
     testo;
     return $html;
 }
 
-function creaBarraMenu($emailUtente) {
-    $ricerca = creaSezioneRicerca();
+function creaBarraMenu($emailUtente, $tipoUtente) {
+    $tipoUtente = creaSezioneTipoUtente(strtolower($tipoUtente));
     $utente = creaSezioneUtente($emailUtente);
     $html =<<<testo
             <div id="barra-menu">
-        {$ricerca}
-        {$utente}    
+                {$tipoUtente}
+                {$utente}    
             </div>
         </div>
         <div id="menu-utente">
@@ -48,15 +51,15 @@ function creaBarraMenu($emailUtente) {
     return $html;
 }
 
-function creaSezioneRicerca() {
-    $html = <<<testo
-            <div id="ricerca">
-                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=cerca">
-                    <input type="text" placeholder="Cerca.." name="cerca">
-                    <button type="submit"><i id="icona-ricerca" class="material-icons">search</i></button>
-                </form>
+function creaSezioneTipoUtente($tipoUtente) {
+    $html = "";
+    if($tipoUtente != ""){
+        $html =<<<testo
+            <div id="tipo-utente">
+                <h3><b>Utente di tipo {$tipoUtente}</b></h3>
             </div>
-    testo;
+        testo;
+    }
     return $html;
 }
 
@@ -65,7 +68,7 @@ function creaSezioneUtente($email) {
     if(isset($email)){
         //Aggiunge l'evento onClick per visulizzare le opzioni per l'utente (esci e gestione)
         $html .=<<<testo
-            \t\t<p>{$email}</p>
+            \t\t<h3>{$email}</h3>
             \t\t<i id="icona-utente" class="material-icons" onClick="mostraMenuUtente()">account_circle</i>\n
         testo;
     }else{
@@ -81,7 +84,6 @@ function creaFooter() {
         </main>
         <footer>
             <address>Progetto: Erasmus Review</address>
-            <address>Scuola: IIS Vittorio Veneto</address>
         </footer>
     </body>
     </html>

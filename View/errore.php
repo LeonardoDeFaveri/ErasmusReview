@@ -8,11 +8,7 @@ if(session_id() == ''){
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Errore");
-if(isset($_SESSION['email_utente'])){
-    $html .= creaBarraMenu($_SESSION['email_utente']);
-}else{
-    $html .= creaBarraMenu("");
-}
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 
 $codiceErrore = $_GET['errore'] ?? 404;
 $html .= "<h2 class='errore'>Errore {$codiceErrore}</h2>";
