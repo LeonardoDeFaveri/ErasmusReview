@@ -1527,12 +1527,39 @@ class Modello {
      * @param  string $al data in formato YYYY-MM-DD
      * @return bool true se lo studente è stato inserito altrimenti false
      */
-    public function insertStudenteInClasse($idClasse, $idStudente, $dal, $al){
+    public function insertStudenteInClasse($idClasse, $idStudente, $dal, $al) {
         $query =<<<testo
         INSERT INTO classi_studenti (id_studente,id_classe,dal,al) VALUES (
-            {$idStudente}, {$idClasse}, "{$dal}", "{$al}")
+            {$idStudente}, {$idClasse}, "{$dal}", 
         testo;
-        return $this->connessione->query($query);        
+        if($al == null){
+            $query .= "NULL)";
+        }else{
+            $query .= "'{$al}'";
+        }
+        return $this->connessione->query($query);
+    }
+
+    /**
+     * insertDocenteInClasse assegna un docente a una classe
+     *
+     * @param  int $idClasse id della classe alla quale assegnare il docente
+     * @param  int $idDocente id del docente da assegnare
+     * @param  string $dal data in formato YYYY-MM-DD
+     * @param  string $al data in formato YYYY-MM-DD
+     * @return bool true se il docente è stato inserito altrimenti false
+     */
+    public function insertiDocenteInClasse($idClasse, $idDocente, $dal, $al) {
+        $query =<<<testo
+        INSERT INTO classi_docenti (id_docente, id_classe, dal, al) VALUES (
+            {$idDocente}, {$idClasse}, "{$dal}", 
+        testo;
+        if($al == null){
+            $query .= "NULL)";
+        }else{
+            $query .= "'{$al}')";
+        }
+        return $this->connessione->query($query);
     }
 
     /**

@@ -72,15 +72,6 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                         <p>Assegna gli studenti alla classe</p>\n
     testo;
     $studenti = unserialize($_SESSION['studenti']);
-    /*foreach($studenti as $studente){
-        $id = $studente->getId();
-        $html .=<<<testo
-            <label>
-                <input type="checkbox" name="studenti[]" value={$id}>
-                {$studente->getCognome()} {$studente->getNome()}
-            </label>
-        testo;
-    }*/
     $html .=<<<testo
                         <div class="contenitore-tabella">
                             <table id="tabella-studenti">

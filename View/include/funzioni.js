@@ -73,6 +73,27 @@ function controllaEsperienza() {
 }
 
 /**
+ * Controlla la correttezza della date
+ * 
+ * @param {form} form
+ */
+function controllaDate(form) {
+	var al = document.getElementsByName('al')[0].value;
+	var dal = document.getElementsByName('dal')[0].value;
+
+	if (dal == "" && al != "" || dal != "" && al == "") {
+		alert("Devi specificare sia la data di inizio che di fine, oppure nessuna");
+		return false;
+	}
+
+	if (dal != "" && al != "" && dal >= al) {
+		alert("L'intervallo temporale specificato è sbagliato");
+		return false;
+	}
+	return true;
+}
+
+/**
  * Crea una tabella che mostra tutti gli studenti che
  * possono essere inseriti in una classe.
  */

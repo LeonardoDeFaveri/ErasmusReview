@@ -725,7 +725,35 @@ class Controller {
                         exit();
                     }
                 }
-                
+            break;
+
+            case 'associa-docente-classe':
+                $classe = $this->modello->getClasseDaId($_GET['id']);
+                if($classe == null){
+                    header('Location: View/modifica/associaDocenteClasse.php?errore=3a');
+                    exit();
+                }
+                if(isset($_POST['submit'])){
+                    $docente = $this->modello->getDocenteDaId($_POST['id_docente']);
+                    if($docente == null){
+                        header('Location: View/modifica/associaDocenteClasse.php?errore=3b');
+                        exit();
+                    }
+                    $dal = $_POST['dal'] == "" ? date('Y-m-d') : $_POST['dal'];
+                    $al = $_POST['al'] == "" ? null : $_POST['al'];
+                    if(!$this->modello->insertiDocenteInClasse($classe->getId(), $docente->getId(), $dal, $al)){
+                        header('Location: View/modifica/associaDocenteClasse.php?errore=2');
+                        exit();
+                    }
+                    header("Location: index.php?comando=mostra-classe&id={$classe->getId()}");
+                    exit();
+                }else{
+                    $docenti = $this->modello->getDocentiDaScuola($classe->getScuola());
+                    $_SESSION['classe'] = serialize($classe);
+                    $_SESSION['possibili_docenti_classe'] = serialize($docenti);
+                    header('Location: View/modifica/associaDocenteClasse.php');
+                    exit();
+                }
             break;
             
             // Questo case viene invocato quando viene invocato l'index con un comando non gestito.

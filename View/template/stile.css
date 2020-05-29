@@ -316,13 +316,6 @@ td{
     width: 200px;
 }
 
-/*.lista-checkbox{
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}*/
-
 .scheda-di-valutazione{
     border: var(--default-border);
     background-color: var(--default-elements-background-color-2);

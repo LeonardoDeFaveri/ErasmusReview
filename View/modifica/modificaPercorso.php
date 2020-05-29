@@ -85,7 +85,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     }
     $html.=<<<testo
                 </div>
-                <input type="submit">
+                <input type="submit" name="submit">
             </fieldset>
         </form>
     testo;
