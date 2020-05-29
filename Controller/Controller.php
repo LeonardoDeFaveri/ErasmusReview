@@ -692,16 +692,25 @@ class Controller {
             break;
             case 'modifica-percorso':
                 if(isset($_POST['submit'])){
+                    $percorso = null;
+                    $id = $_GET['id'] ?? -1;
                     if($_SESSION['tipo_utente'] == 'docente'){
-                        //$idDocente = 
+                        $percorso = new Percorso(
+                            $id,
+                            $this->modello->getDocenteDaEmail($_SESSION['email_utente']),
+                            $this->modello->getClasseDaId($_POST['id_classe']),
+                            $_POST['dal'],
+                            $_POST['al']
+                        );
+                    }else{
+                        $percorso = new Percorso(
+                            $id,
+                            $this->modello->getDocenteDaId($_POST['id_docente']),
+                            $this->modello->getClasseDaId($_POST['id_classe']),
+                            $_POST['dal'],
+                            $_POST['al']
+                        );
                     }
-                    $percorso = new Percorso(
-                        null,
-                        $_POST['id_docente'],
-                        $_POST['id_classe'],
-                        $_POST['dal'],
-                        $_POST['al']
-                    );
                     if($this->modello->modificaPercorso($percorso)){
                         header('Location: View/modifica/modificaPercorso.php?successo=true');
                         exit();
@@ -711,7 +720,6 @@ class Controller {
                 }else{
                     $id = $_GET['id'] ?? -1;
                     $percorso = $this->modello->getPercorsoDaId($id);
-                    
                     if ($percorso == null){
                         header('Location: View/modifica/modificaPercorso.php?errore=1');
                         exit();

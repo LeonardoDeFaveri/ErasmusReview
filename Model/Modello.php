@@ -1267,7 +1267,7 @@ class Modello {
     
     public function modificaScuola($scuola) {
         $query =<<<testo
-            UPDATE scuola 
+            UPDATE scuole 
             SET 
                 nome = "{$scuola->getNome()}",
                 citta = "{$scuola->getCitta()}",     
@@ -1284,8 +1284,8 @@ class Modello {
                 id_docente = "{$percorso->getDocente()->getId()}",
                 id_classe = "{$percorso->getClasse()->getId()}",     
                 dal = "{$percorso->getDal()}",
-                al = "{$percorso->getAl()}",     
-            WHERE codice_meccanografico = "{$percorso->getId()}";
+                al = "{$percorso->getAl()}"     
+            WHERE id = "{$percorso->getId()}"
         testo;
         return $this->connessione->query($query);
     }
