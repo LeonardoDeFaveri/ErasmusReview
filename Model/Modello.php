@@ -1311,15 +1311,22 @@ class Modello {
         }
         return $valutazioniMedie;
     }
-
+    
+    /**
+     * getEsperienzeDaPercorso estrae le esperienze associate ad
+     * un percorso.
+     *
+     * @param  int $id id del percorso per il quale estrarre le esperienze
+     * @return Esperienza[] se ne sono state trovato, altrimenti un array vuoto
+     */
     public function getEsperienzeDaPercorso($id){
         $query=<<<testo
             SELECT id FROM esperienze WHERE id_percorso = {$id}
         testo;
-        $ris=$this->connessione->query($query);
-        $esperienze=array();
-        while(($riga=$ris->fetch_row())!=null){
-            $esperienze[]=$this->getEsperienzaDaId($riga[0]);
+        $ris = $this->connessione->query($query);
+        $esperienze = array();
+        while(($riga = $ris->fetch_row()) != null){
+            $esperienze[] = $this->getEsperienzaDaId($riga[0]);
         }
         return $esperienze;
     }    

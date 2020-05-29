@@ -24,7 +24,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $percorso = unserialize($_SESSION['percorso']);
     $esperienze=unserialize($_SESSION['esperienze']);
     
-    if(count($percorso) == 0){
+    if(count($esperienze) == 0){
         $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
     }
     else{
@@ -34,13 +34,14 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                 <h2>Tutte le esperienze</h2>\n
             </div>
         testo;
-
+        $docente=$percorso->getDocente();
+        $classe=$percorso->getClasse();
         //creazione barra laterale
         $html .=<<<testo
                 <div class="barra-laterale">
                     <summary>Dati del percorso</summary>
-                    <strong>Docente: </strong>{$percorso->getDocente()}
-                    <strong>Classe: </strong>{$percorso->getClasse()}
+                    <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}
+                    <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}
                     <strong>Dal: </strong>{$percorso->getDal()}
                     <strong>Al: </strong>{$percorso->getAl()}
                 </div>
