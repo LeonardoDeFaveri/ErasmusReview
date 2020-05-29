@@ -32,9 +32,10 @@ if(isset($_GET['errore'])){
     echo $html;
     return;
 }
-$aspetti = unserialize($_SESSION['valutazioni_medie']);
+$valutazioni = unserialize($_SESSION['valutazioni_medie_famiglia']);
 $famiglia = unserialize($_SESSION['famiglia']);
 $html .=<<<testo
+    <h2>Dati della famiglia</h2>
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
@@ -46,6 +47,12 @@ $html .=<<<testo
                 <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
             </div>
             <hr>
+testo;
+
+if(count($valutazioni) == 0){
+    $html .= "<h3>Questa famiglia non è ancora stata valutata</h3>\n";
+}else{
+    $html .=<<<testo
             <table>
                 <thead>
                     <tr>
@@ -55,11 +62,11 @@ $html .=<<<testo
                 </thead>
                 <tbody>
     testo;
-    foreach($aspetti as $aspetto){
+    foreach($valutazioni as $valutazione){
         $html.=<<<testo
             <tr>
-                <td>{$aspetto->getAspetto()->getNome()}</td>
-                <td>{$aspetto->getVoto()}</td>
+                <td>{$valutazione->getAspetto()->getNome()}</td>
+                <td>{$valutazione->getVoto()}</td>
             </tr>
         testo;
     }
@@ -69,6 +76,7 @@ $html .=<<<testo
         </div>
     </div>
     testo;
+}
 $html .= creaFooter();
 echo $html;
 ?>

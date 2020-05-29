@@ -7,6 +7,7 @@ if(session_id() == ''){
 }
 include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Classe.php";
+include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Studente");
@@ -34,16 +35,18 @@ if(isset($_GET['errore']) ){
 
 $studente = unserialize($_SESSION['studente']);
 $classi = unserialize($_SESSION['classi_studente']);
+$valutazioni = unserialize($_SESSION['valutazioni_medie_studente']);
 $html .=<<<testo
     <div class="contenitore-centrato">
-        <div class="riquadro">
-            <b>Dati dello Studente</b><br>
-            {$studente->getNome()} {$studente->getCognome()}<br>
-            {$studente->getEmail()}<br>
-            {$studente->getDataNascita()}
-            <hr>
-            <b>Classi dello studente</b>
-            <ul>\n
+        <div>
+            <div class="riquadro">
+                <b>Dati dello Studente</b><br>
+                {$studente->getNome()} {$studente->getCognome()}<br>
+                {$studente->getEmail()}<br>
+                {$studente->getDataNascita()}
+                <hr>
+                <b>Classi dello studente</b>
+                <ul>\n
 testo;
 
 foreach ($classi as $classe) {
@@ -55,8 +58,36 @@ foreach ($classi as $classe) {
 $html .=<<<testo
             </ul>
         </div>
-    </div>
 testo;
+
+if(count($valutazioni) == 0){
+    $html .= "<h3>Questo studente non è ancora stato valutato</h3>\n";
+}else{
+    $html .=<<<testo
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspetto</th>
+                        <th>Voto medio</th>
+                    </tr>
+                </thead>
+                <tbody>
+    testo;
+    foreach($valutazioni as $valutazione){
+        $html.=<<<testo
+            <tr>
+                <td>{$valutazione->getAspetto()->getNome()}</td>
+                <td>{$valutazione->getVoto()}</td>
+            </tr>
+        testo;
+    }
+    $html .=<<<testo
+                </tbody>
+            </table>
+        </div>
+    </div>
+    testo;
+}
 
 $html .= creaFooter();
 echo $html;
