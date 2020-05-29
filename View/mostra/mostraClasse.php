@@ -74,9 +74,6 @@ if(count($docenti) == 0){
     <h3>Docenti</h3>
     <h4>Non è ancora stato associato nessun docente a questa classe</h4>\n
     testo;
-    if($_SESSION['tipo_utente'] == 'scuola') {
-        $html .= "<h4><a href='{$_SESSION['web_root']}/index.php?comando=associa-docente-classe&id={$classe->getId()}'>Aggiungine uno</a></h4>\n";
-    }
 }else{
     $html .=<<<testo
         <h3>Docenti</h3>
@@ -107,6 +104,9 @@ if(count($docenti) == 0){
             </table>
         </div>
     testo;
+}
+if($_SESSION['tipo_utente'] == 'scuola') {
+    $html .= "<h4><a href='{$_SESSION['web_root']}/index.php?comando=associa-docente-classe&id={$classe->getId()}'>Associa un docente</a></h4>\n";
 }
 
 $html .= creaFooter();

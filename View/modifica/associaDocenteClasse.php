@@ -26,7 +26,7 @@ if(isset($_GET['errore'])){
         case 2:
             $html .=<<<testo
             <script>
-                alert("C'è stato un errore durante l'assegnazione del docente alla classe");
+                alert("C'è stato un errore durante l'assegnazione del docente alla classe, probabilmente è già stato assegnato");
             </script>
             testo;
         break;
