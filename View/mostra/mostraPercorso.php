@@ -83,4 +83,5 @@ function creaRiquadro($esperienza, $erasmus = false) {
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+}
 ?>

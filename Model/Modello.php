@@ -1321,7 +1321,7 @@ class Modello {
         while(($riga=$ris->fetch_row())!=null){
             $esperienze[]=$this->getEsperienzaDaId($riga[0]);
         }
-        return $esperienza;
+        return $esperienze;
     }    
 
     /**
