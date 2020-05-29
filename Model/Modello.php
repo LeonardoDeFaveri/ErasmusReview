@@ -1321,7 +1321,7 @@ class Modello {
             WHERE
                 id_percorso = {$id}
         testo;
-        $ris->connessione->query($query);
+        $ris=$this->connessione->query($query);
         $esperienze=array();
         while(($riga=$ris->fetch_row())!=null){
             $esperienze[]=$this->getEsperienzaDaId($riga[0]);
