@@ -8,8 +8,7 @@ if(session_id() == ''){
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Login");
-$email = $_SESSION['email_utente'] ?? null;
-$html .= creaBarraMenu($email);
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? null, $_SESSION['tipo_utente'] ?? "");
 $html .= "<h2>Login</h2>\n";
 if(isset($_GET['errore']) && $_GET['errore'] == 1) {
     $html .=<<<testo

@@ -12,15 +12,14 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Amministrazione Scuola");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['scuola'])){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come amministratore scolastico per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $scuola = unserialize($_SESSION['scuola']);
-    $html .= creaBarraMenu($scuola->getEmail());
     $classi = unserialize($_SESSION['classi']);
     $docenti = unserialize($_SESSION['docenti']);
     $percorsi = unserialize($_SESSION['percorsi']);

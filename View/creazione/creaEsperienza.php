@@ -17,8 +17,8 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 
 $html = creaHeader("Creazione Esperienza");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente o scuola per poter visualizzare questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
@@ -32,7 +32,6 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
         testo;
         
     }
-    $html .= creaBarraMenu($_SESSION['email_utente']);
     $studenti = unserialize($_SESSION['studenti']);
     $aziende = unserialize($_SESSION['aziende']);
     $agenzie = unserialize($_SESSION['agenzie']);
@@ -41,8 +40,8 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
     $html .=<<<testo
         <div>
             <h2>Crea Esperienza</h2>
-                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza">
-                    <fieldset>
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza" onSubmit="return controllaEsperienza()">
+                    <fieldset class="form-con-colonne">
                         <legend>Creazione Esperienza</legend>
                         <div class="dati">
                         <div class="riga">
@@ -75,7 +74,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
     $html .=<<<testo
                         <div class="riga">
                             <label for="id_azienda">Seleziona Azienda:</label>
-                            <select name ='id_azienda' required>\n
+                            <select name='id_azienda' required>\n
     testo;
     foreach($aziende as $azienda){
         $html.=<<<testo
@@ -89,8 +88,8 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
     $html .=<<<testo
                         <div class="riga">
                             <label for="id_agenzia">Seleziona Agenzia:</label>
-                            <select name ='id_agenzia'>
-                            \t<option value ='null' selected></option>\n
+                            <select id="id_agenzia" name="id_agenzia">
+                            \t<option value ="null" selected></option>\n
     testo;
     foreach($agenzie as $agenzia){
         $html.=<<<testo
@@ -104,8 +103,8 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
     $html .=<<<testo
                         <div class="riga">
                             <label for="id_famiglia">Seleziona Famiglia:</label>
-                            <select name ='id_famiglia'>
-                                <option value ='null' selected></option>\n 
+                            <select id="id_famiglia" name="id_famiglia">
+                                <option value="null" selected></option>\n 
     testo;
     foreach($famiglie as $famiglia){
     $html.=<<<testo
@@ -123,6 +122,8 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
                             <label for="dataAl">Al:</label>
                             <input type="date" id="dataAl" name="dataAl">
                         </div>
+                        <span class="suggerimento">Se non specificate, le date di inizio e fine dell'esperienza
+                        corrisponderanno con quelle del percorso</span>
                     </div>
                     <input type="submit" name="submit">
                     </fieldset>

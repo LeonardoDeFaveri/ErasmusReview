@@ -11,7 +11,7 @@ include_once "{$_SESSION['root']}/Model/Valutazione.php";
 include_once "{$_SESSION['root']}/View/include/struttura.php";
 
 $html = creaHeader("Famiglia");
-$html .= creaBarraMenu($_SESSION['email_utente'] ?? "");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])) {
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso per poter vedere questa pagina</h2>
@@ -36,13 +36,15 @@ $aspetti = unserialize($_SESSION['valutazioni_medie']);
 $famiglia = unserialize($_SESSION['famiglia']);
 $html .=<<<testo
     <div class="contenitore-centrato">
-        <div class="riquadro">
-            <b>Dati della famiglia</b><br>
-            <hr>
-            <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
-            <strong>Nome: </strong>{$famiglia->getNome()}<br> 
-            <strong>Citta: </strong>{$famiglia->getCitta()}<br>
-            <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
+        <div>
+            <div class="riquadro">
+                <b>Dati della famiglia</b><br>
+                <hr>
+                <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
+                <strong>Nome: </strong>{$famiglia->getNome()}<br> 
+                <strong>Citta: </strong>{$famiglia->getCitta()}<br>
+                <strong>Indirizzo: </strong>{$famiglia->getIndirizzo()}<br>
+            </div>
             <hr>
             <table>
                 <thead>

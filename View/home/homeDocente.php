@@ -14,15 +14,14 @@ include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Home Docente");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
     $docente = unserialize($_SESSION['docente']);
-    $html .= creaBarraMenu($docente->getEmail());
     $classi = unserialize($_SESSION['classi']);
     $percorsi = unserialize($_SESSION['percorsi']);
 

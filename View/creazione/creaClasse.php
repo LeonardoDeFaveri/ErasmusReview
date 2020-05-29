@@ -12,15 +12,14 @@ include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
 $html = creaHeader("Crea Classe");
+$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])){
-    $html .= creaBarraMenu("");
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
         <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
 }else{
     $scuola = unserialize($_SESSION['scuola']);
-    $html .= creaBarraMenu($scuola->getEmail());
     if(isset($_GET['errore']) && $_GET['errore'] == 2){
         switch($_GET['errore']){
             case 2:
@@ -44,7 +43,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
     $html.=<<<testo
             <div>
             <h2>Crea classe</h2>
-                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe">
+                <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-classe" id="form-crea-classe" onSubmit="getDati(this)">
                     <fieldset class="form-con-colonne">
                         <legend>Creazione classe</legend>
                         <div class="dati">
@@ -64,22 +63,44 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || !isset($_SESSION['scuola'])
                                 <label>Fine anno scolastico</label>
                                 <input type="date" name="as_fine" required>
                             </div>
+                            <div class="riga">
+                                <label></label>
+                                <input type="text" name="id_studenti" id="id_studenti" style="display:none;">
+                            </div>
                         </div>
                         <hr>
-                        <p>Assegna gli studenti alla classe</p>
-                        <div class="lista-checkbox">  
+                        <p>Assegna gli studenti alla classe</p>\n
     testo;
     $studenti = unserialize($_SESSION['studenti']);
-    foreach($studenti as $studente){
-        $id = $studente->getId();
+    $html .=<<<testo
+                        <div class="contenitore-tabella">
+                            <table id="tabella-studenti">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Id</th>
+                                        <th>Cognome</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>\n
+    testo;
+
+    foreach ($studenti as $studente) {
         $html .=<<<testo
-            <label>
-                <input type="checkbox" name="studenti[]" value={$id}>
-                {$studente->getCognome()} {$studente->getNome()}
-            </label>
+        <tr>
+            <td></td>
+            <td>{$studente->getId()}</td>
+            <td>{$studente->getCognome()}</td>
+            <td>{$studente->getNome()}</td>
+        </tr>\n
         testo;
     }
+
     $html .=<<<testo
+                            
+                                </tbody>
+                            </table>
                         </div>
                         <input type="submit" name="submit" value="Crea classe">
                     </fieldset>
