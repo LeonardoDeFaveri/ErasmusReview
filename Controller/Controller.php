@@ -214,6 +214,7 @@ class Controller {
                     exit();    
                 }
                 $_SESSION['classe'] = serialize($classe);
+                $_SESSION['studenti'] = serialize($this->modello->getContenitoreStudentiDaClasse($id));
                 $_SESSION['docenti_classe'] = serialize($this->modello->getDocentiDaClasse($classe->getId()));
                 header('Location: View/mostra/mostraClasse.php');
                 exit();

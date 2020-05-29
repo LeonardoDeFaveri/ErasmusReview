@@ -74,7 +74,7 @@ function creaRiquadro($esperienza, $daValutare = false) {
     $famiglia = $esperienza->getFamiglia();
     $studente = $esperienza->getStudente();
     $riquadro =<<<testo
-        \t\t\t<div class="riquadro">
+        \t\t\t<div class="riquadro erasmus">
             \t\t\t<strong>Dati dello studente</strong><br>
             \t\t\t<a href="{$_SESSION['web_root']}/index.php?comando=mostra-studente&id={$studente->getId()}">{$studente->getCognome()} {$studente->getNome()}</a><br>
             \t\t\t<strong>Classe: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-classe&id={$classe->getId()}">{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}</a><br>

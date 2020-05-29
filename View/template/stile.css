@@ -4,6 +4,7 @@
     --default-background-color: #faf9f2;
     --default-elements-background-color: #fcba03;
     --default-elements-background-color-2: #ffdc7a;
+    --default-erasmus-color: #ffa14f;
     --default-border: 1px solid #333;
     --default-border-radius: 3px;
     --default-margin: 5px;
@@ -340,5 +341,9 @@ td{
 }
 
 #tabella-studenti{
-    padding: 0px
+    padding: 0px;
+}
+
+.erasmus {
+    background-color: var(--default-erasmus-color);
 }
