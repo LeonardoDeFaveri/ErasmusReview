@@ -144,3 +144,10 @@ function getStudentiSelezionati() {
 	}
 	return idStudenti;
 }
+
+/**
+ * Qunado si clicca un pulsante invio della valutazione vengono mostrati i dati inseriti e si chiede la conferma dell'invio
+ */
+function confermaInvioValutazione(){
+	return confirm("Sei sicuro di voler inviare la valutazione");
+}

@@ -347,3 +347,8 @@ td{
 .erasmus {
     background-color: var(--default-erasmus-color);
 }
+
+.logo{
+    max-width: 60px;
+    margin: var(--default-margin)
+}

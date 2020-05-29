@@ -14,6 +14,8 @@ function creaHeader($nomePagina) {
         <title>{$nomePagina} - ErasmusReview</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{$_SESSION['web_root']}/Immagini/favicon.png">
+        
         <link href="{$_SESSION['web_root']}/View/template/stile.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
@@ -26,6 +28,7 @@ function creaHeader($nomePagina) {
     </head>
     <body>
         <div id="barra-superiore">
+            <a href="{$_SESSION['web_root']}/index.php"><img src="{$_SESSION['web_root']}/Immagini/favicon.png" class="logo" alt="logo del sito"></a>
             <header id="header-principale">
                 <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a> - <small>{$nomePagina}</small></h1>
             </header>\n
@@ -83,7 +86,7 @@ function creaFooter() {
     $html = <<<testo
         </main>
         <footer>
-            <address>Progetto: Erasmus Review</address>
+            <address>Progetto: ErasmusReview</address>
         </footer>
     </body>
     </html>
