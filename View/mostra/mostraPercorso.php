@@ -48,15 +48,18 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                 </div>
             </main>\n
         testo;
-
+        $html.="<div class=contenitore-riquadri>";
         foreach ($esperienze as $esperienza){
             if($esperienza->getFamiglia()!=null){
                 if($esperienza->getAgenzia()!=null){
                     $html.=creaRiquadro($esperienza,true);
                 }
             }
-            $html.=creaRiquadro($esperienza);
+            else{
+               $html.=creaRiquadro($esperienza);
+            }
         }
+        $html.="</div>";
     }
 }
 $html .= creaFooter();
@@ -84,7 +87,7 @@ function creaRiquadro($esperienza, $erasmus = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
-    $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+    $riquadro .= "</div>";
     return $riquadro;
 }
 ?>
