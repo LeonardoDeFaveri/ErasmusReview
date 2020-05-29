@@ -39,11 +39,12 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         //creazione barra laterale
         $html .=<<<testo
                 <div class="barra-laterale">
-                    <summary>Dati del percorso</summary>
-                    <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}
-                    <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}
-                    <strong>Dal: </strong>{$percorso->getDal()}
-                    <strong>Al: </strong>{$percorso->getAl()}
+                    <summary><strong>Dati del percorso</strong></summary>
+                    <hr>
+                    <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}<br>
+                    <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+                    <strong>Dal: </strong>{$percorso->getDal()}<br>
+                    <strong>Al: </strong>{$percorso->getAl()}<br>
                 </div>
             </main>\n
         testo;
