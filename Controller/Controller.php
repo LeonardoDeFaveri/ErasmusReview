@@ -198,6 +198,9 @@ class Controller {
                     header('Location: View/mostra/mostraPercorso.php?errore=3');
                     exit();
                 }
+                $_SESSION['percorso'] = serialize($percorso);
+                header('Location: View/mostra/mostraPercorso.php');
+                exit();
             break;
             case 'mostra-studenti':
                 $studenti = $this->modello->getStudentiDaScuola($_GET['codice_scuola']);
@@ -721,6 +724,7 @@ class Controller {
                     }
                     $_SESSION['percorso'] = serialize($percorso);
                     if($_SESSION['tipo_utente'] == 'scuola'){
+                        $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                         $docenti = $this->modello->getDocentiDaScuola($scuola);
                         $classi = $this->modello->getClassiDaScuola($scuola);
                         $_SESSION['docenti'] = serialize($docenti);

@@ -48,8 +48,9 @@ if(isset($_GET['errore'])){
 $esperienza = unserialize($_SESSION['esperienza']);
 $modello = unserialize($_SESSION['modello']);
 $aspetti = $modello->getAspetti();
+//onclick fx js
 $html.=<<<testo
-    <form action="{$_SESSION['web_root']}/index.php?comando=inserisci-scheda-compilata" method="POST">
+    <form action="{$_SESSION['web_root']}/index.php?comando=inserisci-scheda-compilata" method="POST" onsubmit="return confermaInvioValutazione()" >
         <fieldset class="form-con-colonne">
             <legend>Compila scheda di valutazione</legend>
             <div class="dati">

@@ -9,11 +9,10 @@ if(session_id() == ''){
     $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusReview";
 }
 include_once "{$_SESSION['root']}/View/include/struttura.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Home Docente");
+$html = creaHeader("Percorso");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $html .=<<<testo
@@ -21,77 +20,15 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
-    $docente = unserialize($_SESSION['docente']);
-    $classi = unserialize($_SESSION['classi']);
-    $percorsi = unserialize($_SESSION['percorsi']);
-
+    //$docente = unserialize($_SESSION['docente']);
+    //$classi = unserialize($_SESSION['classi']);
+    $percorso = unserialize($_SESSION['percors0']);
+    $esperienze=unserialize($_SESSION['esperienze']);
     $html .=<<<testo
         <main class="pagina-con-barra-laterale">
             <div class="contenuto">
-                <h2>Tutti i percorsi</h2>\n
+                <h2>Tutte le esperienze</h2>\n
     testo;
-
-    if(count($percorsi) == 0){
-        $html .= "<p>Non è stato ancora definito nessun percorso</p>\n";
-    }else{
-        $futuri = array();
-        $inCorso = array();
-        $conclusi = array();
-
-        foreach ($percorsi as $percorso) {
-            if($percorso->getDal() > date('Y-m-d')){
-                $futuri[] = $percorso;
-            }else if($percorso->getAl() > date('Y-m-d')){
-                $inCorso[] = $percorso;
-            }else{
-                $conclusi[] = $percorso;
-            }
-        }
-
-        if(count($futuri) > 0){
-            $html .=<<<testo
-                <details open>
-                    <summary>Percorsi Futuri</summary>
-                    <div class="contenitore-riquadri">\n
-            testo;
-            foreach ($futuri as $percorso) {
-                $html .= creaRiquadroPercorso($percorso);
-            }
-            $html .=<<<testo
-                    </div>
-                </details>\n
-            testo;
-        }
-        if(count($inCorso) > 0){
-            $html .=<<<testo
-                <details open>
-                    <summary>Percorsi Attivi</summary>
-                    <div class="contenitore-riquadri">\n
-            testo;
-            foreach ($inCorso as $percorso) {
-                $html .= creaRiquadroPercorso($percorso);
-            }
-            $html .=<<<testo
-                    </div>
-                </details>\n
-            testo;
-        }
-        if(count($conclusi) > 0){
-            $html .=<<<testo
-                <details>
-                    <summary>Percorsi Conclusi</summary>
-                    <div class="contenitore-riquadri">\n
-            testo;
-            foreach ($conclusi as $percorso) {
-                $html .= creaRiquadroPercorso($percorso, true);
-            }
-            $html .=<<<testo
-                    </div>
-                </details>\n
-            testo;
-        }
-    }
-
     $html.=<<<testo
                 <hr>
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-percorso">
@@ -138,12 +75,20 @@ function creaRiquadroPercorso($percorso, $terminato = false) {
             \t\t\t<hr>
             \t\t\t<strong>Dal: </strong>{$percorso->getDal()} <strong>Al: </strong>{$percorso->getAl()}<br>
             <div class="contenitore-bottoni-riquadro">\n
-    testo;   
-    $html .=<<<testo
-        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
-            <button type="submit">Modifica</button>
-        </form>\n
     testo;
+    if($terminato){
+        $html .=<<<testo
+            <form action="{$_SESSION['web_root']}/index.php?comando=valutazione-percorso&id={$percorso->getId()}" method="POST">
+                <button type="submit">Valutazione</button>
+            </form>\n
+        testo;
+    }else{
+        $html .=<<<testo
+            <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
+                <button type="submit">Modifica</button>
+            </form>\n
+        testo;
+    }
     $html .=<<<testo
                 <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
                     <button type="submit">Mostra info</button>
@@ -154,3 +99,4 @@ function creaRiquadroPercorso($percorso, $terminato = false) {
     return $html;
 }
 ?>
+

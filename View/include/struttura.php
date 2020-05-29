@@ -83,7 +83,7 @@ function creaFooter() {
     $html = <<<testo
         </main>
         <footer>
-            <address>Progetto: Erasmus Review</address>
+            <address>Progetto: ErasmusReview</address>
         </footer>
     </body>
     </html>

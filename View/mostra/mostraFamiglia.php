@@ -39,7 +39,7 @@ $html .=<<<testo
     <div class="contenitore-centrato">
         <div>
             <div class="riquadro">
-                <b>Dati della famiglia</b><br>
+                <strong>Dati della famiglia</strong><br>
                 <hr>
                 <strong>Cognome: </strong>{$famiglia->getCognome()}<br>
                 <strong>Nome: </strong>{$famiglia->getNome()}<br> 
