@@ -689,6 +689,9 @@ class Controller {
             break;
             case 'modifica-percorso':
                 if(isset($_POST['submit'])){
+                    if($_SESSION['tipo_utente'] == 'docente'){
+                        //$idDocente = 
+                    }
                     $percorso = new Percorso(
                         null,
                         $_POST['id_docente'],

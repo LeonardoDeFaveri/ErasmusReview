@@ -49,10 +49,11 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
             $html.=<<<testo
                         \t\t<option value ='{$classe->getId()}' selected>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>\n
             testo;
+        }else{
+            $html.=<<<testo
+                            \t\t<option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>\n
+            testo;
         }
-        $html.=<<<testo
-                        \t\t<option value ='{$classe->getId()}'>{$classe->getNumero()} {$classe->getSezione()} {$classe->getAnnoScolastico()}</option>\n
-        testo;
     }
     $html.=<<<testo
                     </select>
