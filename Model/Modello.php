@@ -1312,6 +1312,23 @@ class Modello {
         return $valutazioniMedie;
     }
 
+    public function getEsperienzeDaPercorso($id){
+        $query=<<<testo
+            SELECT
+                id
+            FROM
+                esperienze
+            WHERE
+                id_percorso = {$id}
+        testo;
+        $ris->connessione->query($query);
+        $esperienze=array();
+        while(($riga=$ris->fetch_row())!=null){
+            $esperienze[]=$this->getEsperienzaDaId($riga[0]);
+        }
+        return $esperienza;
+    }    
+
     /**
      * getValutazioniMedieDiStudenti estrae dal database le valutazioni
      * medie di uno studente.
