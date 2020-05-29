@@ -20,39 +20,43 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
     testo;
 }else{
-    //$docente = unserialize($_SESSION['docente']);
-    //$classi = unserialize($_SESSION['classi']);
+    
     $percorso = unserialize($_SESSION['percorso']);
     $esperienze=unserialize($_SESSION['esperienze']);
-    $html .=<<<testo
+    
+    if(count($percorso) == 0){
+        $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
+    }
+    else{
+        $html .=<<<testo
         <main class="pagina-con-barra-laterale">
             <div class="contenuto">
                 <h2>Tutte le esperienze</h2>\n
             </div>
-    testo;
+        testo;
 
-    //creazione barra laterale
-    $html .=<<<testo
-            <div class="barra-laterale">
-                <summary>Dati del percorso</summary>
-                <strong>Docente: </strong>{$percorso->getDocente()}
-                <strong>Classe: </strong>{$percorso->getClasse()}
-                <strong>Dal: </strong>{$percorso->getDal()}
-                <strong>Al: </strong>{$percorso->getAl()}
-            </div>
-        </main>\n
-    testo;
-                
-    foreach ($esperienze as $esperienza){
-        if($esperienza->getFamiglia()!=null){
-            if($esperienza->getAgenzia()!=null){
-                creaRiquadro($esperienza,true);
+        //creazione barra laterale
+        $html .=<<<testo
+                <div class="barra-laterale">
+                    <summary>Dati del percorso</summary>
+                    <strong>Docente: </strong>{$percorso->getDocente()}
+                    <strong>Classe: </strong>{$percorso->getClasse()}
+                    <strong>Dal: </strong>{$percorso->getDal()}
+                    <strong>Al: </strong>{$percorso->getAl()}
+                </div>
+            </main>\n
+        testo;
+
+        foreach ($esperienze as $esperienza){
+            if($esperienza->getFamiglia()!=null){
+                if($esperienza->getAgenzia()!=null){
+                    creaRiquadro($esperienza,true);
+                }
             }
+            creaRiquadro($esperienza);
         }
-        creaRiquadro($esperienza);
     }
 }
-
 $html .= creaFooter();
 echo $html;
 
@@ -80,4 +84,3 @@ function creaRiquadro($esperienza, $erasmus = false) {
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
 ?>
-

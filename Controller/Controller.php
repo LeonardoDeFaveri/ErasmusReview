@@ -196,10 +196,6 @@ class Controller {
                     header('Location: View/mostra/mostraPercorso.php?errore=3');
                     exit();
                 }
-                if ($esperienze == null){
-                    header('Location: View/mostra/mostraPercorso.php?errore=3');
-                    exit();
-                }
                 $_SESSION['percorso'] = serialize($percorso);
                 $_SESSION['esperienze']=serialize($esperienze);
                 header('Location: View/mostra/mostraPercorso.php');
