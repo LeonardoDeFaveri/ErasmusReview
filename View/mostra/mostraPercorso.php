@@ -87,11 +87,7 @@ function creaRiquadro($esperienza, $erasmus = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
-<<<<<<< HEAD
     $riquadro .= "</div>";
-=======
-    $riquadro .= "</div>\n";
->>>>>>> a0698592d98f8997a292e2f7c2ff76b578f07ced
     return $riquadro;
 }
 ?>
