@@ -24,7 +24,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $percorso = unserialize($_SESSION['percorso']);
     $esperienze=unserialize($_SESSION['esperienze']);
     
-    if(count($percorso) == 0){
+    if(count($esperienze) == 0){
         $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
     }
     else{
@@ -34,15 +34,17 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                 <h2>Tutte le esperienze</h2>\n
             </div>
         testo;
-
+        $docente=$percorso->getDocente();
+        $classe=$percorso->getClasse();
         //creazione barra laterale
         $html .=<<<testo
                 <div class="barra-laterale">
-                    <summary>Dati del percorso</summary>
-                    <strong>Docente: </strong>{$percorso->getDocente()}
-                    <strong>Classe: </strong>{$percorso->getClasse()}
-                    <strong>Dal: </strong>{$percorso->getDal()}
-                    <strong>Al: </strong>{$percorso->getAl()}
+                    <summary><strong>Dati del percorso</strong></summary>
+                    <hr>
+                    <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}<br>
+                    <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+                    <strong>Dal: </strong>{$percorso->getDal()}<br>
+                    <strong>Al: </strong>{$percorso->getAl()}<br>
                 </div>
             </main>\n
         testo;
@@ -83,4 +85,5 @@ function creaRiquadro($esperienza, $erasmus = false) {
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
     $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+}
 ?>
