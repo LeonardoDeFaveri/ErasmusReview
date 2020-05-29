@@ -368,3 +368,7 @@ td{
     margin: var(--default-margin);
     padding: var(--default-padding);
 }
+
+.erasmus{
+    background-color:  snow;
+}

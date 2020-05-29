@@ -21,7 +21,10 @@ function creaHeader($nomePagina) {
     <body>
         <div id="barra-superiore">
             <header id="header-principale">
-                <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a></h1>
+                <hgroup>
+                    <h1><a href="{$_SESSION['web_root']}/index.php">ErasmusReview</a></h1>
+                    <h4 id=nome-pagina>$nomePagina</h4>
+                </hgroup>
             </header>\n
     testo;
     return $html;
