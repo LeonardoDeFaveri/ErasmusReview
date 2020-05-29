@@ -159,7 +159,10 @@ class Controller {
                     header('Location: View/mostra/mostraAzienda.php?errore=3');
                     exit();
                 }
+                $modello = $this->modello->getModelloDaTipi('studente', 'azienda');
+                $valutazioni = $this->modello->getValutazioniMedieDiAzienda($modello, $azienda);
                 $_SESSION['azienda'] = serialize($azienda);
+                $_SESSION['valutazioni_medie_azienda'] = serialize($valutazioni);
                 header('Location: View/mostra/mostraAzienda.php');
                 exit();
             break;
@@ -184,7 +187,7 @@ class Controller {
                 $modello = $this->modello->getModelloDaTipi('studente', 'famiglia');
                 $_SESSION['famiglia'] = serialize($famiglia);
                 $valutazioni = $this->modello->getValutazioniMedieDiFamiglia($modello, $famiglia);
-                $_SESSION['valutazioni_medie'] = serialize($valutazioni);
+                $_SESSION['valutazioni_medie_famiglia'] = serialize($valutazioni);
                 header('Location: View/mostra/mostraFamiglia.php');
                 exit();
             break;
@@ -229,6 +232,9 @@ class Controller {
                 }
                 $_SESSION['classi_studente'] = serialize($this->modello->getClassiDaStudente($studente));
                 $_SESSION['studente'] = serialize($studente);
+                $modello = $this->modello->getModelloDaTipi('azienda', 'studente');
+                $valutazioni = $this->modello->getValutazioniMedieDiStudente($modello, $studente);
+                $_SESSION['valutazioni_medie_studente'] = serialize($valutazioni);
                 header('Location: View/mostra/mostraStudente.php');
                 exit();
             break;  
