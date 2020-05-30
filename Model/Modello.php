@@ -427,7 +427,7 @@ class Modello {
      */
     public function getStudentiDaClasse($idClasse) {
         $query =<<<testo
-        SELECT S.*
+        SELECT DISTINCT S.*
         FROM classi_studenti CS
             INNER JOIN studenti S
             ON CS.id_studente = S.id
@@ -487,7 +487,7 @@ class Modello {
      */
     public function getStudentiDaDocente($idDocente) {
         $query =<<<testo
-        SELECT S.* 
+        SELECT DISTINCT S.* 
         FROM studenti S INNER JOIN classi_studenti CL 
         ON CL.id_studente=S.id 
         INNER JOIN classi_docenti CD 
@@ -520,7 +520,7 @@ class Modello {
      */
     public function getStudentiDaScuola($codiceMeccanografico) {
         $query =<<<testo
-        SELECT S.* FROM studenti S
+        SELECT DISTINCT S.* FROM studenti S
             INNER JOIN studenti_scuole SS ON
             S.id = SS.id_studente
             INNER JOIN scuole SC ON
@@ -1467,7 +1467,8 @@ class Modello {
         testo;
         return $this->connessione->query($query);
     }
-
+    public function modificaEsperienza($esperienza){
+    }
     /**
      * insertAgenzia inserisce un'agenzia nel database.
      *
