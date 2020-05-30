@@ -32,7 +32,6 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
         <main class="pagina-con-barra-laterale">
             <div class="contenuto">
                 <h2>Tutte le esperienze</h2>\n
-            </div>
         testo;
         $docente=$percorso->getDocente();
         $classe=$percorso->getClasse();
@@ -46,7 +45,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                     <strong>Dal: </strong>{$percorso->getDal()}<br>
                     <strong>Al: </strong>{$percorso->getAl()}<br>
                 </div>
-        </main>\n
+        
         testo;
         $html.="<div class=contenitore-riquadri>";
         foreach ($esperienze as $esperienza){
@@ -60,6 +59,8 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
             }
         }
         $html.="</div>";
+        $html.="</div>";
+        $html.="</main>";
     }
 }
 $html .= creaFooter();
