@@ -294,6 +294,36 @@ class Modello {
     }
 
     /**
+     * getDocentiAttiviDaScuola estrae dal database tutti i docenti attivi in questo momento di una scuola.
+     *
+     * @param  Scuola $scuola scuola della quale estrarre gli studenti
+     * @return Docente[] se ne sono stati trovati, altrimenti un array vuoto
+     */
+    public function getDocentiAttiviDaScuola($scuola) {
+        $query =<<<testo
+        SELECT D.* FROM docenti D
+            INNER JOIN docenti_scuole DS
+            ON DS.id_docente = D.id
+        WHERE DS.codice_scuola = '{$scuola->getId()}' AND DS.al IS NULL
+        ORDER BY D.cognome, D.nome
+        testo;
+        $ris = $this->connessione->query($query);
+        $docenti = array();
+        if ($ris && $ris->num_rows > 0){
+            $ris = $ris->fetch_all(MYSQLI_ASSOC);
+            foreach($ris as $docente){
+                $docenti[] = new Docente(
+                    $docente['id'],
+                    $docente['nome'],
+                    $docente['cognome'],
+                    $docente['email_utente']
+                );
+            }
+        }
+        return $docenti;
+    }
+
+    /**
      * getFamigliaDaId estrae dal database la famiglia associato all'id specificato.
      *
      * @param  int $id id della famiglia da estrarre
@@ -456,13 +486,12 @@ class Modello {
      * @return Studente[] se ne sono stati trovati, altrimenti un array vuoto
      */
     public function getStudentiDaDocente($idDocente) {
-        $dataOggi = date('Y-m-d');
         $query =<<<testo
         SELECT S.* 
         FROM studenti S INNER JOIN classi_studenti CL 
         ON CL.id_studente=S.id 
         INNER JOIN classi_docenti CD 
-        ON CD.id_docente = {$idDocente} WHERE CD.al > {$dataOggi}
+        ON CD.id_docente = {$idDocente} WHERE CD.al > NOW()
         testo;
         $ris = $this->connessione->query($query);
         $studenti = array();
