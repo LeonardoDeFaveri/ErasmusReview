@@ -46,7 +46,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
                     <strong>Dal: </strong>{$percorso->getDal()}<br>
                     <strong>Al: </strong>{$percorso->getAl()}<br>
                 </div>
-            </main>\n
+        </main>\n
         testo;
         $html.="<div class=contenitore-riquadri>";
         foreach ($esperienze as $esperienza){
