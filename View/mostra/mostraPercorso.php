@@ -114,7 +114,14 @@ function creaRiquadro($esperienza, $erasmus = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
-    $riquadro .= "</div>\n";
+    $riquadro .=<<<testo
+            \t\t\t<div class="contenitore-bottoni-riquadro">
+                \t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=modifica-esperienza&id={$esperienza->getId()}" method="POST">
+                    \t\t\t<button type="submit">Modifica</button>
+                \t\t\t</form>
+            \t\t\t</div>
+        \t\t\t</div>\n
+    testo;
     return $riquadro;
 }
 ?>
