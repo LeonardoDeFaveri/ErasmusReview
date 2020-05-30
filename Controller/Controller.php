@@ -753,7 +753,41 @@ class Controller {
                     }
                 }
             break;
-
+            case 'modifica-esperienza':
+                if(isset($_POST['submit'])){
+                    $esperienza = null;
+                    $id = $_GET['id'] ?? -1;
+                    $esperienza = new Esperienza(
+                        $id,
+                        $this->modello->getStudenteDaEmail($_SESSION['email_utente']),
+                        $this->modello->getPercorsiDaDocente($_SESSION['id_percorso']),
+                        $this->modello->getAziendaDaId($_SESSION['id_azienda']),
+                        $this->modello->getAgenziaDaId($_SESSION['id_agenzia']),
+                        $this->modello->getFamigliaDaId($_SESSION['id_famiglia']),
+                        $_POST['dataDal'],
+                        $_POST['dataAl']        
+                    );
+                    if($this->modello->modificaEsperienza()){
+                        header('Location: View/modifica/modificaEsperienza.php?successo=true');
+                        exit();
+                    }
+                    header('Location: View/modifica/modificaEsperienza.php?errore=2');
+                    exit();
+                }else{
+                    $id = $_GET['id'] ?? -1;
+                    $esperienza = $this->modello->getEsperienzaDaId($id);
+                    if ($percorso == null){
+                        header('Location: View/modifica/modificaEsperienza.php?errore=1');
+                        exit();
+                    }
+                    $_SESSION['esperienza'] = serialize($esperienza);
+                    $_SESSION['aziende']= serialize($this->modello->getAziende());
+                    $_SESSION['agenzie']= serialize($this->modello->getAgenzie());
+                    $_SESSION['famiglie']= serialize($this->modello->getFamiglie());
+                    $_SESSION['dal']= serialize($esperienza->getDal());
+                    $_SESSION['al']= serialize($esperienza->getAl());
+                }
+            break;
             case 'associa-docente-classe':
                 $classe = $this->modello->getClasseDaId($_GET['id']);
                 if($classe == null){

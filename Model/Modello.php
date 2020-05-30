@@ -1438,7 +1438,9 @@ class Modello {
         testo;
         return $this->connessione->query($query);
     }
-
+    public function modificaEsperienza($esperienza){
+        
+    }
     /**
      * insertAgenzia inserisce un'agenzia nel database.
      *
