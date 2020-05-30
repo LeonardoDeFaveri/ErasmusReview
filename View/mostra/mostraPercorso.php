@@ -12,7 +12,7 @@ include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Percorso");
+$html = creaHeader("Mostra percorso");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
 if(!isset($_SESSION['email_utente'])){
     $html .=<<<testo
