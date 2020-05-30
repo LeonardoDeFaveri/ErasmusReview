@@ -36,15 +36,26 @@ if(isset($_GET['errore']) ){
 }
 
 $percorso = unserialize($_SESSION['percorso']);
-$esperienze=unserialize($_SESSION['esperienze']);
+$esperienze = unserialize($_SESSION['esperienze']);
 
 if(count($esperienze) == 0){
     $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
 }
 else{
+    $oggi = new DateTime('now');
+    $inizioPercorso = new DateTime($percorso->getDal());
+    $finePercorso = new DateTime($percorso->getAl());
+    $differenzaFineInizio = $finePercorso->diff($inizioPercorso);
+    $differenzaOggiInizio = $oggi->diff($inizioPercorso);
     $html .=<<<testo
     <main class="pagina-con-barra-laterale">
         <div class="contenuto">
+            <h2>Durata Del Percorso</h2>\n
+            <div class="progresso-percorso">
+                <span>
+                    <progress class="progresso-percorso" value="{$differenzaOggiInizio->days}" max="{$differenzaFineInizio->days}">Durata Percorso</progress>
+                </span>
+            </div>
             <h2>Tutte le esperienze</h2>\n
     testo;
     $docente=$percorso->getDocente();
@@ -85,6 +96,7 @@ echo $html;
 function creaRiquadro($esperienza, $erasmus = false) {
     $classe = $esperienza->getPercorso()->getClasse();
     $scuola = $classe->getScuola();
+    $studente = $esperienza->getStudente();
     $azienda = $esperienza->getAzienda();
     $agenzia = $esperienza->getAgenzia();
     $famiglia = $esperienza->getFamiglia();
@@ -101,6 +113,7 @@ function creaRiquadro($esperienza, $erasmus = false) {
         testo;
     }
     $riquadro .=<<<testo
+            \t\t\t{$studente->getNome()} {$studente->getCognome()}<br>
             \t\t\t<strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
             \t\t\t<strong>Scuola: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-scuola&codice_meccanografico={$scuola->getId()}">{$scuola->getNome()}</a>
             \t\t\t<hr>
