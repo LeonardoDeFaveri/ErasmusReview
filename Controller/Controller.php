@@ -767,7 +767,7 @@ class Controller {
                         $_POST['dataDal'],
                         $_POST['dataAl']        
                     );
-                    if($this->modello->modificaEsperienza()){
+                    if($this->modello->modificaEsperienza($esperienza)){
                         header('Location: View/modifica/modificaEsperienza.php?successo=true');
                         exit();
                     }
@@ -776,7 +776,7 @@ class Controller {
                 }else{
                     $id = $_GET['id'] ?? -1;
                     $esperienza = $this->modello->getEsperienzaDaId($id);
-                    if ($percorso == null){
+                    if ($esperienza == null){
                         header('Location: View/modifica/modificaEsperienza.php?errore=1');
                         exit();
                     }
