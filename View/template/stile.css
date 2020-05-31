@@ -353,39 +353,44 @@ td{
     margin: var(--default-margin)
 }
 
+.contenitore-progresso-percorso{
+    margin: var(--default-margin);
+}
+
 .progresso-percorso {
-    /*background-color: #1a1a1a;
-    height: 25px;*/
-    padding: 5px;
+    height: 25px;
+    width: 100%;
+    padding: 1px;
     margin: 10px 0;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border: var(--default-border);
     border-radius: 5px;
     -moz-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
     -webkit-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
     box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
 }
 
-.progresso-percorso span {
+/*Colore della barra vuota*/
+.progresso-percorso[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+/*Colore della barra piena*/
+.progresso-percorso[value]::-webkit-progress-value {
+    background-color: coral;
+}
+
+.contenitore-progresso-percorso span {
     display: inline-block;
     height: 25px;
-    width: 25%;
-    /*-moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-    background: rgb(1,182,178);
-    background: linear-gradient(bottom, rgb(1,182,178) 39%, rgb(27,219,214) 70%, rgb(54,255,255) 85%);
-    background: -o-linear-gradient(bottom, rgb(1,182,178) 39%, rgb(27,219,214) 70%, rgb(54,255,255) 85%);
-    background: -moz-linear-gradient(bottom, rgb(1,182,178) 39%, rgb(27,219,214) 70%, rgb(54,255,255) 85%);
-    background: -webkit-linear-gradient(bottom, rgb(1,182,178) 39%, rgb(27,219,214) 70%, rgb(54,255,255) 85%);
-    background: -ms-linear-gradient(bottom, rgb(1,182,178) 39%, rgb(27,219,214) 70%, rgb(54,255,255) 85%);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(0.39, rgb(1,182,178)), color-stop(0.7, rgb(27,219,214)), color-stop(0.85, rgb(54,255,255)));*/
+    width: 100%;
 }
+
 /*animazione barra caricamento*/
-.progresso-percorso span {
+.contenitore-progresso-percorso span {
     -webkit-transition: width .4s ease-in-out;
     -moz-transition: width .4s ease-in-out;
     -ms-transition: width .4s ease-in-out;

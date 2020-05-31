@@ -51,7 +51,7 @@ else{
     <main class="pagina-con-barra-laterale">
         <div class="contenuto">
             <h2>Durata Del Percorso</h2>\n
-            <div class="progresso-percorso">
+            <div class="contenitore-progresso-percorso">
                 <span>
                     <progress class="progresso-percorso" value="{$differenzaOggiInizio->days}" max="{$differenzaFineInizio->days}">Durata Percorso</progress>
                 </span>
