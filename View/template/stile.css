@@ -198,6 +198,10 @@ details summary{
     width: 300px;
 }
 
+.erasmus {
+    background-color: var(--default-erasmus-color);
+}
+
 button{
     margin: var(--default-margin);
     padding: var(--default-padding);
@@ -342,10 +346,6 @@ td{
 
 #tabella-studenti{
     padding: 0px;
-}
-
-.erasmus {
-    background-color: var(--default-erasmus-color);
 }
 
 .logo{
