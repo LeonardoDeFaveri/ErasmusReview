@@ -41,6 +41,9 @@ $html .=<<<testo
             {$docente->getNome()} {$docente->getCognome()}<br>
             {$docente->getEmail()}
             <hr>
+testo;
+
+$html.=<<<testo
             <b>Classi del docente</b>
             <ul>\n
 testo;
@@ -53,6 +56,19 @@ foreach ($classi as $classe) {
 
 $html .=<<<testo
             </ul>
+testo;
+
+if($_SESSION["tipo_utente"]=="scuola"){
+    $html .=<<<testo
+        <div class="contenitore-bottoni-riquadro">
+            <form action="{$_SESSION['web_root']}/index.php?comando=modifica-docente&id={$docente->getId()}" method="POST">
+                <input type="submit" value="Modifica">
+            </form>
+        </div>
+    testo;
+}
+
+$html .=<<<testo
         </div>
     </div>
 testo;

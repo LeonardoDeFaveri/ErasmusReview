@@ -35,7 +35,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
         testo;
     }
     $scuola = unserialize($_SESSION['scuola']);
-    $html .= creaBarraMenu($_SESSION["email_utente"]);
+    $html .= creaBarraMenu($_SESSION["email_utente"],$_SESSION["tipo_utente"]);
     $html.=<<<testo
         <form action="{$_SESSION['web_root']}/index.php?comando=modifica-dati-scuola" method="POST">
             <fieldset class="form-con-colonne">
