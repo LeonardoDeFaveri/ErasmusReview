@@ -40,7 +40,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     
     $html .=<<<testo
         <div>
-            <h2>Crea Esperienza</h2>
+            <h2>Modifica Esperienza</h2>
                 <form method="POST" action="{$_SESSION['web_root']}/index.php?comando=crea-esperienza" onSubmit="return controllaEsperienza()">
                     <fieldset class="form-con-colonne">
                         <legend>Creazione Esperienza</legend>
