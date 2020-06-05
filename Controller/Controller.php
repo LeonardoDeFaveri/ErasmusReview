@@ -751,21 +751,6 @@ class Controller {
                     }
                 }
             break;
-<<<<<<< HEAD
-
-            case 'modifica-docente':
-                $docente=$this->modello->getDocenteDaId($_GET['id'] ?? -1);
-                if($docente==null){
-                    header('Location View/modifica/modificaDocente.php?errore=3');
-                    exit();
-                }else{
-                    $_SESSION["docente"]=serialize($docente);
-                    header('Location View/modifica/modificaDocente.php');
-                    exit();
-                }
-            break;
-
-=======
             case 'modifica-esperienza':
                 if(isset($_POST['submit'])){
                     $esperienza = null;
@@ -801,7 +786,6 @@ class Controller {
                     $_SESSION['al']= serialize($esperienza->getAl());
                 }
             break;
->>>>>>> ade34fd003e0ebb8adfe41f793969bf5bd5a5257
             case 'associa-docente-classe':
                 $classe = $this->modello->getClasseDaId($_GET['id']);
                 if($classe == null){
