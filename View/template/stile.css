@@ -198,6 +198,10 @@ details summary{
     width: 300px;
 }
 
+.erasmus {
+    background-color: var(--default-erasmus-color);
+}
+
 button{
     margin: var(--default-margin);
     padding: var(--default-padding);
@@ -344,11 +348,52 @@ td{
     padding: 0px;
 }
 
-.erasmus {
-    background-color: var(--default-erasmus-color);
-}
-
 .logo{
     max-width: 60px;
     margin: var(--default-margin)
+}
+
+.contenitore-progresso-percorso{
+    margin: var(--default-margin);
+}
+
+.progresso-percorso {
+    height: 25px;
+    width: 100%;
+    padding: 1px;
+    margin: 10px 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: var(--default-border);
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+    -webkit-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+}
+
+/*Colore della barra vuota*/
+.progresso-percorso[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+/*Colore della barra piena*/
+.progresso-percorso[value]::-webkit-progress-value {
+    background-color: coral;
+}
+
+.contenitore-progresso-percorso span {
+    display: inline-block;
+    height: 25px;
+    width: 100%;
+}
+
+/*animazione barra caricamento*/
+.contenitore-progresso-percorso span {
+    -webkit-transition: width .4s ease-in-out;
+    -moz-transition: width .4s ease-in-out;
+    -ms-transition: width .4s ease-in-out;
+    -o-transition: width .4s ease-in-out;
+    transition: width .4s ease-in-out;
 }

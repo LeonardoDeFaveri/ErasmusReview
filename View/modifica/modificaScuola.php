@@ -17,7 +17,7 @@ if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
     if($_GET["errore"] == 1 || !isset($_SESSION['email_utente'])){
         $html .=<<<testo
             <h2>Devi aver eseguito l'accesso come scuola per poter vedere questa pagina</h2>
-            <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+            <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
         testo;
     }else if($_GET["errore"] == 2){
         $html .=<<<testo

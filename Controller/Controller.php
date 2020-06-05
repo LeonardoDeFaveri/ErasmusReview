@@ -486,7 +486,7 @@ class Controller {
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
                     $_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
-                    $_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
+                    $_SESSION['docenti'] = serialize($this->modello->getDocentiAttiviDaScuola($scuola));
                     $_SESSION['scuola'] = serialize($scuola);
                 }
                 header('Location: View/creazione/creaPercorso.php');
@@ -534,8 +534,6 @@ class Controller {
                     $_SESSION['percorsi'] = serialize($this->modello->getPercorsiDaDocente($docente));
                 }else{
                     $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                    //$_SESSION['classi'] = serialize($this->modello->getClassiDaScuola($scuola));
-                    //$_SESSION['docenti'] = serialize($this->modello->getDocentiDaScuola($scuola));
                     $_SESSION['studenti'] = serialize($this->modello->getStudentiAttiviDaScuola($scuola->getId()));
                     $_SESSION['aziende'] = serialize($this->modello->getAziende());
                     $_SESSION['agenzie'] = serialize($this->modello->getAgenzie());
@@ -738,7 +736,7 @@ class Controller {
                     $_SESSION['percorso'] = serialize($percorso);
                     if($_SESSION['tipo_utente'] == 'scuola'){
                         $scuola = $this->modello->getScuolaDaEmail($_SESSION['email_utente']);
-                        $docenti = $this->modello->getDocentiDaScuola($scuola);
+                        $docenti = $this->modello->getDocentiAttiviDaScuola($scuola);
                         $classi = $this->modello->getClassiDaScuola($scuola);
                         $_SESSION['docenti'] = serialize($docenti);
                         $_SESSION['classi'] = serialize($classi);
@@ -753,6 +751,7 @@ class Controller {
                     }
                 }
             break;
+<<<<<<< HEAD
 
             case 'modifica-docente':
                 $docente=$this->modello->getDocenteDaId($_GET['id'] ?? -1);
@@ -766,6 +765,43 @@ class Controller {
                 }
             break;
 
+=======
+            case 'modifica-esperienza':
+                if(isset($_POST['submit'])){
+                    $esperienza = null;
+                    $id = $_GET['id'] ?? -1;
+                    $esperienza = new Esperienza(
+                        $id,
+                        $this->modello->getStudenteDaEmail($_SESSION['email_utente']),
+                        $this->modello->getPercorsiDaDocente($_SESSION['id_percorso']),
+                        $this->modello->getAziendaDaId($_SESSION['id_azienda']),
+                        $this->modello->getAgenziaDaId($_SESSION['id_agenzia']),
+                        $this->modello->getFamigliaDaId($_SESSION['id_famiglia']),
+                        $_POST['dataDal'],
+                        $_POST['dataAl']        
+                    );
+                    if($this->modello->modificaEsperienza($esperienza)){
+                        header('Location: View/modifica/modificaEsperienza.php?successo=true');
+                        exit();
+                    }
+                    header('Location: View/modifica/modificaEsperienza.php?errore=2');
+                    exit();
+                }else{
+                    $id = $_GET['id'] ?? -1;
+                    $esperienza = $this->modello->getEsperienzaDaId($id);
+                    if ($esperienza == null){
+                        header('Location: View/modifica/modificaEsperienza.php?errore=1');
+                        exit();
+                    }
+                    $_SESSION['esperienza'] = serialize($esperienza);
+                    $_SESSION['aziende']= serialize($this->modello->getAziende());
+                    $_SESSION['agenzie']= serialize($this->modello->getAgenzie());
+                    $_SESSION['famiglie']= serialize($this->modello->getFamiglie());
+                    $_SESSION['dal']= serialize($esperienza->getDal());
+                    $_SESSION['al']= serialize($esperienza->getAl());
+                }
+            break;
+>>>>>>> ade34fd003e0ebb8adfe41f793969bf5bd5a5257
             case 'associa-docente-classe':
                 $classe = $this->modello->getClasseDaId($_GET['id']);
                 if($classe == null){
@@ -787,7 +823,7 @@ class Controller {
                     header("Location: index.php?comando=mostra-classe&id={$classe->getId()}");
                     exit();
                 }else{
-                    $docenti = $this->modello->getDocentiDaScuola($classe->getScuola());
+                    $docenti = $this->modello->getDocentiAttiviDaScuola($classe->getScuola());
                     $_SESSION['classe'] = serialize($classe);
                     $_SESSION['possibili_docenti_classe'] = serialize($docenti);
                     header('Location: View/modifica/associaDocenteClasse.php');

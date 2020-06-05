@@ -18,7 +18,7 @@ $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente']
 if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
     $html .=<<<testo
         <h2>Devi aver eseguito l'accesso come docente per poter vedere questa pagina</h2>
-        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
 }else{
     $docente = unserialize($_SESSION['docente']);
@@ -138,12 +138,14 @@ function creaRiquadroPercorso($percorso, $terminato = false) {
             \t\t\t<hr>
             \t\t\t<strong>Dal: </strong>{$percorso->getDal()} <strong>Al: </strong>{$percorso->getAl()}<br>
             <div class="contenitore-bottoni-riquadro">\n
-    testo;   
-    $html .=<<<testo
-        <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
-            <button type="submit">Modifica</button>
-        </form>\n
     testo;
+    if(!$terminato){
+        $html .=<<<testo
+            <form action="{$_SESSION['web_root']}/index.php?comando=modifica-percorso&id={$percorso->getId()}" method="POST">
+                <button type="submit">Modifica</button>
+            </form>\n
+        testo;
+    }
     $html .=<<<testo
                 <form action="{$_SESSION['web_root']}/index.php?comando=mostra-percorso&id={$percorso->getId()}" method="POST">
                     <button type="submit">Mostra info</button>

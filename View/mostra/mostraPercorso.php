@@ -12,52 +12,82 @@ include_once "{$_SESSION['root']}/View/include/struttura.php";
 include_once "{$_SESSION['root']}/Model/Percorso.php";
 include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Percorso");
+$html = creaHeader("Mostra percorso");
 $html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
-if(isset($_GET['errore']) || !isset($_SESSION['docente'])){
+if(!isset($_SESSION['email_utente'])){
     $html .=<<<testo
-        <h2>Devi aver eseguito l'accesso come docente per poter vedere questa pagina</h2>
-        <a href="{$_SESSION['web_root']}/login.php">Accedi</a>
+        <h2>Devi aver eseguito l'accesso per poter vedere questa pagina</h2>
+        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
     testo;
-}else{
-    
-    $percorso = unserialize($_SESSION['percorso']);
-    $esperienze=unserialize($_SESSION['esperienze']);
-    
-    if(count($esperienze) == 0){
-        $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
-    }
-    else{
-        $html .=<<<testo
-        <main class="pagina-con-barra-laterale">
-            <div class="contenuto">
-                <h2>Tutte le esperienze</h2>\n
-            </div>
-        testo;
-        $docente=$percorso->getDocente();
-        $classe=$percorso->getClasse();
-        //creazione barra laterale
-        $html .=<<<testo
-                <div class="barra-laterale">
-                    <summary><strong>Dati del percorso</strong></summary>
-                    <hr>
-                    <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}<br>
-                    <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
-                    <strong>Dal: </strong>{$percorso->getDal()}<br>
-                    <strong>Al: </strong>{$percorso->getAl()}<br>
-                </div>
-            </main>\n
-        testo;
+    $html .= creaFooter();
+    echo $html;
+    return;
+}
 
-        foreach ($esperienze as $esperienza){
-            if($esperienza->getFamiglia()!=null){
-                if($esperienza->getAgenzia()!=null){
-                    $html.=creaRiquadro($esperienza,true);
-                }
+if(isset($_GET['errore']) ){
+    switch($_GET['errore']){
+        case 3:
+            $html .= "<h2>Il percorso selezionato non esiste</h2>";
+        break;
+    }
+    $html .= creaFooter();
+    echo $html;
+    return;
+}
+
+$percorso = unserialize($_SESSION['percorso']);
+$esperienze = unserialize($_SESSION['esperienze']);
+
+if(count($esperienze) == 0){
+    $html .= "<p>Non è stato ancora definita nessuna esperienza</p>\n";
+}
+else{
+    $oggi = new DateTime('now');
+    $inizioPercorso = new DateTime($percorso->getDal());
+    $finePercorso = new DateTime($percorso->getAl());
+    $differenzaFineInizio = $finePercorso->diff($inizioPercorso);
+    $differenzaOggiInizio = $oggi->diff($inizioPercorso);
+    $html .=<<<testo
+    <main class="pagina-con-barra-laterale">
+        <div class="contenuto">
+            <h2>Durata Del Percorso</h2>\n
+            <div class="contenitore-progresso-percorso">
+                <span>
+                    <progress class="progresso-percorso" value="{$differenzaOggiInizio->days}" max="{$differenzaFineInizio->days}">Durata Percorso</progress>
+                </span>
+            </div>
+            <h2>Tutte le esperienze</h2>\n
+    testo;
+    $docente=$percorso->getDocente();
+    $classe=$percorso->getClasse();
+    $html.="<div class=contenitore-riquadri>\n";
+    foreach ($esperienze as $esperienza){
+        if($esperienza->getFamiglia()!=null){
+            if($esperienza->getAgenzia()!=null){
+                $html.=creaRiquadro($esperienza,true);
             }
+        }
+        else{
             $html.=creaRiquadro($esperienza);
         }
     }
+    $html .=<<<testo
+            </div>
+        </div>\n
+    testo;
+    //creazione barra laterale
+    $html .=<<<testo
+            <div class="barra-laterale">
+                <summary><strong>Dati del percorso</strong></summary>
+                <hr>
+                <strong>Docente: </strong>{$docente->getNome()}{$docente->getCognome()}<br>
+                <strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
+                <strong>Dal: </strong>{$percorso->getDal()}<br>
+                <strong>Al: </strong>{$percorso->getAl()}<br>
+            </div>
+    
+    testo;
+    $html.="</main>";
 }
 $html .= creaFooter();
 echo $html;
@@ -66,11 +96,24 @@ echo $html;
 function creaRiquadro($esperienza, $erasmus = false) {
     $classe = $esperienza->getPercorso()->getClasse();
     $scuola = $classe->getScuola();
+    $studente = $esperienza->getStudente();
     $azienda = $esperienza->getAzienda();
     $agenzia = $esperienza->getAgenzia();
     $famiglia = $esperienza->getFamiglia();
-    $riquadro = $erasmus ? "\t\t\t<div class=\"riquadro erasmus\">\n<strong><em>Erasmus</em></strong><br>\n" : "\t\t\t<div class=\"riquadro pcto\">\n<strong><em>Pcto</em></strong><br>";
-    $riquadro.=<<<testo
+    $riquadro = "";
+    if($erasmus){
+        $riquadro .=<<<testo
+            \t\t<div class="riquadro erasmus">
+                <strong><em>Erasmus</em></strong><br>\n
+        testo;
+    }else{
+        $riquadro .=<<<testo
+            \t\t<div class="riquadro pcto">\n
+                <strong><em>Pcto</em></strong><br>\n
+        testo;
+    }
+    $riquadro .=<<<testo
+            \t\t\t{$studente->getNome()} {$studente->getCognome()}<br>
             \t\t\t<strong>Classe: </strong>{$classe->getNumero()}{$classe->getSezione()} {$classe->getAnnoScolastico()}<br>
             \t\t\t<strong>Scuola: </strong><a href="{$_SESSION['web_root']}/index.php?comando=mostra-scuola&codice_meccanografico={$scuola->getId()}">{$scuola->getNome()}</a>
             \t\t\t<hr>
@@ -84,7 +127,14 @@ function creaRiquadro($esperienza, $erasmus = false) {
     if($famiglia != null){
         $riquadro .= "\t\t\t\t\t<strong>Famiglia: </strong><a href='{$_SESSION['web_root']}/index.php?comando=mostra-famiglia&id={$famiglia->getId()}'>{$famiglia->getCognome()}</a>\n";
     }
-    $riquadro .= "\t\t\t\t\t<div class='contenitore-bottoni-riquadro'>\n";
+    $riquadro .=<<<testo
+            \t\t\t<div class="contenitore-bottoni-riquadro">
+                \t\t\t<form action="{$_SESSION['web_root']}/index.php?comando=modifica-esperienza&id={$esperienza->getId()}" method="POST">
+                    \t\t\t<button type="submit">Modifica</button>
+                \t\t\t</form>
+            \t\t\t</div>
+        \t\t\t</div>\n
+    testo;
     return $riquadro;
 }
 ?>

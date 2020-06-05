@@ -3,13 +3,13 @@ USE erasmus_review;
 
 DELETE FROM tipi_utenti;
 INSERT INTO tipi_utenti (tipo_utente) VALUES
-('studente'),
-('docente'),
-('azienda'),
-('agenzia'),
-('scuola'),
-('admin'),
-('famiglia');
+	('studente'),
+	('docente'),
+	('azienda'),
+	('agenzia'),
+	('scuola'),
+	('admin'),
+	('famiglia');
 
 DELETE FROM utenti;
 INSERT INTO utenti (email, password, tipo_utente) VALUES
@@ -180,20 +180,43 @@ VALUES
 	(12, 4, 12),
 	(13, 4, 13);
 
--- DELETE FROM schede_di_valutazione;
--- INSERT INTO schede_di_valutazione (id,id_modello,id_recensore,id_recensito,id_esperienza,data_ora)
--- VALUES
---	(1, 1, 4, 3, 5, '2020-05-22 11:13:00'),
---	(2, 2, 3, 4, 2, '2020-05-22 11:13:00'),
---	(3, 3, 1, 1, 3, '2020-05-22 11:13:00'),
---	(4, 4, 2, 1, 4, '2020-05-22 11:13:00');
+DELETE FROM schede_di_valutazione;
+INSERT INTO schede_di_valutazione (id, id_modello, id_recensore, id_recensito, id_esperienza, data_ora) VALUES
+	(1, 4, 3, 1, 9, '2020-05-22 12:05:10'),
+	(2, 3, 1, 1, 3, '2020-05-23 03:05:40'),
+	(3, 2, 1, 7, 21, '2020-05-23 03:05:48'),
+	(4, 1, 1, 1, 3, '2020-05-29 11:05:25'),
+	(5, 1, 1, 1, 1, '2020-05-29 11:05:08'),
+	(6, 2, 1, 1, 3, '2020-05-29 11:05:30'),
+	(7, 2, 1, 1, 1, '2020-05-29 11:05:27');
 
--- DELETE FROM valutazioni;
--- INSERT INTO valutazioni (id, id_scheda_di_valutazione, voto, id_aspetto, 
--- VALUES
--- 	(1, 1, 5, 1),
---	(2, 1, 4, 2),
---	(3, 1, 3, 3),
---	(4, 1, 3, 4);
+INSERT INTO valutazioni (id, id_scheda_di_valutazione, voto, id_aspetto) VALUES
+	(5, 1, 4, 12),
+	(6, 1, 2, 13),
+	(7, 2, 1, 10),
+	(8, 2, 1, 11),
+	(9, 3, 1, 5),
+	(10, 3, 1, 6),
+	(11, 3, 1, 7),
+	(12, 3, 1, 8),
+	(13, 3, 1, 9),
+	(14, 4, 3, 1),
+	(15, 4, 4, 2),
+	(16, 4, 1, 3),
+	(17, 4, 3, 4),
+	(18, 5, 4, 1),
+	(19, 5, 4, 2),
+	(20, 5, 5, 3),
+	(21, 5, 2, 4),
+	(22, 6, 4, 5),
+	(23, 6, 3, 6),
+	(24, 6, 3, 7),
+	(25, 6, 5, 8),
+	(26, 6, 2, 9),
+	(27, 7, 5, 5),
+	(28, 7, 3, 6),
+	(29, 7, 2, 7),
+	(30, 7, 3, 8),
+	(31, 7, 2, 9);
 
 COMMIT;

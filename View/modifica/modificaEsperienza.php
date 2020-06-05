@@ -1,42 +1,43 @@
 <?php
-/**
- * creaEsperienza permette di creare un'esperienza.
- */
 if(session_id() == ''){
     session_start();
     $_SESSION['root'] = __DIR__ . "/../..";
     $protocollo = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
     $_SESSION['web_root'] = "{$protocollo}://{$_SERVER['SERVER_NAME']}/ErasmusReview";
 }
-
 include_once "{$_SESSION['root']}/View/include/struttura.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Agenzia.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Azienda.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Studente.php";
-include_once "{$_SESSION['root']}/Model/Soggetti/Famiglia.php";
-include_once "{$_SESSION['root']}/Model/Percorso.php";
+include_once "{$_SESSION['root']}/Model/Soggetti/Docente.php";
+include_once "{$_SESSION['root']}/Model/Esperienza.php";
 
-$html = creaHeader("Creazione Esperienza");
-$html .= creaBarraMenu($_SESSION['email_utente'] ?? "", $_SESSION['tipo_utente'] ?? "");
-if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente']) && !isset($_SESSION['scuola']))){
-    $html .=<<<testo
-        <h2>Devi aver eseguito l'accesso come docente o scuola per poter visualizzare questa pagina</h2>
-        <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
-    testo;
-}else{
-    if(isset($_GET['errore']) && $_GET['errore'] == 2){
+$html = creaHeader("Modifica Esperienza");
+if(isset($_GET['errore']) || !isset($_SESSION['email_utente'])){
+    $html .= creaBarraMenu("","");
+    if($_GET["errore"] == 1 || !isset($_SESSION['email_utente'])){
         $html .=<<<testo
-                    <script>
-                        alert("Non sono riuscito ad inserire l'esperienza; probabilmente esiste già");
-                    </script>    
+            <h2>Devi aver eseguito l'accesso come scuola o docente per poter vedere questa pagina</h2>
+            <a href="{$_SESSION['web_root']}/View/login.php">Accedi</a>
         testo;
-        
+    }else if($_GET["errore"] == 2){
+        $html .=<<<testo
+            <script>
+                alert("Qualcosa &egrave; andato storto nella modifica");
+            </script>
+        testo;
     }
-    $studenti = unserialize($_SESSION['studenti']);
+}else{
+    if(isset($_GET['successo'])){
+        $html .=<<<testo
+            <script>
+                alert("Modifica effettuata con successo");
+            </script>
+        testo;
+    }
     $aziende = unserialize($_SESSION['aziende']);
     $agenzie = unserialize($_SESSION['agenzie']);
     $famiglie = unserialize($_SESSION['famiglie']);
-    $percorsi = unserialize($_SESSION['percorsi']);
+    $dal = unserialize($_SESSION['dal']);
+    $al = unserialize($_SESSION['al']);
+    
     $html .=<<<testo
         <div>
             <h2>Crea Esperienza</h2>
@@ -44,32 +45,6 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
                     <fieldset class="form-con-colonne">
                         <legend>Creazione Esperienza</legend>
                         <div class="dati">
-                        <div class="riga">
-                            <label for="id_studente">Seleziona Studente:</label>
-                            <select name="id_studente" autofocus required>\n
-    testo;
-    foreach($studenti as $studente){
-        $html.=<<<testo
-                                \t<option value ='{$studente->getId()}'>{$studente->getNome()} {$studente->getCognome()}</option>\n
-        testo;
-    }
-    $html.=<<<testo
-                            </select>
-                        </div>\n
-        testo;
-    $html .=<<<testo
-                        <div class="riga">
-                            <label for="id_percorso">Seleziona Percorso:</label>
-                            <select name ='id_percorso' required>\n
-    testo;
-    foreach($percorsi as $percorso){
-        $html.=<<<testo
-                        \t\t<option value ='{$percorso->getId()}'>{$percorso->getClasse()->getNumero()} {$percorso->getClasse()->getSezione()} {$percorso->getClasse()->getAnnoScolastico()} {$percorso->getDal()} {$percorso->getAl()}</option>\n
-        testo;
-    }
-    $html.=<<<testo
-                            </select>
-                        </div>\n
     testo;
     $html .=<<<testo
                         <div class="riga">
@@ -131,6 +106,7 @@ if(isset($_GET['errore']) && $_GET['errore'] == 1 || (!isset($_SESSION['docente'
         </div>\n
     testo;
 }
-$html .= creaFooter();
+$html.=creaFooter();
 echo $html;
 ?>
+
