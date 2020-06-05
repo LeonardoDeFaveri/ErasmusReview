@@ -754,6 +754,18 @@ class Controller {
                 }
             break;
 
+            case 'modifica-docente':
+                $docente=$this->modello->getDocenteDaId($_GET['id'] ?? -1);
+                if($docente==null){
+                    header('Location View/modifica/modificaDocente.php?errore=3');
+                    exit();
+                }else{
+                    $_SESSION["docente"]=serialize($docente);
+                    header('Location View/modifica/modificaDocente.php');
+                    exit();
+                }
+            break;
+
             case 'associa-docente-classe':
                 $classe = $this->modello->getClasseDaId($_GET['id']);
                 if($classe == null){
